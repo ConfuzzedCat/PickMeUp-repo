@@ -1,0 +1,80 @@
+Alt på engelsk, method, var, etc.
+camelCase på method, Variabler
+Inline brackets ved if, else, while osv.
+tillad unlimited private hjælpe methoder
+Hvis en dependency er manglende så skriv dummy code
+overlap diskuteres mellem teams, hvor overlappet er
+lave tdd på hvad der er vigtigst
+Magic numbers/variable er beskred med en comment
+bruge variabler isted for bare værdier der er indsat
+javadoc til method og classes. Skal indeholde forfatter og User Story
+fejlhåndter bubbler op til f.eks controller
+Dummy
+
+I frontend bruger vi Anders' Prettier config*
+I frontend bruger vi React.js
+
+
+teams aftaler indburdes hvornår man kode, også aftaler scrum master hvornår de taler sammen
+
+
+Anders Prettier config
+SOF
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": false,
+  "printWidth": 1000,
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": "*.jsx",
+      "options": {
+        "printWidth": 80
+      }
+    }
+  ]
+}
+EOF,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
