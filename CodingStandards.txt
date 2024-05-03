@@ -23,6 +23,13 @@ Der kommer til at være branches for hver user story, og der skal laves review a
 
 Der arbejdes ud fra et mobile first koncept. 
 
+Der er lavet et TDD tag på taiga, tasks som er markeret med TDD-tagget skal laves ved TDD.
+Alle funktioner som ikke har TDD tag, og ikke er en getter eller setter, skal unittestes.
+Unittests kører når der laves pull requests fra dev til user story branches. 
+Integrationstests kører når der laves pull request fra main til dev.
+
+PlantUML klassediagram skal opdateres løbende, som minimum efter hver task for at give overblik over hvad der er lavet og er til rådighed.
+
 
 
 
