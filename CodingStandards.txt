@@ -17,6 +17,14 @@ I frontend bruger vi React.js
 
 teams aftaler indburdes hvornår man kode, også aftaler scrum master hvornår de taler sammen
 
+Main branch kommer til at være beskyttet mod pushes. 
+Der skal lave pull requests fra en dev branch. 
+Der kommer til at være branches for hver user story, og der skal laves review af det team som arbejder på user storien før der kan pushes til dev.
+
+Der arbejdes ud fra et mobile first koncept. 
+
+
+
 
 Anders Prettier config
 SOF
