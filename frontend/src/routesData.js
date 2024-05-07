@@ -1,7 +1,7 @@
 const routesData = [
     {
       id: 1,
-      destination: "Lyngy",
+      destination: "Lyngby",
         handicapAccessibility: true,
         time: "08:00",
         date: "2024-05-10",
