@@ -2,7 +2,7 @@ function signup(){
 
     return(
         <div>
-            "hej"
+            "hej med dig"
         </div>
     );
 }
