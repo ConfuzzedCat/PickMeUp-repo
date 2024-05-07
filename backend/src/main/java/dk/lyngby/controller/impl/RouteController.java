@@ -1,5 +1,6 @@
 package dk.lyngby.controller.impl;
 
+import dk.lyngby.Model.Route;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import io.javalin.http.Context;
