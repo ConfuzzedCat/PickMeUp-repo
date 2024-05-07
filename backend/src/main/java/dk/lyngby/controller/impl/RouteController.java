@@ -6,6 +6,7 @@ import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.dao.impl.MockRouteDao;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDto;
+import dk.lyngby.Model.Route;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
