@@ -1,6 +1,7 @@
 package dk.lyngby.utility;
 
 import com.google.gson.Gson;
+import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.dto.CoordinateDTO;
 import dk.lyngby.dto.DistanceDTO;
 import dk.lyngby.exception.ApiException;
@@ -39,7 +40,13 @@ public class RouteCalcUtil {
             location = location.replaceAll("å", "%C3%A5");
         }
         // new format: address%20number%20postal
-        String requestString = "https://api.geoapify.com/v1/geocode/search?text=" + location + "&format=json&apiKey=c205e64d77a04951959d6de10d7e5c2e";
+        String key = "";
+        try {
+            key = ApplicationConfig.getProperty("geoapify.API.key");
+        } catch (IOException e){
+            throw new ApiException(500, "Something went wrong, try again later.");
+        }
+        String requestString = "https://api.geoapify.com/v1/geocode/search?text=" + location + "&format=json&apiKey=" + key;
         Request request = new Request.Builder()
                 .url(requestString)
                 .method("GET", null)
@@ -65,7 +72,13 @@ public class RouteCalcUtil {
      * @throws ApiException If API call is unsuccessful.
      */
     public double findDistanceBetweenTwoLocations(String startLocationCoords, String routeCoords) throws ApiException {
-        String requestString = "https://api.geoapify.com/v1/routing?waypoints=" + startLocationCoords + "|" + routeCoords + "&mode=drive&apiKey=c205e64d77a04951959d6de10d7e5c2e";
+        String key = "";
+        try {
+            key = ApplicationConfig.getProperty("geoapify.API.key");
+        } catch (IOException e){
+            throw new ApiException(500, "Something went wrong, try again later.");
+        }
+        String requestString = "https://api.geoapify.com/v1/routing?waypoints=" + startLocationCoords + "|" + routeCoords + "&mode=drive&apiKey=" + key;
         Request request = new Request.Builder()
                 .url(requestString)
                 .method("GET", null)

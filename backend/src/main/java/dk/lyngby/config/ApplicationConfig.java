@@ -35,4 +35,16 @@ public class ApplicationConfig {
     public static void stopServer(Javalin app) {
         app.stop();
     }
+
+    public static String getProperty(String propName) throws IOException
+    {
+        try (InputStream is = HibernateConfig.class.getClassLoader().getResourceAsStream("properties-from-pom.properties"))
+        {
+            Properties prop = new Properties();
+            prop.load(is);
+            return prop.getProperty(propName);
+        } catch (IOException ex) {
+            throw new IOException("Could not read property from pom file. Build Maven!");
+        }
+    }
 }
