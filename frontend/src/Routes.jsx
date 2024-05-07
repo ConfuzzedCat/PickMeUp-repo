@@ -50,7 +50,7 @@ function Routes() {
     <option>Driver</option>
   </select>
 
-  <button className="btn-sm">Apply</button>
+  <button className="btn btn-sm">Apply</button>
 
 
   <table className="table">
