@@ -18,7 +18,7 @@
         <junit.version>5.9.1</junit.version>
 
         <!-- Project properties  -->
-
+        <geoapify.API.key>c205e64d77a04951959d6de10d7e5c2e</geoapify.API.key>
     </properties>
     <dependencies>
 
