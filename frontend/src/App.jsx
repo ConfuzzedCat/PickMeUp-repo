@@ -1,13 +1,11 @@
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
 import './App.css'
-import Signup from './signup';
-import Upload from './upload';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     
@@ -30,4 +28,4 @@ function App() {
   
 }
 
-export default App
+export default App;
