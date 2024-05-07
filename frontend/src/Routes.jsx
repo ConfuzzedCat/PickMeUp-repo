@@ -1,8 +1,15 @@
 import React from "react"
 import { useState } from "react"
 import { useEffect } from "react"
+import mockData from "./util/routesData.js"
 
 function Routes() {
+  const [routes, setRoutes] = useState([]) // state to hold routes data
+
+  useEffect(() => {
+    setRoutes(mockData.getAllRoutes()) // load the data into state when the component mounts
+  }, []) // empty dependency array to run the effect only once
+
   return (
     <div className="overflow-x-auto">
       <h1>Available Routes</h1>
@@ -33,10 +40,13 @@ function Routes() {
         {/* head */}
         <thead>
           <tr>
-            <th></th>
-            <th>Route</th>
+            <th>ID</th>
+            <th>Destination</th>
             <th>Driver</th>
             <th>Time</th>
+            <th>Date</th>
+            <th>Passengers</th>
+            <th>Car Size</th>
           </tr>
         </thead>
         <tbody>
