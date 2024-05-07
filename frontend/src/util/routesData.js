@@ -30,5 +30,17 @@ const routesData = [
                 driver: "John Doesen"
    }
   ];
+
+  // functions to get all routes
+export const getAllRoutes = () => {
+    return routesData;
+  };
+
+  // function to get a single route by ID
+export const getRouteById = (id) => {
+    return routesData.find((route) => route.id === id);
+  };
+
+
   
-  export default routesData;
+  export default { getAllRoutes, getRouteById};
