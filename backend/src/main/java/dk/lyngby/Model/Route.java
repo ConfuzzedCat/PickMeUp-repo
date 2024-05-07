@@ -25,6 +25,9 @@ public class Route {
     private int endPostalCode;
     private String endLocation;
 
+    public String getStartLocation() {
+        return startLocation;
+    }
 
     //private Driver driver;
 
