@@ -95,5 +95,14 @@ public class RouteController implements IController<Route, Integer> {
         ctx.json(routeDto, RouteDto.class);
     }
 
+    public void getListOfRoutesClosestToStart(Context ctx){
+        // Hiv start og slut ud af context.
+        // Hent driver routes i DB, som har samme slutpunkt.
+        // Sammenlign distancen mellem startpunktet for brugeren og startpunktet for routen, via geoapify.
+        // Filtrér routes fra som er urealistike / ikke passer til filtrering.
+        // Sortér routes sådan at de routes som er tættest på brugerens start lokation bliver vist først.
 
+    }
 }
+
+
