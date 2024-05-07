@@ -18,7 +18,7 @@ public class RouteController {
         String startLocationCoords = routeUtil.getCoordinatesForAddress(requestBody.getStartLocation());
         // Hent driver routes i DB, som har samme slutpunkt.
         // Sammenlign distancen mellem startpunktet for brugeren og startpunktet for routen, via geoapify.
-        Map<Route, Double> chosenRoutes = new HashMap<Route, Double>();
+        Map<Route, Double> chosenRoutes = new HashMap<>();
         for(Route r: routes){
             String routeCoords = routeUtil.getCoordinatesForAddress(r.getStartLocation());
             double distance = routeUtil.findDistanceBetweenTwoLocations(startLocationCoords, routeCoords);
