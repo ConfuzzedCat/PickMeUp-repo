@@ -2,10 +2,6 @@ package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
-import dk.lyngby.dto.HotelDto;
-import dk.lyngby.dto.RoomDto;
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
 import io.javalin.Javalin;
 import io.restassured.http.ContentType;
 import jakarta.persistence.EntityManagerFactory;
