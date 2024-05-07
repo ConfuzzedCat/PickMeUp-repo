@@ -24,19 +24,18 @@ public class RouteDao implements IDao {
     }
 
     /**
-     * This method returns a list of routes based on the endLocation and passengerStartPostalCode
+     * This method returns a list of routes based on the endLocation + endPostalCode and passengerStartPostalCode
      * @param endLocation is the ending location that the passenger decides
      * @param passengerStartPostalCode is the starting postal code for the passenger
      * @return List<Route> List of routes
      * @author pelle112112
      */
-    public List<Route> getPassengerRoutesWithFilter (String endLocation, String passengerStartPostalCode){
-        // For the real case we want to define the postal codes that the passenger wants routes for
-        // For this prototype we are gonna limit the routes for the DB call to be the passengers postal code +-100
+    public List<Route> getPassengerRoutesWithFilter (String endLocation, int endPostalCode, int passengerStartPostalCode) {
         try(EntityManager em = emf.createEntityManager()){
-            Query query = em.createQuery("SELECT r FROM " + Route.class.getSimpleName() + " r WHERE r.endLocation = :endLocation AND r.startPostalCode = :passengerStartPostalCode", Route.class);
+            Query query = em.createQuery("SELECT r FROM " + Route.class.getSimpleName() + " r WHERE r.endLocation = :endLocation AND r.endPostalCode = :endPostalCode AND r.startPostalCode = :passengerStartPostalCode", Route.class);
             query.setParameter("endLocation", endLocation);
             query.setParameter("passengerStartPostalCode", passengerStartPostalCode);
+            query.setParameter("endPostalCode", endPostalCode);
             return query.getResultList();
         }
     }

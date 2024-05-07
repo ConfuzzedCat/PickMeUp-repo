@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HotelControllerTest
 {
+    /*
     //TODO: Remove. Kept for Reference
 
     private static Javalin app;
@@ -216,4 +217,6 @@ class HotelControllerTest
         Room[] roomArray = {r111, r112, r113, r114, r115, r116};
         return Set.of(roomArray);
     }
+
+     */
 }
