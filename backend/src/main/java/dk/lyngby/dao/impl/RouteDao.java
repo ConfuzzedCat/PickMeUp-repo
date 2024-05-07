@@ -44,7 +44,13 @@ public class RouteDao implements IDao {
         this.emf = _emf;
     }
 
-
+    /**
+     * This method returns a list of routes based on the endLocation and passengerStartPostalCode
+     * @param endLocation is the ending location that the passenger decides
+     * @param passengerStartPostalCode is the starting postal code for the passenger
+     * @param route Route class
+     * @return List<Route> List of routes
+     */
     public List<Route> getPassengerRoutesWithFilter (String endLocation, String passengerStartPostalCode, Route route){
         // For the real case we want to define the postal codes that the passenger wants routes for
         // For this prototype we are gonna limit the routes for the DB call to be the passengers postal code +-100
