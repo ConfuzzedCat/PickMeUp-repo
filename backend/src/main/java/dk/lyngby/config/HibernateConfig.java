@@ -1,5 +1,6 @@
 package dk.lyngby.config;
 
+import dk.lyngby.Model.Route;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -20,7 +21,7 @@ public class HibernateConfig {
 
             Properties props = new Properties();
 
-                props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/exam");
+                props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/pickmeup");
                 props.put("hibernate.connection.username", "postgres");
                 props.put("hibernate.connection.password", "postgres");
                 props.put("hibernate.show_sql", "true"); // show sql in console
@@ -86,6 +87,7 @@ public class HibernateConfig {
         //TODO: Remove. Kept for Reference
         //configuration.addAnnotatedClass(Hotel.class);
         //configuration.addAnnotatedClass(Room.class);
+        configuration.addAnnotatedClass(Route.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
