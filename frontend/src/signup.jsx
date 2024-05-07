@@ -24,7 +24,6 @@ function Signup() {
 
         try {
             console.log("Signup successful", signupData);
-            // Assuming signup is successful, redirect to the upload page
             navigate('/upload');
         } catch (error) {
             setError("Error during signup. Please try again.");
@@ -40,9 +39,6 @@ function Signup() {
     };
 
     return (
-
-        
-
         
         <div className="box">
             <h1>Signup</h1>
