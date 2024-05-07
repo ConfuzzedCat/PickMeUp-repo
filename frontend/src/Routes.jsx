@@ -1,6 +1,6 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React from "react"
+import { useState } from "react"
+import { useEffect } from "react"
 
 function Routes() {
   return (
@@ -64,7 +64,7 @@ function Routes() {
         </tbody>
       </table>
     </div>
-  );
+  )
 }
 
-export default Routes;
+export default Routes
