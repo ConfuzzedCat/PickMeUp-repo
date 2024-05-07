@@ -1,10 +1,10 @@
-function signup(){
+function Signup(){
 
     return(
-        <div>
+        <h1>
             "hej med dig"
-        </div>
+        </h1>
     );
 }
 
-export default signup;
+export default Signup;

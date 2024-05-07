@@ -3,6 +3,7 @@ import viteLogo from '/vite.svg'
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
 import './App.css'
+import Signup from './signup';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,7 +38,7 @@ function App() {
       </p>
     
     <Routes>
-        <Route path="/signup" element={<signup />} />
+        <Route path="/signup" element={<Signup />} />
     </Routes>
 
     </Router>
