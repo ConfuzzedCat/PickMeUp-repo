@@ -1,8 +1,6 @@
 package dk.lyngby.config;
 
 
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
