@@ -29,6 +29,9 @@ public class Populate {
         */
     }
 
+
+
+    /*
     @NotNull
     private static Set<Room> getCalRooms() {
         Room r100 = new Room(100, new BigDecimal(2520), Room.RoomType.SINGLE);
@@ -54,4 +57,6 @@ public class Populate {
         Room[] roomArray = {r111, r112, r113, r114, r115, r116};
         return Set.of(roomArray);
     }
+
+     */
 }
