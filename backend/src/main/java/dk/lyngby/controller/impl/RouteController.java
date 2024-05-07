@@ -3,11 +3,11 @@ package dk.lyngby.controller.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
-import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.MockRouteDao;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDto;
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
@@ -95,13 +95,34 @@ public class RouteController implements IController<Route, Integer> {
         ctx.json(routeDto, RouteDto.class);
     }
 
-    public void getListOfRoutesClosestToStart(Context ctx){
+    private RouteCalcUtil routeUtil = new RouteCalcUtil();
+
+    public void getListOfRoutesClosestToStart(Context ctx) throws ApiException{
         // Hiv start og slut ud af context.
+        RequestBody requestBody = ctx.bodyAsClass(RequestBody.class);
+        String startLocationCoords = routeUtil.getCoordinatesForAddress(requestBody.getStartLocation());
         // Hent driver routes i DB, som har samme slutpunkt.
         // Sammenlign distancen mellem startpunktet for brugeren og startpunktet for routen, via geoapify.
+        Map<Route, Double> chosenRoutes = new HashMap<Route, Double>();
+        for(Route r: routes){
+            String routeCoords = routeUtil.getCoordinatesForAddress(r.getStartLocation());
+            double distance = routeUtil.findDistanceBetweenTwoLocations(startLocationCoords, routeCoords);
+            if(distance >= 0) {
+                chosenRoutes.put(r, distance);
+            }
+        }
         // Filtrér routes fra som er urealistike / ikke passer til filtrering.
         // Sortér routes sådan at de routes som er tættest på brugerens start lokation bliver vist først.
 
+    }
+    private static class RequestBody {
+
+        private String startLocation;
+        private String endLocation;
+
+        private String getStartLocation(){
+            return startLocation;
+        }
     }
 }
 

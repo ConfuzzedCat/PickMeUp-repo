@@ -15,6 +15,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 public class Routes {
 
     private final ExceptionHandler exceptionController = new ExceptionHandler();
+    private final RoutesRoute routesRoute = new RoutesRoute();
     private int count = 0;
 
     private final RideRoute rideRoute = new RideRoute();
@@ -32,6 +33,7 @@ public class Routes {
 
             app.routes(() -> {
                 // path("/", hotelRoute.getRoutes());
+                path("/", routesRoute.getRoutes());
                 path("/", rideRoute.getRoutes());
 
             });
