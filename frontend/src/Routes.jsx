@@ -47,30 +47,22 @@ function Routes() {
             <th>Date</th>
             <th>Passengers</th>
             <th>Car Size</th>
+            <th>Handicap Accessibility</th>
           </tr>
         </thead>
         <tbody>
-          {/* row 1 */}
-          <tr className="bg-base-200">
-            <th>1</th>
-            <td>Lyngby - Nørrebro</td>
-            <td>Baby-Driver</td>
-            <td>12:30</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Nørregårdsvej 26 - lyngby station</td>
-            <td>onkel Steward</td>
-            <td>9:00</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>DTU - Cph-business-søerne</td>
-            <td>Jens</td>
-            <td>20:00</td>
-          </tr>
+          {routes.map((route => (
+           <tr key={route.id}>
+            <td>{route.id}</td>
+            <td>{route.destination}</td>
+            <td>{route.driver}</td>
+            <td>{route.time}</td>
+            <td>{route.date}</td>
+            <td>{route.passengers}</td>
+            <td>{route.carSize}</td>
+            <td>{route.handicapAccessibility ? "Yes" : "No"}</td>
+           </tr> 
+          )))}
         </tbody>
       </table>
     </div>
