@@ -40,6 +40,10 @@ function Signup() {
     };
 
     return (
+
+        
+
+        
         <div className="box">
             <h1>Signup</h1>
             <form onSubmit={performSignup}>
@@ -53,6 +57,7 @@ function Signup() {
             </form>
             {error && <p className="error-message">{error}</p>}
         </div>
+        
     );
 }
 
