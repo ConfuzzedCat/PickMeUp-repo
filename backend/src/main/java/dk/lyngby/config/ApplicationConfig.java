@@ -7,7 +7,11 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -38,13 +42,14 @@ public class ApplicationConfig {
 
     public static String getProperty(String propName) throws IOException
     {
-        try (InputStream is = HibernateConfig.class.getClassLoader().getResourceAsStream("properties-from-pom.properties"))
-        {
-            Properties prop = new Properties();
-            prop.load(is);
-            return prop.getProperty(propName);
-        } catch (IOException ex) {
-            throw new IOException("Could not read property from pom file. Build Maven!");
+        String result = "";
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+            result = model.getProperties().getProperty(propName);
+        } catch (IOException | XmlPullParserException e){
+
         }
+        return result;
     }
 }
