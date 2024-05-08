@@ -55,6 +55,16 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:7070/api/v1/route/available_routes
+Content-Type: application/json
+
+{
+    "startLocation": "Testensgade,23,2200",
+    "endLocation": "Firskovvej,18,2100",
+}
+
+###
+
 GET http://localhost:7070/api/v1/rides/
 
 ###

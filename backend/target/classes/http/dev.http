@@ -52,3 +52,13 @@ Content-Type: application/json
   "roomPrice": 1150,
   "roomType": "SINGLE"
 }
+
+###
+
+GET http://localhost:7070/api/v1/route/available_routes
+Content-Type: application/json
+
+{
+    "startLocation": "Testensgade,23,2200",
+    "endLocation": "Firskovvej,18,2100",
+}

@@ -54,7 +54,28 @@ const SearchForRoutes = () => {
                 <button type="submit">Find routes</button>
             </form>
             <div>
-                
+                {routesList.length > 0 ? (
+                    <div>
+                        <table>
+                            <thead>
+                                <th>Starting Location:</th>
+                                <th>End Location</th>
+                            </thead>
+                            <tbody>
+                                {routesList.map(route => {
+                                    <tr>
+                                        <td>{route.startLocation + route.startPostalCode}</td>
+                                        <td>{route.endLocation + route.endPostalCode}</td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <div>
+                        
+                    </div>
+                )}
             </div>
         </div>
         
