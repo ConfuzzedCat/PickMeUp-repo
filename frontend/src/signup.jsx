@@ -27,15 +27,12 @@ function Signup() {
     evt.preventDefault();
   
   
-    // Serialize the signup data to a JSON string
     const signupDataJson = JSON.stringify(signupData);
   
-    // Save the serialized data to localStorage
     localStorage.setItem('signupData', signupDataJson);
   
     console.log("Signup data saved to localStorage");
   
-    // Optionally, redirect the user or show a success message
     alert("Signup data saved (simulated)");
   };
 
