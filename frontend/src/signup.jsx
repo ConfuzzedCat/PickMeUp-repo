@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { validateSignUp } from "./validateSignUp";
+//import { validateSignUp } from "./validateSignUp";
 
 function Signup() {
   const init = {
@@ -61,7 +61,7 @@ function Signup() {
             <form
               class="space-y-4 md:space-y-6"
               action="#"
-              onsubmit={performSignup}
+              onSubmit={performSignup}
             >
               <div>
                 <label
