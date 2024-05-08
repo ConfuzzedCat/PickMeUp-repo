@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import mockData from "./util/routesData.js";
+import mockData from "../util/routesData.js";
 
 function Routes() {
   const [routes, setRoutes] = useState([]);
