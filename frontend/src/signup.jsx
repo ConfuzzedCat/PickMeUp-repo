@@ -9,6 +9,7 @@ function Signup() {
     address: "",
     fullname: "",
     licenseImage: null,
+    StudentImage: null,
   };
   const [signupData, setSignupData] = useState(init);
   const [error, setError] = useState("");
@@ -20,6 +21,7 @@ function Signup() {
     const address = useRef(null);
     const fullname = useRef(null);
     const licenseImage = useRef(null);
+    const StudentImage = useRef(null);
     
 
 
@@ -165,6 +167,21 @@ function Signup() {
                     id="licenseImage"
                     ref={licenseImage}
                     name="licenseImage"
+                    accept="image/*" 
+                    onChange={onFileChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    required=""
+                />
+                </div>
+                <div>
+                <label htmlFor="licenseImage" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Upload your Student ID
+                </label>
+                <input
+                    type="file"
+                    id="StudentImage"
+                    ref={StudentImage}
+                    name="StudentImage"
                     accept="image/*" 
                     onChange={onFileChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
