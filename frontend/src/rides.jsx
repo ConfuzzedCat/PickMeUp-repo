@@ -40,7 +40,7 @@ function Rides() {
             >
                 {loading ? "Loading..." : "View All Rides"}
             </button>
-            <input 
+            <input
                 type="number"
                 placeholder="Enter Ride Index"
                 value={searchIndex}
