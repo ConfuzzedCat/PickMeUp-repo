@@ -25,6 +25,12 @@ public class Route {
     private int endPostalCode;
     private String endLocation;
 
+    public Route(int startPostalCode, String startLocation, int endPostalCode, String endLocation) {
+        this.startPostalCode = startPostalCode;
+        this.startLocation = startLocation;
+        this.endPostalCode = endPostalCode;
+        this.endLocation = endLocation;
+    }
     public String getStartLocation() {
         return startLocation;
     }
