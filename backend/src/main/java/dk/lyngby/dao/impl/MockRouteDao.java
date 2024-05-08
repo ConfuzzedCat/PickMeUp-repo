@@ -4,6 +4,7 @@ import dk.lyngby.config.MockDatabase;
 import dk.lyngby.dao.IDao;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Route;
+import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class MockRouteDao implements IDao {
     // Constructor
     public MockRouteDao(MockDatabase mockDatabase) {
         this.mockDatabase = mockDatabase;
+    }
+
+    public static MockRouteDao getInstance(EntityManagerFactory emf) {
+        return null;
     }
 
     // Method to read all routes from the database
