@@ -7,6 +7,7 @@ import dk.lyngby.dao.impl.MockRouteDao;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDto;
 import dk.lyngby.Model.Route;
+import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
@@ -97,6 +98,7 @@ public class RouteController implements IController<Route, Integer> {
     }
 
     private RouteCalcUtil routeUtil = new RouteCalcUtil();
+    private RouteDao dao = RouteDao.getInstance();
 
     /**
      * This method is handling the context of /route/available_routes endpoint.
@@ -111,6 +113,9 @@ public class RouteController implements IController<Route, Integer> {
         RequestBody requestBody = ctx.bodyAsClass(RequestBody.class);
         String startLocationCoords = routeUtil.getCoordinatesForAddress(requestBody.getStartLocation());
         // Get driver routes from the DB which fits the user's end location and is starting within reasonable distance from the user's start location.
+        String[] startLocation = requestBody.getStartLocation().split(",");
+        String[] endLocation = requestBody.getEndLocation().split(",");
+        List<Route> routes = dao.getPassengerRoutesWithFilter(requestBody.getEndLocation(), Integer.parseInt(startLocation[startLocation.length -1]), Integer.parseInt(endLocation[endLocation.length -1]));
         // Get the distance between the start location of the user and the start location of every given route, via external API call.
         Map<Route, Double> chosenRoutes = new HashMap<>();
         for(Route r: routes){
@@ -131,6 +136,10 @@ public class RouteController implements IController<Route, Integer> {
 
         private String getStartLocation(){
             return startLocation;
+        }
+
+        public String getEndLocation() {
+            return endLocation;
         }
     }
 }

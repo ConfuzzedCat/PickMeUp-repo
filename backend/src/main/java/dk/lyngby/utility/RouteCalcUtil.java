@@ -56,7 +56,7 @@ public class RouteCalcUtil {
             Response response = client.newCall(request).execute();
             CoordinateDTO dto = gson.fromJson(response.body().string(), CoordinateDTO.class);
 
-            return dto.getResults().getLon() + "," + dto.getResults().getLat();
+            return dto.getResults().getLat() + "," + dto.getResults().getLon();
         } catch(IOException e){
             throw new ApiException(500, "Failed to convert address: " + location + " to coordinates. Something went wrong.");
         }
@@ -79,6 +79,7 @@ public class RouteCalcUtil {
             throw new ApiException(500, "Something went wrong, try again later.");
         }
         String requestString = "https://api.geoapify.com/v1/routing?waypoints=" + startLocationCoords + "|" + routeCoords + "&mode=drive&apiKey=" + key;
+
         Request request = new Request.Builder()
                 .url(requestString)
                 .method("GET", null)
