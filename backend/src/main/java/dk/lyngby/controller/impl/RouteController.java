@@ -1,6 +1,7 @@
 package dk.lyngby.controller.impl;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
+import dk.lyngby.dao.impl.MockRouteDao;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDto;
 import dk.lyngby.exception.ApiException;
@@ -13,11 +14,11 @@ import java.util.List;
 public class RouteController implements IController<Route, Integer> {
 
     
-    private final RouteDao dao;
+    private final MockRouteDao dao;
 
     public RouteController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-        this.dao = RouteDao.getInstance(emf);
+        this.dao = MockRouteDao.getInstance(emf);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class RouteController implements IController<Route, Integer> {
         // entity
         List<Route> routeList = dao.readAll();
         // dto
-        List<RouteDto> routeDtoList = RouteDto.toHotelDTOList(hotels);
+        List<RouteDto> routeDtoList = RouteDto.toDTOList(routeList);
         // response
         ctx.res().setStatus(200);
         ctx.json(routeDtoList, RouteDto.class);

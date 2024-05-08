@@ -1,19 +1,24 @@
 package dk.lyngby.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Route {
     private String startLocation;
     private String endLocation;
-    private String driverInfo;
+    private int driverId;
     private double routeLength;
     private int timeInMinutes;
+    LocalDateTime departureTime;
 
     // Constructor
-    public Route(String startLocation, String endLocation, String driverInfo, double routeLength, int timeInMinutes) {
+    public Route(String startLocation, String endLocation, int driverInfo, double routeLength, int timeInMinutes, LocalDateTime departureTime) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
-        this.driverInfo = driverInfo;
+        this.driverId = driverInfo;
         this.routeLength = routeLength;
         this.timeInMinutes = timeInMinutes;
+        this.departureTime = departureTime;
     }
 
     // Getters and setters
@@ -34,12 +39,12 @@ public class Route {
         this.endLocation = endLocation;
     }
 
-    public String getDriverInfo() {
-        return driverInfo;
+    public int getDriverInfo() {
+        return driverId;
     }
 
-    public void setDriverInfo(String driverInfo) {
-        this.driverInfo = driverInfo;
+    public void setDriverInfo(int driverInfo) {
+        this.driverId = driverInfo;
     }
 
     public double getRouteLength() {
@@ -65,7 +70,7 @@ public class Route {
         return "Route{" +
                 "startLocation='" + startLocation + '\'' +
                 ", endLocation='" + endLocation + '\'' +
-                ", driverInfo='" + driverInfo + '\'' +
+                ", driverInfo='" + driverId + '\'' +
                 ", routeLength=" + routeLength +
                 ", timeInMinutes=" + timeInMinutes +
                 '}';

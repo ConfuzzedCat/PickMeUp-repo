@@ -1,14 +1,15 @@
 package dk.lyngby.routes;
 
-import dk.lyngby.controller.impl.HotelController;
+
+import dk.lyngby.controller.impl.RouteController;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
-import static io.javalin.apibuilder.ApiBuilder.delete;
+
 
 public class RideRoute {
 
-    private final RouterController routerController = new HotelController();
+    private final RouteController routerController = new RouteController();
 
     protected EndpointGroup getRoutes() {
 

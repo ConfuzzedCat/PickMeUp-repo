@@ -4,6 +4,7 @@ import dk.lyngby.config.MockDatabase;
 import dk.lyngby.dao.IDao;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Route;
+
 import java.util.List;
 
 public class MockRouteDao implements IDao {
@@ -57,5 +58,7 @@ public class MockRouteDao implements IDao {
 
     public boolean validatePrimaryKey(Object o) {
         return false;
+
     }
+
 }
