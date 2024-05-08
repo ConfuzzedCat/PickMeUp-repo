@@ -51,7 +51,7 @@ function Signup() {
   };
 
   return (
-    <section class="bg-gray-50 dark:bg-gray-900">
+    <section clas="bg-gray-50 dark:bg-gray-900">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -65,7 +65,7 @@ function Signup() {
             >
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your email
@@ -80,7 +80,7 @@ function Signup() {
               </div>
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
@@ -96,7 +96,7 @@ function Signup() {
               </div>
               <div>
                 <label
-                  for="Adress"
+                  htmlFor="Adress"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Address
@@ -111,7 +111,7 @@ function Signup() {
               </div>
               <div>
                 <label
-                  for="firstname"
+                  htmlFor="firstname"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   full name
@@ -137,7 +137,7 @@ function Signup() {
                   </div>
                   <div class="ml-3 text-sm">
                     <label
-                      for="remember"
+                      htmlFor="remember"
                       class="text-gray-500 dark:text-gray-300"
                     >
                       Remember me
@@ -173,5 +173,7 @@ function Signup() {
     </section>
   );
 }
+
+
 
 export default Signup;
