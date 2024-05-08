@@ -1,4 +1,4 @@
-export function validateSignUp(firstname, lastname, email, password) {
+/*export function validateSignUp(firstname, lastname, email, password) {
     let errors = {};
     let isValid = true;
 
@@ -28,3 +28,4 @@ export function validateSignUp(firstname, lastname, email, password) {
         errors
     };
 
+*/
