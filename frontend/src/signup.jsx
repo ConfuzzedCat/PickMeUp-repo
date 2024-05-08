@@ -29,6 +29,7 @@ function Signup() {
     evt.preventDefault();
   
   
+  
     const signupDataJson = JSON.stringify(signupData);
   
     localStorage.setItem('signupData', signupDataJson);
@@ -36,6 +37,9 @@ function Signup() {
     console.log("Signup data saved to localStorage");
   
     alert("Signup data saved (simulated)");
+
+    // Redirect to the main application (home page or another route)
+    navigate('/'); // Adjust the route as necessary
   };
 
     /*
