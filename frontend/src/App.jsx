@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "./assets/vite.svg";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [trips, setTrips] = useState([]);
+
+  // Function to fetch trips from backend
+  const fetchTrips = async () => {
+    try {
+      const response = await fetch("/api/routes");
+      if (!response.ok) {
+        throw new Error("Failed to fetch trips");
+      }
+      const data = await response.json();
+      setTrips(data);
+    } catch (error) {
+      console.error("Error fetching trips:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTrips();
+  }, []); 
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>Driver</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <h2>Create Trip</h2>
+        <form id="tripForm">
+          <label htmlFor="departureLocation">Departure Location:</label>
+          <br />
+          <input
+            type="text"
+            id="departureLocation"
+            name="departureLocation"
+            required
+          />
+          <br />
+          <br />
+
+          <label htmlFor="destination">Destination:</label>
+          <br />
+          <input type="text" id="destination" name="destination" required />
+          <br />
+          <br />
+
+          <label htmlFor="departureDateTime">Departure Date/Time:</label>
+          <br />
+          <input
+            type="datetime-local"
+            id="departureDateTime"
+            name="departureDateTime"
+            required
+          />
+          <br />
+          <br />
+
+          <button type="submit">Create Trip</button>
+        </form>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="card">
+        <h2>Trips</h2>
+        <ul id="tripList">
+          {trips.map((trip) => (
+            <li key={trip.id}>
+              Departure Location: {trip.departureLocation}, Destination:{" "}
+              {trip.destination}, Departure Date/Time: {trip.departureDateTime}
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
