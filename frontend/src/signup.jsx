@@ -1,27 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 //import { validateSignUp } from "./validateSignUp";
 
 function Signup() {
   const init = {
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    address: "",
+    fullname: "",
+    licenseImage: null,
   };
   const [signupData, setSignupData] = useState(init);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+
+    const email = useRef(null);
+    const password = useRef(null);
+    const address = useRef(null);
+    const fullname = useRef(null);
+    const licenseImage = useRef(null);
+    
+
+
   const performSignup = async (evt) => {
     evt.preventDefault();
+  
+  
+    // Serialize the signup data to a JSON string
+    const signupDataJson = JSON.stringify(signupData);
+  
+    // Save the serialized data to localStorage
+    localStorage.setItem('signupData', signupDataJson);
+  
+    console.log("Signup data saved to localStorage");
+  
+    // Optionally, redirect the user or show a success message
+    alert("Signup data saved (simulated)");
+  };
 
-    if (signupData.password !== signupData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
+    /*
     const { isValid, errors } = validateSignUp(
       signupData.firstName,
       signupData.lastName,
@@ -41,7 +59,8 @@ function Signup() {
       setError("Error during signup. Please try again.");
       console.error(error);
     }
-  };
+    */
+  
 
   const onChange = (evt) => {
     setSignupData({
@@ -49,6 +68,15 @@ function Signup() {
       [evt.target.id]: evt.target.value,
     });
   };
+
+  const onFileChange = (event) => {
+    console.log("File Chosen:", event.target.files[0])
+    setSignupData({
+      ...signupData,
+      licenseImage: event.target.files[0] 
+    });
+  };
+
 
   return (
     <section clas="bg-gray-50 dark:bg-gray-900">
@@ -58,7 +86,8 @@ function Signup() {
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign up to a drivers account
             </h1>
-            <form
+            <form onChange={onChange}
+            
               class="space-y-4 md:space-y-6"
               action="#"
               onSubmit={performSignup}
@@ -68,13 +97,16 @@ function Signup() {
                   htmlFor="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Email
                 </label>
                 <input
                   type="email"
                   name="email"
+                  id="email"
+                    ref={email}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
+
                   required=""
                 ></input>
               </div>
@@ -89,6 +121,7 @@ function Signup() {
                   type="password"
                   name="password"
                   id="password"
+                  ref={password}
                   placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
@@ -96,36 +129,53 @@ function Signup() {
               </div>
               <div>
                 <label
-                  htmlFor="Adress"
+                  htmlFor="address"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Address
                 </label>
                 <input
                   type="text"
-                  name="Address"
-                  id="Address"
+                  name="address"
+                  id="address"
+                    ref={address}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 ></input>
               </div>
               <div>
                 <label
-                  htmlFor="firstname"
+                  htmlFor="fullname"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  full name
+                  Full Name
                 </label>
                 <input
                   type="text"
-                  name="firstname"
-                  id="firstname"
+                  name="fullname"
+                  id="fullname"
+                  ref={fullname}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 ></input>
               </div>
+              <div>
+                <label htmlFor="licenseImage" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Upload your driver's license
+                </label>
+                <input
+                    type="file"
+                    id="licenseImage"
+                    ref={licenseImage}
+                    name="licenseImage"
+                    accept="image/*" 
+                    onChange={onFileChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    required=""
+                />
+                </div>
               
-              <button
+              <button 
                 type="submit"
                 class="w-full text-gray-800 bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
