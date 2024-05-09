@@ -3,12 +3,15 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import mockData from "../util/routesData.js"
 import RoutesFilter from "../components/RoutesFilter.jsx"
+import facade from "../util/apiFacade.js"
 
 function Routes() {
   const [routes, setRoutes] = useState([])
 
   useEffect(() => {
-    setRoutes(mockData.getAllRoutes())
+    facade.fetchData('routes', 'GET').then((data) => {
+      setRoutes(data)
+    })
   }, [])
 
   return (
