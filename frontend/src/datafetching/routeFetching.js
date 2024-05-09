@@ -1,4 +1,4 @@
-function routeFetching() {
+export function routeFetching(userAddress, userPostalCode, destinationAddress, destinationPostalCode, callback) {
 
     const url = 'http://localhost:7070/api/v1/route';
 
@@ -30,7 +30,7 @@ function routeFetching() {
             endLocation: destinationAddress + "," + destinationPostalCode,
         }
 
-        const options = makeOptions("GET", payload);
+        const options = makeOptions("POST", payload);
 
         return fetch(url + "/available_routes", options)
             .then(handleHttpErrors)
@@ -44,9 +44,8 @@ function routeFetching() {
             })
     }
     
-    return {
-        getAvailableRoutes
-    };
+    getAvailableRoutes(userAddress, userPostalCode, destinationAddress, destinationPostalCode, callback)
+   
 }
 
 export default routeFetching;

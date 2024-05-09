@@ -1,8 +1,6 @@
 package dk.lyngby.controller.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.lyngby.Model.Route;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.exception.ApiException;
