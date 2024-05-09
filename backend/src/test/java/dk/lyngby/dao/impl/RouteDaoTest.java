@@ -40,6 +40,9 @@ class RouteDaoTest {
             // Insert test rows
             emTest.getTransaction().begin();
 
+            emTest.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY").executeUpdate();
+
+
             emTest.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Studievej 2','2300','Byagervej 5','3450');").executeUpdate();
             emTest.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Studievej 2','2300','uddrupvej 10','3450');").executeUpdate();
             emTest.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Studievej 2','2300','Emdrupvej 128','3600');").executeUpdate();
@@ -57,11 +60,7 @@ class RouteDaoTest {
 
     @AfterEach
     void tearDown() {
-        try(EntityManager emTest = emfTest.createEntityManager()) {
-            emTest.getTransaction().begin();
-            emTest.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY").executeUpdate();
-            emTest.getTransaction().commit();
-        }
+
         HibernateConfig.setTest(false);
         ApplicationConfig.stopServer(app);
     }
