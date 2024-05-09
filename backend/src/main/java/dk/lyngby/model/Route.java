@@ -1,6 +1,6 @@
 package dk.lyngby.model;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -13,10 +13,10 @@ public class Route {
     private int driverId;
     private double routeLength;
     private int timeInMinutes;
-    LocalDateTime departureTime;
+    LocalTime departureTime;
 
     // Constructor
-    public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalDateTime departureTime) {
+    public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalTime departureTime) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.driverId = driverId;

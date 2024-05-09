@@ -2,7 +2,7 @@ package dk.lyngby.dto;
 
 import dk.lyngby.model.Route;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +13,9 @@ public class RouteDto {
     private int driverId;
     private double routeLength;
     private int timeInMinutes;
-    LocalDateTime departureTime;
+    LocalTime departureTime;
 
-    public RouteDto(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalDateTime departureTime) {
+    public RouteDto(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalTime departureTime) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.driverId = driverId;

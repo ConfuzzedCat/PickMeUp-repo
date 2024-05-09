@@ -10,14 +10,20 @@ import java.util.List;
 
 public class MockRouteDao implements IDao {
     private MockDatabase mockDatabase;
+    private static MockRouteDao instance;
+    private static EntityManagerFactory emf;
 
     // Constructor
-    public MockRouteDao(MockDatabase mockDatabase) {
-        this.mockDatabase = mockDatabase;
+    private MockRouteDao() {
+        this.mockDatabase = new MockDatabase();
     }
 
-    public static MockRouteDao getInstance(EntityManagerFactory emf) {
-        return null;
+    public static MockRouteDao getInstance(EntityManagerFactory _emf) {
+        if (instance == null) {
+            emf = _emf;
+            instance = new MockRouteDao();
+        }
+        return instance;
     }
 
     // Method to read all routes from the database
