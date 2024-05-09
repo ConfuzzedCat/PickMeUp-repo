@@ -13,14 +13,20 @@ public class RouteDto {
     private int driverId;
     private double routeLength;
     private int timeInMinutes;
+    private boolean handicapAvailability;
+    private int passengerAmount;
+    private int carSize;
     LocalTime departureTime;
 
-    public RouteDto(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalTime departureTime) {
+    public RouteDto(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalTime departureTime) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.driverId = driverId;
         this.routeLength = routeLength;
         this.timeInMinutes = timeInMinutes;
+        this.handicapAvailability = handicapAvailability;
+        this.passengerAmount = passengerAmount;
+        this.carSize = carSize;
         this.departureTime = departureTime;
     }
 
