@@ -1,15 +1,14 @@
 package dk.lyngby.controller.impl;
+
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.MockRouteDao;
-import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDto;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
-import java.util.List;
 
 public class RouteController implements IController<Route, Integer> {
 
