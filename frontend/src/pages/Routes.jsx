@@ -1,33 +1,20 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import mockData from "../util/routesData.js";
+import React from "react"
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import mockData from "../util/routesData.js"
+import RoutesFilter from "../components/RoutesFilter.jsx"
 
 function Routes() {
-  const [routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState([])
 
   useEffect(() => {
-    setRoutes(mockData.getAllRoutes());
-  }, []);
+    setRoutes(mockData.getAllRoutes())
+  }, [])
 
   return (
-    <div className="overflow-x-auto">
+    <div className="container mx-auto prose-xl">
       <h1>Available Routes</h1>
-
-      <select className="select select-ghost w-full max-w-xs">
-        <option disabled selected>
-          Choose a Filter
-        </option>
-        <option>Destination</option>
-        <option>Handicap Availability</option>
-        <option>Time</option>
-        <option>Date</option>
-        <option>Amount of Passengers</option>
-        <option>Car size</option>
-        <option>Driver</option>
-      </select>
-
-      <button className="btn btn-sm">Apply</button>
+      <RoutesFilter setRoutes={setRoutes} />
 
       <table className="table">
         <thead>
@@ -40,11 +27,11 @@ function Routes() {
             <th>Passengers</th>
             <th>Car Size</th>
             <th>Handicap Accessibility</th>
-            <th>Actions</th>  {/* New column header for actions */}
+            <th>Actions</th> {/* New column header for actions */}
           </tr>
         </thead>
         <tbody>
-          {routes.map(route => (
+          {routes.map((route) => (
             <tr key={route.id}>
               <td>{route.id}</td>
               <td>{route.destination}</td>
@@ -58,13 +45,14 @@ function Routes() {
                 <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
                   See More
                 </Link>
-              </td>  {/* Button in a new cell */}
+              </td>{" "}
+              {/* Button in a new cell */}
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
+  )
 }
 
-export default Routes;
+export default Routes
