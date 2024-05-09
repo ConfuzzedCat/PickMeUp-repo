@@ -59,6 +59,6 @@ GET http://localhost:7070/api/v1/route/available_routes
 Content-Type: application/json
 
 {
-  "startLocation": "Rovsingsgade,25,2200",
+  "startLocation": "Duevej,22,2000",
   "endLocation": "Nørregade,10,1172"
 }

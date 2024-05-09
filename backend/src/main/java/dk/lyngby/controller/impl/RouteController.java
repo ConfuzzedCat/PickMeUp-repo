@@ -12,6 +12,7 @@ import io.javalin.http.Context;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -52,11 +53,29 @@ public class RouteController {
             }
         }
 
-        ctx.json(routes);
-
         // Filter routes that is so far away that it would be unreasonable to walk to the route's starting location.
         // Sort the routes so that the routes which is closest to the location of the user is shown first.
 
+        ctx.json(sortedRoutes(chosenRoutes, 10000));
+        ctx.status(200);
+
+    }
+    /**
+     * This method returns a list of routes based on the users chosen max distance to startlocation from own address
+     *
+     * @param chosenRoutes,      is all the routes with the same endlocation as the user has chosen, within the users postal code
+     * @param userInputDistance, is the max distance the user wants to travel to the startlocation
+     * @return a Hashmap with the relevant routes for the user based on the max distance to startlocation from own address
+     * @author Carsten Juhl
+     */
+    public static List<Route> sortedRoutes(Map<Route, Double> chosenRoutes, double userInputDistance) {
+        // removes all routes with a distance greater than the user input
+        chosenRoutes.entrySet().removeIf(entry -> entry.getValue() > userInputDistance);
+
+        // Puts the sorted routes into a new Hashmap
+        List<Route> sortedRoutes = chosenRoutes.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).collect(Collectors.toList());
+
+        return sortedRoutes;
     }
 
     private static class RequestBody {
