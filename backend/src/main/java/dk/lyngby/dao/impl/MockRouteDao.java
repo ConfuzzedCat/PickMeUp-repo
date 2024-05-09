@@ -19,14 +19,14 @@ public class MockRouteDao implements IDao {
     @Override
     public Route read(Object primaryKey) throws ApiException {
         if (!(primaryKey instanceof Integer)) {
-            throw new ApiException("Primary key must be an integer");
+            throw new ApiException(400, "Primary key must be an integer");
         }
 
         int index = (int) primaryKey;
         List<Route> routes = mockDatabase.getAllRoutes();
 
         if (index < 0 || index >= routes.size()) {
-            throw new ApiException("Route not found with index: " + index);
+            throw new ApiException(404, "Route not found with index: " + index);
         }
 
         return routes.get(index);
