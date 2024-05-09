@@ -1,4 +1,5 @@
 package dk.lyngby.model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Route {
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING)
     LocalTime departureTime;
 
     // Constructor
