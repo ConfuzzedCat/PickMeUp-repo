@@ -29,9 +29,9 @@ public class MockDatabase {
     // Method to initialize mock data
     private void initializeMockData() {
         // Adding mock routes to our mock DB
-        Route route1 = new Route("Start1", "End1", "Driver1", 10.5, 30);
-        Route route2 = new Route("Start2", "End2", "Driver2", 8.2, 25);
-        Route route3 = new Route("Start3", "End3", "Driver3", 15.0, 40);
+        Route route1 = new Route("Start1", "End1", "Driver1", 10.5, 30, null);
+        Route route2 = new Route("Start2", "End2", "Driver2", 8.2, 25, null);
+        Route route3 = new Route("Start3", "End3", "Driver3", 15.0, 40, null);
 
         // Actually adding
         addRoute(route1);

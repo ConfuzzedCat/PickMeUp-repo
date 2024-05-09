@@ -4,6 +4,8 @@ import dk.lyngby.config.MockDatabase;
 import dk.lyngby.dao.IDao;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Route;
+import jakarta.persistence.EntityManagerFactory;
+
 import java.util.List;
 
 public class MockRouteDao implements IDao {
@@ -14,7 +16,11 @@ public class MockRouteDao implements IDao {
         this.mockDatabase = mockDatabase;
     }
 
-    // Method to read a single route from the database
+    public static MockRouteDao getInstance(EntityManagerFactory emf) {
+        return null;
+    }
+
+    // Method to read all routes from the database
 
     @Override
     public Route read(Object primaryKey) throws ApiException {
@@ -38,24 +44,28 @@ public class MockRouteDao implements IDao {
         return mockDatabase.getAllRoutes();
     }
 
-    // Methods not used for this use case
-
+    //not used for this US
+    @Override
     public Object create(Object o) {
         return null;
     }
 
-
+    //not used for this US
+    @Override
     public Object update(Object o, Object o2) {
         return null;
     }
 
-
+    //not used for this US
+    @Override
     public void delete(Object o) {
 
     }
 
-
+    @Override
     public boolean validatePrimaryKey(Object o) {
         return false;
+
     }
+
 }
