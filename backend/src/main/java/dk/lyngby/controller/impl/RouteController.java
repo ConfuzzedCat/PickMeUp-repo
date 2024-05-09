@@ -9,6 +9,8 @@ import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+
 
 public class RouteController implements IController<Route, Integer> {
 
