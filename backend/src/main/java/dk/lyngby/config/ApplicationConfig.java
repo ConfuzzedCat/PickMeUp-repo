@@ -5,6 +5,7 @@ import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
+import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
 import io.javalin.http.Context;
@@ -34,6 +35,13 @@ public class ApplicationConfig {
                 it.exposeHeader("Authorization");
             });
         });
+    }
+
+    public static void corsConfig(Context ctx) {
+        ctx.header("Access-Control-Allow-Origin", "*");
+        ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        ctx.header("Access-Control-Allow-Credentials", "true");
     }
 
     public static void startServer(Javalin app, int port) {
