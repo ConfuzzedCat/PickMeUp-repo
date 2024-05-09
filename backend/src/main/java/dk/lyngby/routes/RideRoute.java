@@ -20,6 +20,7 @@ public class RideRoute {
                 get("/{id}", routerController::read);
               //  put("/{id}", routerController::update);
               //  delete("/{id}", routerController::delete);
+                get("/search", routerController::searchFilters);
             });
         };
     }
