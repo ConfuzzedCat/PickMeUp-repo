@@ -11,17 +11,18 @@ public class MockDatabase {
     // Constructor
     public MockDatabase() {
         this.routes = new ArrayList<>();
-        // You can add some mock data here if needed
+
         initializeMockData();
     }
 
-    // Method to add a route to the database
     public void addRoute(Route route) {
+
         routes.add(route);
     }
 
-    // Method to retrieve all routes from the database
+
     public List<Route> getAllRoutes() {
+
         return routes;
     }
 
