@@ -34,12 +34,14 @@ function Routes() {
           {routes.map((route) => (
             <tr key={route.id}>
               <td>{route.id}</td>
-              <td>{route.destination}</td>
-              <td>{route.driver}</td>
-              <td>{route.time}</td>
-              <td>{route.date}</td>
+              <td>{route.startLocation}</td>
+              <td>{route.endLocation}</td>
+              <td>{route.driverId}</td>
+              <td>{route.routeLength}</td>
+              <td>{route.timeInMinutes}</td>
               <td>{route.passengers}</td>
               <td>{route.carSize}</td>
+              <td>{route.departureTime}</td>
               <td>{route.handicapAccessibility ? "Yes" : "No"}</td>
               <td>
                 <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
