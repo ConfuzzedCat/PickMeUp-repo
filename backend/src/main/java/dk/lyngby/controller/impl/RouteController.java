@@ -45,6 +45,7 @@ public class RouteController {
                 chosenRoutes.put(r, distance);
             }
         }
+
         // Filter routes that is so far away that it would be unreasonable to walk to the route's starting location.
         // Sort the routes so that the routes which is closest to the location of the user is shown first.
 
