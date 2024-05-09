@@ -60,8 +60,7 @@ public class ApplicationConfig {
         app.stop();
     }
 
-    public static String getProperty(String propName) throws IOException
-    {
+    public static String getProperty(String propName) throws IOException {
         String result = "";
         try {
             MavenXpp3Reader reader = new MavenXpp3Reader();
