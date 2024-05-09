@@ -1,36 +1,12 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Routes,
-} from "react-router-dom";
-import "./App.css";
-import Rides from "./rides";
+import "./App.css"
+import { Outlet } from "react-router-dom"
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <Router>
-      <header>
-        <ul>
-          <li>
-            <NavLink
-              to="/rides"
-              className={({ isActive }) => (isActive ? 'active' : undefined)}
-            >
-              Rides
-            </NavLink>
-          </li>
-        </ul>
-      </header>
-
-      <Routes>
-        <Route path="/rides" element={<Rides />} />
-      </Routes>
-    </Router>
-  );
+    <>
+      <Outlet />
+    </>
+  )
 }
 
-export default App;
+export default App
