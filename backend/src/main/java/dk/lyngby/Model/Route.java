@@ -35,4 +35,15 @@ public class Route {
     //private Driver driver;
 
 
+    public int getEndPostalCode() {
+        return endPostalCode;
+    }
+
+    public int getStartPostalCode() {
+        return startPostalCode;
+    }
+
+    public String getEndLocation() {
+        return endLocation;
+    }
 }

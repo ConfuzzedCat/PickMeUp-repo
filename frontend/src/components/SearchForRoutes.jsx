@@ -9,13 +9,16 @@ const SearchForRoutes = () => {
     const [destinationPostalCode, setDestinationPostalCode] = useState([])
     const [routesList, setRoutesList] = useState([])
 
-    const submitHandler = () => {
-        getAvailableRoutes(
+    const submitHandler = (event) => {
+        event.preventDefault();
+        routeFetching(
             userAddress,
             userPostalCode, 
             destinationAddress, 
             destinationPostalCode,
-            (data) => setRoutesList(data))
+            (data) => {
+                setRoutesList(data)
+            })
     }
     
     return (
@@ -58,16 +61,18 @@ const SearchForRoutes = () => {
                     <div>
                         <table>
                             <thead>
-                                <th>Starting Location:</th>
-                                <th>End Location</th>
+                                <tr>
+                                    <th>Starting Location:</th>
+                                    <th>End Location</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                {routesList.map(route => {
-                                    <tr>
-                                        <td>{route.startLocation + route.startPostalCode}</td>
-                                        <td>{route.endLocation + route.endPostalCode}</td>
+                                {routesList.map((route) => (
+                                    <tr key={route.id}>
+                                        <td>{route.startLocation + " " + route.startPostalCode}</td>
+                                        <td>{route.endLocation + " " +route.endPostalCode}</td>
                                     </tr>
-                                })}
+                                ))}
                             </tbody>
                         </table>
                     </div>
