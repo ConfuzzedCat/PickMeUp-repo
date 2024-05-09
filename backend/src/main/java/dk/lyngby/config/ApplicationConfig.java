@@ -15,6 +15,8 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -26,20 +28,19 @@ public class ApplicationConfig {
         config.routing.contextPath = "/api/v1"; // base path for all routes
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.plugins.register(new RouteOverviewPlugin("/")); // enables route overview at /
-    }
-
-    public static void corsConfig(Context ctx) {
-        ctx.header("Access-Control-Allow-Origin", "*");
-        ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        ctx.header("Access-Control-Allow-Credentials", "true");
+        config.plugins.enableCors(cors -> {
+            cors.add(it -> {
+                it.reflectClientOrigin = true;
+                it.allowCredentials = true;
+                it.exposeHeader("Content-Type");
+                it.exposeHeader("Authorization");
+            });
+        });
     }
 
     public static void startServer(Javalin app, int port) {
         Routes routes = new Routes();
         app.updateConfig(ApplicationConfig::configuration);
-        app.before(ApplicationConfig::corsConfig);
-        app.options("/*", ApplicationConfig::corsConfig);
         app.routes(routes.getRoutes(app));
         app.exception(ApiException.class, EXCEPTION_HANDLER::apiExceptionHandler);
         app.exception(Exception.class, EXCEPTION_HANDLER::exceptionHandler);
