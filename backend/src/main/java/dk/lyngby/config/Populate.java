@@ -12,8 +12,8 @@ public class Populate {
     public static void main(String[] args) {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-        //truncateRoutes(emf);
-        //populateRoutes(emf);
+        truncateRoutes(emf);
+        populateRoutes(emf);
     }
 
 
@@ -28,16 +28,9 @@ public class Populate {
             // Insert test rows
             em.getTransaction().begin();
 
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Studievej 2','2300','Byagervej 5','3450');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Studievej 2','2300','uddrupvej 10','3450');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Studievej 2','2300','Emdrupvej 128','3600');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('4','Studievej 2','2300','Hvidovrevej 128','3600');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('5','Studievej 2','2300','Rødovrevej 213','3600');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('6','Firskovvej 18','2100','Madspetersvej 12','2200');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('7','Firskovvej 18','2100','Galevej 102','2200');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('8','Firskovvej 18','2100','Hvidkildevej 12','2550');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('9','Firskovvej 18','2100','Jagtvej 3','2300');").executeUpdate();
-            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('10','Firskovvej 18','2100','Rovsingsgade 15','2800');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Nørregade 10','1172','Rovsingsgade 31','2200');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Nørregade 10','1172','Duevej 92','2000');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Nørregade 10','1172','Frederiksvej 10','2000');").executeUpdate();
 
             em.getTransaction().commit();
         }

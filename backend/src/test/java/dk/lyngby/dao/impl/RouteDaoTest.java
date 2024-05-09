@@ -69,8 +69,8 @@ class RouteDaoTest {
     @Test
     void getPassengerRoutesWithFilter() {
         RouteDao routeDao = RouteDao.getInstance();
-        List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej 2", 2300, 3450);
-        List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej 18", 2100, 2200);
+        List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej,2", 2300, 3450);
+        List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej,18", 2100, 2200);
 
         assertEquals(2, routeList.size());
         assertEquals(2, routeList1.size());

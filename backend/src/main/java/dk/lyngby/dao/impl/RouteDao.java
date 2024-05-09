@@ -31,9 +31,10 @@ public class RouteDao implements IDao {
      * @author pelle112112
      */
     public List<Route> getPassengerRoutesWithFilter (String endLocation, int endPostalCode, int passengerStartPostalCode) {
+
         try(EntityManager em = emf.createEntityManager()){
-            Query query = em.createQuery("SELECT r FROM " + Route.class.getSimpleName() + " r WHERE r.endLocation = :endLocation AND r.endPostalCode = :endPostalCode AND r.startPostalCode = :passengerStartPostalCode", Route.class);
-            query.setParameter("endLocation", endLocation);
+            Query query = em.createQuery("SELECT r FROM " + Route.class.getSimpleName() + " r WHERE r.endLocation LIKE :endLocation AND r.endPostalCode = :endPostalCode AND r.startPostalCode = :passengerStartPostalCode", Route.class);
+            query.setParameter("endLocation", endLocation.replaceAll(",", " "));
             query.setParameter("passengerStartPostalCode", passengerStartPostalCode);
             query.setParameter("endPostalCode", endPostalCode);
             return query.getResultList();
