@@ -3,6 +3,7 @@ package dk.lyngby.dao.impl;
 import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class RouteDao {
@@ -25,7 +26,7 @@ public class RouteDao {
     public List<Route> searchFilters (String startLocation, String endLocation, int driverId,
                                       double routeLength, int timeInMinutes,
                                       boolean handicapAvailability, int passengerAmount,
-                                      int carSize, String departureTime) {
+                                      int carSize, LocalTime departureTime) {
 
         try (var em = emf.createEntityManager()) {
             var query = em.createQuery("SELECT r FROM Route r WHERE r.startLocation = :startLocation " +

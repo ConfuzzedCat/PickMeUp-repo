@@ -17,10 +17,11 @@ public class RideRoute {
             path("/rides", () -> {
                 //  post("/", routerController::create)
                 get("/", routerController::readAll);
+                get("/search", routerController::searchFilters);
                 get("/{id}", routerController::read);
               //  put("/{id}", routerController::update);
               //  delete("/{id}", routerController::delete);
-                get("/search", routerController::searchFilters);
+
             });
         };
     }

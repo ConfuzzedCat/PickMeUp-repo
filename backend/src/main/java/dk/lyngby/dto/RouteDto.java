@@ -1,14 +1,12 @@
 package dk.lyngby.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dk.lyngby.model.Route;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
-
-@NoArgsConstructor
 @Getter
 public class RouteDto {
 
@@ -21,6 +19,7 @@ public class RouteDto {
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING)
     LocalTime departureTime;
 
     public RouteDto(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalTime departureTime) {

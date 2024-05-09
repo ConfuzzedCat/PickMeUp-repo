@@ -1,5 +1,7 @@
 package dk.lyngby.controller.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.MockRouteDao;
@@ -10,6 +12,7 @@ import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -79,20 +82,23 @@ public class RouteController implements IController<Route, Integer> {
 
     //controller for the searchFilters in RouteDao
     public void searchFilters(Context ctx) {
-        // request
-        String startLocation = ctx.queryParam("startLocation");
-        String endLocation = ctx.queryParam("endLocation");
-        int driverId = Integer.parseInt(ctx.queryParam("driverId"));
-        double routeLength = Double.parseDouble(ctx.queryParam("routeLength"));
-        int timeInMinutes = Integer.parseInt(ctx.queryParam("timeInMinutes"));
-        boolean handicapAvailability = Boolean.parseBoolean(ctx.queryParam("handicapAvailability"));
-        int passengerAmount = Integer.parseInt(ctx.queryParam("passengerAmount"));
-        int carSize = Integer.parseInt(ctx.queryParam("carSize"));
-        String departureTime = ctx.queryParam("departureTime");
+        String requestBody = ctx.body();
+
+        JsonObject jsonObject = new Gson().fromJson(requestBody, JsonObject.class);
+        String startLocation = jsonObject.get("startLocation").getAsString();
+        String endLocation = jsonObject.get("endLocation").getAsString();
+        int driverId = jsonObject.get("driverId").getAsInt();
+        double routeLength = jsonObject.get("routeLength").getAsDouble();
+        int timeInMinutes = jsonObject.get("timeInMinutes").getAsInt();
+        boolean handicapAvailability = jsonObject.get("handicapAvailability").getAsBoolean();
+        int passengerAmount = jsonObject.get("passengerAmount").getAsInt();
+        int carSize = jsonObject.get("carSize").getAsInt();
+        LocalTime departureTime = LocalTime.parse(jsonObject.get("departureTime").getAsString());
+
         // entity
         List<Route> routes = routeDao.searchFilters(startLocation, endLocation,
                 driverId, routeLength, timeInMinutes, handicapAvailability,
-                passengerAmount, carSize, departureTime);
+                passengerAmount, carSize,departureTime);
 
         List<RouteDto> routeDto = RouteDto.toDTOList(routes);
         // response
