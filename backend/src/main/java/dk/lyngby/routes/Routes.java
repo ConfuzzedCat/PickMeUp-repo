@@ -17,6 +17,8 @@ public class Routes {
     private final ExceptionHandler exceptionController = new ExceptionHandler();
     private int count = 0;
 
+    private final RideRoute rideRoute = new RideRoute();
+
     private final Logger LOGGER = LoggerFactory.getLogger(Routes.class);
 
     private void requestInfoHandler(Context ctx) {
@@ -30,6 +32,7 @@ public class Routes {
 
             app.routes(() -> {
                 // path("/", hotelRoute.getRoutes());
+                path("/", rideRoute.getRoutes());
 
             });
 

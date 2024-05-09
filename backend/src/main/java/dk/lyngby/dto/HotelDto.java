@@ -21,6 +21,14 @@ public class HotelDto {
     private Hotel.HotelType hotelType;
     private Set<RoomDto> rooms = new HashSet<>();
 
+    public HotelDto(String hotelName, String hotelAddress, Hotel.HotelType hotelType)
+    {
+        this.hotelName = hotelName;
+        this.hotelAddress = hotelAddress;
+        this.hotelType = hotelType;
+    }
+
+
     public HotelDto(Hotel hotel) {
         this.id = hotel.getId();
         this.hotelName = hotel.getHotelName();
@@ -32,12 +40,6 @@ public class HotelDto {
         }
     }
 
-    public HotelDto(String hotelName, String hotelAddress, Hotel.HotelType hotelType)
-    {
-        this.hotelName = hotelName;
-        this.hotelAddress = hotelAddress;
-        this.hotelType = hotelType;
-    }
 
     public static List<HotelDto> toHotelDTOList(List<Hotel> hotels) {
         return hotels.stream().map(HotelDto::new).collect(Collectors.toList());
