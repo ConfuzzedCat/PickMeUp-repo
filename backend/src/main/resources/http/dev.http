@@ -52,3 +52,7 @@ Content-Type: application/json
   "roomPrice": 1150,
   "roomType": "SINGLE"
 }
+
+###
+
+GET {{url}}/rides/
