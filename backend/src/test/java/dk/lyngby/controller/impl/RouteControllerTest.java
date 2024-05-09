@@ -17,13 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class RouteControllerTest {
     private static RouteController routeController;
     private static HashMap<Route, Double> chosenRoute = new HashMap<>();
-    Route route = new Route();
+
     @BeforeAll
     static void beforeAll() {
     }
 
     @BeforeEach
     void setUp() {
+
+        HibernateConfig.setTest(true);
         routeController = new RouteController();
 
 
