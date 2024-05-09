@@ -54,6 +54,22 @@ class RouteDaoTest {
     }
 
     @Test
+    void getPassengerRoutesWithFilter() {
+        RouteDao routeDao = RouteDao.getInstance();
+        List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej,2", 2300, 3450);
+        List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej,18", 2100, 2200);
+
+        assertEquals(2, routeList.size());
+        assertEquals(2, routeList1.size());
+
+        assertEquals("Byagervej 5", routeList.get(0).getStartLocation());
+        assertEquals("uddrupvej 10", routeList.get(1).getStartLocation());
+
+        assertEquals("Madspetersvej 12", routeList1.get(0).getStartLocation());
+        assertEquals("Galevej 102", routeList1.get(1).getStartLocation());
+    }
+
+    @Test
     void searchFilters() {
         try {
             var em = emfTest.createEntityManager();

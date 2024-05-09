@@ -41,11 +41,15 @@ public class RouteCalcUtil {
         }
         // new format: address%20number%20postal
         String key = "";
-        try {
-            key = ApplicationConfig.getProperty("geoapify.API.key");
+        key = "c205e64d77a04951959d6de10d7e5c2e";
+        /*try {
+
+            //key = ApplicationConfig.getProperty("geoapify.API.key");
         } catch (IOException e){
             throw new ApiException(500, "Something went wrong, try again later.");
         }
+
+         */
         String requestString = "https://api.geoapify.com/v1/geocode/search?text=" + location + "&format=json&apiKey=" + key;
         Request request = new Request.Builder()
                 .url(requestString)
@@ -73,11 +77,15 @@ public class RouteCalcUtil {
      */
     public double findDistanceBetweenTwoLocations(String startLocationCoords, String routeCoords) throws ApiException {
         String key = "";
+        key = "c205e64d77a04951959d6de10d7e5c2e";
+        /*
         try {
             key = ApplicationConfig.getProperty("geoapify.API.key");
         } catch (IOException e){
             throw new ApiException(500, "Something went wrong, try again later.");
         }
+
+         */
         String requestString = "https://api.geoapify.com/v1/routing?waypoints=" + startLocationCoords + "|" + routeCoords + "&mode=drive&apiKey=" + key;
 
         Request request = new Request.Builder()
