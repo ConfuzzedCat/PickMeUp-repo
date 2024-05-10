@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IDao<T, D> {
 
-    T read(D d) throws ApiException;
+    T read(Integer d) throws ApiException;
     List<T> readAll();
     T create(T t);
     T update(D d, T t);

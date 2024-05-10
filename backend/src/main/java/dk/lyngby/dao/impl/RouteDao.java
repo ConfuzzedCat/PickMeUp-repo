@@ -1,39 +1,102 @@
 package dk.lyngby.dao.impl;
 
+import dk.lyngby.model.Route;
+import dk.lyngby.config.HibernateConfig;
+import dk.lyngby.dao.IDao;
+import dk.lyngby.exception.ApiException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
+
+import java.util.List;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import dk.lyngby.model.Route;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 
-public class RouteDao {
+
+
+public class RouteDao implements IDao {
+
+    protected EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
     private static RouteDao instance;
-    private static EntityManagerFactory emf;
-
-    public static RouteDao getInstance(EntityManagerFactory _emf) {
-        if (instance == null) {
-            emf = _emf;
+    private RouteDao(){}
+    public static RouteDao getInstance(){
+        if(instance == null){
             instance = new RouteDao();
         }
         return instance;
     }
+
+    /**
+     * This method returns a list of routes based on the endLocation + endPostalCode and passengerStartPostalCode
+     * @param endLocation is the ending location that the passenger decides
+     * @param passengerStartPostalCode is the starting postal code for the passenger
+     * @return List<Route> List of routes
+     * @author pelle112112
+     */
+    public List<Route> getPassengerRoutesWithFilter (String endLocation, int endPostalCode, int passengerStartPostalCode) {
+
+        try(EntityManager em = emf.createEntityManager()){
+            Query query = em.createQuery("SELECT r FROM " + Route.class.getSimpleName() + " r WHERE r.endLocation LIKE :endLocation AND r.endPostalCode = :endPostalCode AND r.startPostalCode = :passengerStartPostalCode", Route.class);
+            query.setParameter("endLocation", endLocation.replaceAll(",", " "));
+            query.setParameter("passengerStartPostalCode", passengerStartPostalCode);
+            query.setParameter("endPostalCode", endPostalCode);
+            return query.getResultList();
+        }
+    }
+
+
+    @Override
+    public Route read(Integer id) throws ApiException {
+        if (id == null) {
+            throw new ApiException(400, "Primary key must be an integer");
+        }
+        try (var em = emf.createEntityManager())
+        {
+            return em.find(Route.class, id);
+        }
+    }
+
+
+
+    @Override
+    public List readAll() {
+        return null;
+    }
+
+    @Override
+    public Object create(Object o) {
+        return null;
+    }
+
+    @Override
+    public Object update(Object o, Object o2) {
+        return null;
+    }
+
+    @Override
+    public void delete(Object o) {
+    }
+
+    @Override
+    public boolean validatePrimaryKey(Object o) {
+        return false;
+    }
+
     /** create a search filter for the routes that searches for routes based
      on multiple criteria such as start location, end location, driverId,
      route length, time in minutes, handicap availability, passenger amount,
      car size, or departure time **/
 
-    public List<Route> searchFilters(JsonObject filters) throws Exception {
+    public List<dk.lyngby.model.Route> searchFilters(JsonObject filters) throws Exception {
         StringBuilder queryString = new StringBuilder("SELECT r FROM Route r WHERE 1 = 1");
-        TypedQuery<Route> query;
+        TypedQuery<dk.lyngby.model.Route> query;
 
         try (EntityManager em = emf.createEntityManager()) {
             if (filters != null) {
@@ -48,7 +111,7 @@ public class RouteDao {
                     }
                 });
 
-                query = em.createQuery(queryString.toString(), Route.class);
+                query = em.createQuery(queryString.toString(), dk.lyngby.model.Route.class);
 
                 filters.entrySet().forEach(entry -> {
                     String key = entry.getKey();
@@ -58,7 +121,7 @@ public class RouteDao {
                     }
                 });
             } else {
-                query = em.createQuery("SELECT r FROM Route r", Route.class);
+                query = em.createQuery("SELECT r FROM Route r", dk.lyngby.model.Route.class);
             }
 
             return query.getResultList();

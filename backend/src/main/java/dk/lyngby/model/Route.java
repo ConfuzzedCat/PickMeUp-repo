@@ -19,6 +19,8 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int startPostalCode;
+    private int endPostalCode;
     private String startLocation;
     private String endLocation;
     private int driverId;
@@ -31,7 +33,9 @@ public class Route {
     LocalDateTime departureTime;
 
     // Constructor
-    public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+    public Route(int startPostalCode, int endPostalCode, String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+        this.startPostalCode = startPostalCode;
+        this.endPostalCode = endPostalCode;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.driverId = driverId;

@@ -1,17 +1,17 @@
 package dk.lyngby.config;
 
+import ch.qos.logback.core.model.Model;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
+import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
-import io.javalin.http.Context;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
@@ -22,6 +22,14 @@ public class ApplicationConfig {
         config.routing.contextPath = "/api/v1"; // base path for all routes
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.plugins.register(new RouteOverviewPlugin("/")); // enables route overview at /
+        config.plugins.enableCors(cors -> {
+            cors.add(it -> {
+                it.reflectClientOrigin = true;
+                it.allowCredentials = true;
+                it.exposeHeader("Content-Type");
+                it.exposeHeader("Authorization");
+            });
+        });
     }
 
     public static void startServer(Javalin app, int port) {
@@ -46,4 +54,6 @@ public class ApplicationConfig {
     public static void stopServer(Javalin app) {
         app.stop();
     }
+
+
 }
