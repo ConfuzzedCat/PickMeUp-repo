@@ -1,4 +1,4 @@
-const URL = 'http://localhost:7070/api/v1'
+const URL = 'http://localhost:7070/api/v1/'
 
 function apiFacade() {
 
@@ -26,13 +26,13 @@ function apiFacade() {
                 "Accept": "application/json"
             }
         }
-    }
 
-    if (payload) {
-        opts.body = JSON.stringify(payload)
-    }
+        if (payload) {
+            opts.body = JSON.stringify(payload)
+        }
 
-    return opts;
+        return opts;
+    }
 
     return {
         fetchData,

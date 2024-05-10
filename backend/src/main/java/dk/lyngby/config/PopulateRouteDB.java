@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,9 +41,9 @@ public class PopulateRouteDB {
 
     @NotNull
     private static List<Route> getRoutes() {
-        Route route1 = new Route("Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalTime.of(10, 30));
-        Route route2 = new Route("Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalTime.of(8, 15));
-        Route route3 = new Route("Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalTime.of(9, 0));
+        Route route1 = new Route("Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+        Route route2 = new Route("Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+        Route route3 = new Route("Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
         Route[] routeArray = {route1, route2, route3};
         return List.of(routeArray);
     }
