@@ -11,9 +11,10 @@ function apiFacade() {
     }
 
 
-    const fetchData = (endpoint, method, payload) => {
+    const fetchData = async (endpoint, method, payload) => {
         const options = makeOptions(method, payload, true);
-        return fetch(URL + endpoint, options).then(handleHttpErrors);
+        const res = await fetch(URL + endpoint, options)
+        return handleHttpErrors(res)
 
     }
 
