@@ -21,6 +21,14 @@ public class ApplicationConfig {
         config.routing.contextPath = "/api/v1"; // base path for all routes
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.plugins.register(new RouteOverviewPlugin("/")); // enables route overview at /
+        config.plugins.enableCors(cors -> {
+            cors.add(it -> {
+                it.reflectClientOrigin = true;
+                it.allowCredentials = true;
+                it.exposeHeader("Content-Type");
+                it.exposeHeader("Authorization");
+            });
+        });
     }
 
     public static void startServer(Javalin app, int port) {
