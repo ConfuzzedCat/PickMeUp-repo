@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -40,5 +41,18 @@ public class Route {
         this.passengerAmount = passengerAmount;
         this.carSize = carSize;
         this.departureTime = departureTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return id == route.id && driverId == route.driverId && Double.compare(routeLength, route.routeLength) == 0 && timeInMinutes == route.timeInMinutes && handicapAvailability == route.handicapAvailability && passengerAmount == route.passengerAmount && carSize == route.carSize && Objects.equals(startLocation, route.startLocation) && Objects.equals(endLocation, route.endLocation) && Objects.equals(departureTime, route.departureTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startLocation, endLocation, driverId, routeLength, timeInMinutes, handicapAvailability, passengerAmount, carSize, departureTime);
     }
 }
