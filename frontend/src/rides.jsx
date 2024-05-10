@@ -3,22 +3,6 @@ import React, { useState, useEffect } from "react";
 function RideModal({ ride, onClose }) {
     if (!ride) return null;
 
-<<<<<<< Updated upstream
-    async function fetchRides() {
-        setLoading(true);
-        try {
-            const response = await fetch("http://localhost:7070/api/v1/rides");
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setRides(data);
-        } catch (error) {
-            console.error('Failed to fetch rides:', error);
-        }
-        setLoading(false);
-    }
-=======
     // Definer styles osv, for at undgå at bruge App.css fordi der blev snakket om den skulle slettes
     const modalStyle = {
         position: "fixed",
@@ -32,7 +16,6 @@ function RideModal({ ride, onClose }) {
         justifyContent: "center",
         zIndex: 1000
     };
->>>>>>> Stashed changes
 
     const modalContentStyle = {
         backgroundColor: "grey",
