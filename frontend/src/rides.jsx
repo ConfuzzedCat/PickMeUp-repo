@@ -7,7 +7,6 @@ function Rides() {
     const [loading, setLoading] = useState(false);
     const [searchIndex, setSearchIndex] = useState('');
 
-    // Funktion til at hente alle ture fra API
     async function fetchRides() {
         setLoading(true);
         try {
