@@ -1,6 +1,6 @@
 export function routeFetching(userAddress, userPostalCode, destinationAddress, destinationPostalCode, callback) {
 
-    const url = 'http://localhost:7070/api/v1/route';
+    const url = 'http://localhost:7070/api/v1/rides';
 
     const handleHttpErrors = (res) => {
         if(!res.ok){
