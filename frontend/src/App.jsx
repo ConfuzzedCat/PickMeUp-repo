@@ -8,18 +8,18 @@ import {
 import "./App.css";
 import Rides from "./rides";
 
-
 function App() {
   const [count, setCount] = useState(0);
-
-
 
   return (
     <Router>
       <header>
         <ul>
           <li>
-            <NavLink to="/rides" activeClassName="active">
+            <NavLink
+              to="/rides"
+              className={({ isActive }) => (isActive ? 'active' : undefined)}
+            >
               Rides
             </NavLink>
           </li>
