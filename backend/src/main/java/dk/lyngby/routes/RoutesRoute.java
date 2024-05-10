@@ -15,8 +15,11 @@ public class RoutesRoute {
 
     public EndpointGroup getRoutes(){
         return () -> {
-            path("/route", () -> {
+            path("/rides", () -> {
+                get("/", rc::readAll);
+                get("/{id}", rc::read);
                 post("/available_routes", rc::getListOfRoutesClosestToStart);
+                post("/search", rc::searchFilters);
             });
         };
     }

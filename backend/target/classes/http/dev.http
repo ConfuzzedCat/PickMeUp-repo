@@ -62,3 +62,23 @@ Content-Type: application/json
   "startLocation": "Duevej,22,2000",
   "endLocation": "Nørregade,10,1172"
 }
+
+###
+
+GET http://localhost:7070/api/v1/rides/
+
+###
+GET http://localhost:7070/api/v1/rides/search/
+Content-Type: application/json
+
+{
+    "startLocation": "Start3",
+    "endLocation": "End3",
+    "driverId": 3,
+    "routeLength": 15,
+    "timeInMinutes": 40,
+    "handicapAvailability": true,
+    "passengerAmount": 5,
+    "carSize": 7,
+    "departureTime": "09:00"
+}

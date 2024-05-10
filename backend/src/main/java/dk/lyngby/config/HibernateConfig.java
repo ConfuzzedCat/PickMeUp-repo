@@ -1,6 +1,6 @@
 package dk.lyngby.config;
 
-import dk.lyngby.Model.Route;
+import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;

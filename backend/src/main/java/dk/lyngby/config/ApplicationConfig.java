@@ -1,5 +1,6 @@
 package dk.lyngby.config;
 
+import ch.qos.logback.core.model.Model;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;
@@ -8,16 +9,9 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
@@ -41,25 +35,25 @@ public class ApplicationConfig {
     public static void startServer(Javalin app, int port) {
         Routes routes = new Routes();
         app.updateConfig(ApplicationConfig::configuration);
+        app.before(ApplicationConfig::corsConfig);
+        app.options("/*", ApplicationConfig::corsConfig);
         app.routes(routes.getRoutes(app));
         app.exception(ApiException.class, EXCEPTION_HANDLER::apiExceptionHandler);
         app.exception(Exception.class, EXCEPTION_HANDLER::exceptionHandler);
         app.start(port);
     }
 
+    public static void corsConfig(Context ctx) {
+        ctx.header("Access-Control-Allow-Origin", "*");
+        ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        ctx.header("Access-Control-Allow-Credentials", "true");
+    }
+
+
     public static void stopServer(Javalin app) {
         app.stop();
     }
 
-    public static String getProperty(String propName) throws IOException {
-        String result = "";
-        try {
-            MavenXpp3Reader reader = new MavenXpp3Reader();
-            Model model = reader.read(new FileReader("pom.xml"));
-            result = model.getProperties().getProperty(propName);
-        } catch (IOException | XmlPullParserException e){
 
-        }
-        return result;
-    }
 }
