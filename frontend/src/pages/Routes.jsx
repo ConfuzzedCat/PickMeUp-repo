@@ -10,6 +10,7 @@ function Routes() {
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
+      console.log(data)
       setRoutes(data)
     })
   }, [])
@@ -45,7 +46,7 @@ function Routes() {
               <td>{route.departureTime}</td>
               <td>{route.passengerAmount}</td>
               <td>{route.carSize}</td>
-              <td>{route.handicapAccessibility ? "Yes" : "No"}</td>
+              <td>{route.handicapAvailability ? "Yes" : "No"}</td>
               <td>
                 <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
                   See More
