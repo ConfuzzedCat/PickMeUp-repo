@@ -20,7 +20,7 @@ public class Route {
     private int driverId;
     private double routeLength;
     private int timeInMinutes;
-    LocalTime departureTime;
+    private LocalTime departureTime;
 
     // Constructor
     public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, LocalTime departureTime) {
