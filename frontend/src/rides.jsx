@@ -27,8 +27,8 @@ function Rides() {
     }, []);
 
     const rideToShow = searchIndex !== '' && parseInt(searchIndex) < rides.length && parseInt(searchIndex) >= 0
-                        ? [rides[parseInt(searchIndex)]]
-                        : [];
+        ? [rides[parseInt(searchIndex)]]
+        : [];
 
     return (
         <div className="US15-container">
