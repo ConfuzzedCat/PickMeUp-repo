@@ -1,33 +1,42 @@
 import React, { useState } from "react"
+import facade from "../util/apiFacade.js"
 
 function RoutesFilter({ setRoutes }) {
   const [formData, setFormData] = useState({
-    destination: "",
-    passenger: "",
+    endLocation: "",
+    passengerAmount: "",
     driver: "",
-    handicapAcc: "",
+    handicapAvailability: null,
     carSize: "",
-    dateTime: "",
+    start: "",
+    end: "",
   })
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    if (name === "passenger" && (isNaN(value) || value < 0)) return
-    setFormData({ ...formData, [name]: value })
+
+    if (name === "passengerAmount" && (isNaN(value) || value < 0)) return
+
+    let newValue = value
+    if (name === "handicapAvailability" && value !== "") {
+      newValue = value === "true"
+    }
+
+    // if carSize convert to number
+    if (name === "carSize" && value !== "") {
+      newValue = parseInt(value)
+    }
+
+    setFormData({ ...formData, [name]: newValue })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you can use formData to perform your search
-    console.log(formData)
-    // Clear the form fields after submission if needed
-    setFormData({
-      destination: "",
-      passenger: "",
-      driver: "",
-      handicapAcc: "",
-      carSize: "",
-      dateTime: "",
+
+    const searchParams = Object.fromEntries(Object.entries(formData).filter(([_, v]) => v !== "" && v !== null))
+    console.log(searchParams)
+    facade.fetchData("rides/search", "POST", searchParams).then((data) => {
+      setRoutes(data)
     })
   }
 
@@ -37,13 +46,13 @@ function RoutesFilter({ setRoutes }) {
         <div className="label">
           <span className="label-text">Destination</span>
         </div>
-        <input type="text" name="destination" value={formData.destination} onChange={handleChange} className="input input-sm input-bordered" />
+        <input type="text" name="endLocation" value={formData.endLocation} onChange={handleChange} className="input input-sm input-bordered" />
       </label>
       <label className="form-control">
         <div className="label">
           <span className="label-text">Passengers participating</span>
         </div>
-        <input type="number" name="passenger" onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()} value={formData.passenger} onChange={handleChange} className="input input-sm input-bordered" />
+        <input type="number" name="passengerAmount" onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()} value={formData.passengerAmount} onChange={handleChange} className="input input-sm input-bordered" />
       </label>
 
       <label className="form-control">
@@ -55,13 +64,15 @@ function RoutesFilter({ setRoutes }) {
 
       <label className="form-control">
         <div className="label">
-          <span className="label-text"> Car size</span>
+          <span className="label-text">Car seats</span>
         </div>
         <select name="carSize" value={formData.carSize} onChange={handleChange} className="select select-bordered select-sm w-full">
           <option value="">Select</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>{" "}
       </label>
 
@@ -69,7 +80,7 @@ function RoutesFilter({ setRoutes }) {
         <div className="label">
           <span className="label-text"> Handicap accessibility</span>
         </div>
-        <select name="handicapAcc" value={formData.handicapAcc} onChange={handleChange} className="select select-bordered select-sm w-full">
+        <select name="handicapAvailability" value={formData.handicapAvailability} onChange={handleChange} className="select select-bordered select-sm w-full">
           <option value="">Select</option>
           <option value="true">Yes</option>
           <option value="false">No</option>
@@ -78,9 +89,16 @@ function RoutesFilter({ setRoutes }) {
 
       <label className="form-control">
         <div className="label">
-          <span className="label-text"> Date and time</span>
+          <span className="label-text">From</span>
         </div>
-        <input type="datetime-local" name="dateTime" value={formData.dateTime} onChange={handleChange} className="input input-sm input-bordered" />
+        <input type="datetime-local" name="start" value={formData.start} onChange={handleChange} className="input input-sm input-bordered" />
+      </label>
+
+      <label className="form-control">
+        <div className="label">
+          <span className="label-text">To</span>
+        </div>
+        <input type="datetime-local" name="end" value={formData.end} onChange={handleChange} className="input input-sm input-bordered" />
       </label>
 
       <div className="self-end">

@@ -17,8 +17,8 @@ public class RideRoute {
             path("/rides", () -> {
                 //  post("/", routerController::create)
                 get("/", routerController::readAll);
-                get("/search", routerController::searchFilters);
                 get("/{id}", routerController::read);
+                post("/search", routerController::searchFilters);
               //  put("/{id}", routerController::update);
               //  delete("/{id}", routerController::delete);
 

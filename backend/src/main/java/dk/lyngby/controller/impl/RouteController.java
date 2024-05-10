@@ -81,30 +81,19 @@ public class RouteController implements IController<Route, Integer> {
     }
 
     //controller for the searchFilters in RouteDao
-    public void searchFilters(Context ctx) {
+    public void searchFilters(Context ctx) throws Exception{
         String requestBody = ctx.body();
 
         JsonObject jsonObject = new Gson().fromJson(requestBody, JsonObject.class);
-        String startLocation = jsonObject.get("startLocation").getAsString();
-        String endLocation = jsonObject.get("endLocation").getAsString();
-        int driverId = jsonObject.get("driverId").getAsInt();
-        double routeLength = jsonObject.get("routeLength").getAsDouble();
-        int timeInMinutes = jsonObject.get("timeInMinutes").getAsInt();
-        boolean handicapAvailability = jsonObject.get("handicapAvailability").getAsBoolean();
-        int passengerAmount = jsonObject.get("passengerAmount").getAsInt();
-        int carSize = jsonObject.get("carSize").getAsInt();
-        LocalTime departureTime = LocalTime.parse(jsonObject.get("departureTime").getAsString());
 
-        // entity
-        List<Route> routes = routeDao.searchFilters(startLocation, endLocation,
-                driverId, routeLength, timeInMinutes, handicapAvailability,
-                passengerAmount, carSize,departureTime);
+        // Extract the fields dynamically
+        List<Route> routes = routeDao.searchFilters(jsonObject);
 
         List<RouteDto> routeDto = RouteDto.toDTOList(routes);
         // response
         ctx.res().setStatus(200);
         ctx.json(routeDto, RouteDto.class);
-
     }
+
 
 }

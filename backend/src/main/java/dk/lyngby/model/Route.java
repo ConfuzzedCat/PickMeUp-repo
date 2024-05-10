@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
@@ -24,11 +26,11 @@ public class Route {
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
-    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING)
-    LocalTime departureTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    LocalDateTime departureTime;
 
     // Constructor
-    public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalTime departureTime) {
+    public Route(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.driverId = driverId;
