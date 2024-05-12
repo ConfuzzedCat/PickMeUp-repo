@@ -9,8 +9,6 @@ import "./App.css";
 import Signup from "./signup";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Router>
       <header>
@@ -30,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

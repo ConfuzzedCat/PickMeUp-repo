@@ -2,10 +2,6 @@ package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
-import dk.lyngby.dto.HotelDto;
-import dk.lyngby.dto.RoomDto;
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
 import io.javalin.Javalin;
 import io.restassured.http.ContentType;
 import jakarta.persistence.EntityManagerFactory;
@@ -24,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HotelControllerTest
 {
+    /*
     //TODO: Remove. Kept for Reference
 
     private static Javalin app;
@@ -220,4 +217,6 @@ class HotelControllerTest
         Room[] roomArray = {r111, r112, r113, r114, r115, r116};
         return Set.of(roomArray);
     }
+
+     */
 }

@@ -18,9 +18,16 @@
         <junit.version>5.9.1</junit.version>
 
         <!-- Project properties  -->
-
+        <geoapify.API.key>c205e64d77a04951959d6de10d7e5c2e</geoapify.API.key>
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
 
         <!--   R.E.S.T     -->
 
@@ -151,6 +158,16 @@
             <artifactId>json-schema-validator</artifactId>
             <version>${restassured.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>4.0.3</version>
         </dependency>
     </dependencies>
 
