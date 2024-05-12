@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.dto;
 
 import dk.lyngby.model.Room;
@@ -47,3 +48,4 @@ public class RoomDto {
         return result;
     }
 }
+*/

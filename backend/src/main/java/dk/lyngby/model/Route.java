@@ -38,6 +38,22 @@ public class Route {
         this.departureDateTime = departureDateTime;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getDepartureLocation() {
+        return departureLocation;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public LocalDateTime getDepartureDateTime() {
+        return departureDateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

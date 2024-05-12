@@ -14,14 +14,14 @@ public class Populate {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
 
-            // Create sample routes
+            // sample routes
             Route route1 = new Route("New York", "Los Angeles", LocalDateTime.of(2024, 5, 10, 8, 0));
             em.persist(route1);
 
             Route route2 = new Route("London", "Paris", LocalDateTime.of(2024, 5, 15, 10, 30));
             em.persist(route2);
 
-            // Commit the transaction
+            // Commit 
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

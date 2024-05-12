@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.HibernateConfig;
@@ -99,3 +100,4 @@ public class HotelController implements IController<Hotel, Integer> {
     }
 
 }
+*/

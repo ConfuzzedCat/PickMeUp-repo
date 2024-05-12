@@ -17,6 +17,7 @@ public class RouteDto {
     private String destination;
     private LocalDateTime departureDateTime;
 
+    //fix this
     public RouteDto(Route route) {
         this.id = route.getId();
         this.departureLocation = route.getDepartureLocation();

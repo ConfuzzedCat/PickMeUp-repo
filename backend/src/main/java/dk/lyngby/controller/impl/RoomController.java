@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.HibernateConfig;
@@ -111,3 +112,4 @@ public class RoomController implements IController<Room, Integer> {
                 .get();
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.dao.impl;
 
 import dk.lyngby.exception.ApiException;
@@ -88,3 +89,4 @@ public class HotelDao implements dk.lyngby.dao.IDao<Hotel, Integer> {
         }
     }
 }
+*/

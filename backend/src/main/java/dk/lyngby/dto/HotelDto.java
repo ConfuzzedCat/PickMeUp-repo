@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.dto;
 
 import dk.lyngby.model.Hotel;
@@ -58,3 +59,4 @@ public class HotelDto {
         return getId().hashCode();
     }
 }
+*/

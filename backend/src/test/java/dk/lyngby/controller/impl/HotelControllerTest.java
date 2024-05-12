@@ -1,9 +1,8 @@
+/*
 package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
-import dk.lyngby.dto.HotelDto;
-import dk.lyngby.dto.RoomDto;
 import dk.lyngby.model.Hotel;
 import dk.lyngby.model.Room;
 import io.javalin.Javalin;
@@ -220,4 +219,4 @@ class HotelControllerTest
         Room[] roomArray = {r111, r112, r113, r114, r115, r116};
         return Set.of(roomArray);
     }
-}
+}*/

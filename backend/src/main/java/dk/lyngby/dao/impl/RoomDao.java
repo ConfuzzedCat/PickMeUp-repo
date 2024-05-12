@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.dao.impl;
 
 
@@ -110,3 +111,4 @@ public class RoomDao implements dk.lyngby.dao.IDao<Room, Integer> {
     }
 
 }
+*/
