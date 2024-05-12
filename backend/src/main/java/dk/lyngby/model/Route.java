@@ -17,7 +17,7 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "route_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "driver_id", nullable = false)
@@ -38,7 +38,7 @@ public class Route {
         this.departureDateTime = departureDateTime;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

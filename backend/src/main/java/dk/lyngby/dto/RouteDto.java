@@ -12,17 +12,22 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class RouteDto {
 
-    private Long id;
+    private Integer id;
     private String departureLocation;
     private String destination;
     private LocalDateTime departureDateTime;
 
-    //fix this
     public RouteDto(Route route) {
         this.id = route.getId();
         this.departureLocation = route.getDepartureLocation();
         this.destination = route.getDestination();
         this.departureDateTime = route.getDepartureDateTime();
+    }
+
+    public RouteDto(String departureLocation, String destination, LocalDateTime departureDateTime) {
+        this.departureLocation = departureLocation;
+        this.destination = destination;
+        this.departureDateTime = departureDateTime;
     }
 
     public static List<RouteDto> toRouteDTOList(List<Route> routes) {
