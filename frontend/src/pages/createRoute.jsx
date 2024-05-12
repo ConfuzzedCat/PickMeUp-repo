@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import React from "react";
 
-function App() {
+function createRoute() {
   const [trips, setTrips] = useState([]);
 
   // Function to fetch trips from backend
@@ -75,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default createRoute;
