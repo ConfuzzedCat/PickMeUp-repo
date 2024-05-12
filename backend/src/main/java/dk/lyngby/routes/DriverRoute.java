@@ -12,7 +12,7 @@ public class DriverRoute {
     protected EndpointGroup getRoutes() {
 
         return () -> {
-            path("/hotels", () -> {
+            path("/routes", () -> {
                 post("/", routeController::create);
                 get("/", routeController::readAll);
                 get("/{id}", routeController::read);

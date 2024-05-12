@@ -29,7 +29,7 @@ public class Routes {
             app.before(this::requestInfoHandler);
 
             app.routes(() -> {
-                // path("/", hotelRoute.getRoutes());
+                 //path("/", DriverRoute.getRoutes());
 
             });
 
