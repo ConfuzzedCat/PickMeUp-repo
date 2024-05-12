@@ -3,6 +3,7 @@ package dk.lyngby.config;
 import dk.lyngby.model.Driver;
 import dk.lyngby.model.Hotel;
 import dk.lyngby.model.Room;
+import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -89,6 +90,7 @@ public class HibernateConfig {
         //TODO: Remove. Kept for Reference
         //configuration.addAnnotatedClass(Hotel.class);
         configuration.addAnnotatedClass(Driver.class);
+        configuration.addAnnotatedClass(Route.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
