@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function createRoute() {
   const [trips, setTrips] = useState([]);
@@ -8,6 +7,7 @@ function createRoute() {
   const fetchTrips = async () => {
     try {
       const response = await fetch("/api/v1/routes");
+      console.log(response); // Log the entire response object
       if (!response.ok) {
         throw new Error("Failed to fetch trips");
       }
@@ -65,7 +65,8 @@ function createRoute() {
           {trips.map((trip) => (
             <li key={trip.id}>
               Departure Location: {trip.departureLocation}, Destination:{" "}
-              {trip.destination}, Departure Date/Time: {trip.departureDateTime}
+              {trip.destination}, Departure Date/Time:{" "}
+              {trip.departureDateTime.toLocaleString()}
             </li>
           ))}
         </ul>
