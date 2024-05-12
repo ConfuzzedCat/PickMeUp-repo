@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.model;
 
 import jakarta.persistence.*;
@@ -61,3 +62,4 @@ public class Room {
         SINGLE, DOUBLE, SUITE
     }
 }
+*/

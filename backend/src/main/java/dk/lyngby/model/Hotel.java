@@ -1,3 +1,4 @@
+/*
 package dk.lyngby.model;
 
 import jakarta.persistence.*;
@@ -78,3 +79,4 @@ public class Hotel {
         BUDGET, STANDARD, LUXURY
     }
 }
+*/

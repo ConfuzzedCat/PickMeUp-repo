@@ -7,7 +7,7 @@ function createRoute() {
   // Function to fetch trips from backend
   const fetchTrips = async () => {
     try {
-      const response = await fetch("/api/routes");
+      const response = await fetch("/api/v1/routes");
       if (!response.ok) {
         throw new Error("Failed to fetch trips");
       }

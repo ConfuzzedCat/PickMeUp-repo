@@ -7,9 +7,9 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class DriverRoute {
 
-    private final RouteController routeController = new RouteController();
+    private static final RouteController routeController = new RouteController();
 
-    protected EndpointGroup getRoutes() {
+    protected static EndpointGroup getRoutes() {
 
         return () -> {
             path("/routes", () -> {

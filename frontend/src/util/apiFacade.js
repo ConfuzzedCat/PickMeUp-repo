@@ -1,5 +1,5 @@
 const URL = 'http://localhost:7070/api/v1/';
-const HOTEL_ROUTE = "recipes"; 
+const HOTEL_ROUTE = "routes"; 
 
 function apiFacade() {
   const setToken = (token) => {
