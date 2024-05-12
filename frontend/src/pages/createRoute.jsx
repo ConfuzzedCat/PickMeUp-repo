@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import React from "react";
-import { Link } from "react-router-dom";
 
 function App() {
   const [trips, setTrips] = useState([]);
