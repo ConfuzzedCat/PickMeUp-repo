@@ -66,22 +66,45 @@ public class RouteDao implements IDao {
 
 
     @Override
-    public List readAll() {
-        return null;
+    public List<Route> readAll() {
+        try (var em = emf.createEntityManager()) {
+            var query = em.createQuery("SELECT r FROM Route r", Route.class);
+            return query.getResultList();
+        }
     }
 
     @Override
-    public Object create(Object o) {
-        return null;
+    public Route create(Route route) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.persist(route);
+            em.getTransaction().commit();
+            return route;
+        }
     }
 
     @Override
-    public Object update(Object o, Object o2) {
-        return null;
+    public Route update(Long id, Route updatedRoute) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Route route = em.find(Route.class, id);
+            route.setStartLocation(updatedRoute.getStartLocation());
+            route.setEndLocation(updatedRoute.getEndLocation());
+            route.setDepartureDateTime(updatedRoute.getDepartureDateTime());
+            em.merge(route);
+            em.getTransaction().commit();
+            return route;
+        }
     }
 
     @Override
-    public void delete(Object o) {
+    public void delete(Long id) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Route route = em.find(Route.class, id);
+            em.remove(route);
+            em.getTransaction().commit();
+        }
     }
 
     @Override

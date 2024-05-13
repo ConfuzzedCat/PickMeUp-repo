@@ -1,62 +1,67 @@
 package dk.lyngby.model;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "route")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-@Entity
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "route_id")
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id", nullable = false)
+    private Driver driver;
+
     private int startPostalCode;
     private int endPostalCode;
+
+    @Column(name = "startLocation", nullable = false)
     private String startLocation;
+
+    @Column(name = "endLocation", nullable = false)
     private String endLocation;
-    private int driverId;
+
     private double routeLength;
+
     private int timeInMinutes;
+
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    LocalDateTime departureTime;
 
-    // Constructor
-    public Route(int startPostalCode, int endPostalCode, String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+    @Column(name = "departure_date_time", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private LocalDateTime departureDateTime;
+
+    public Route(Driver driver, int startPostalCode, int endPostalCode, String startLocation, String endLocation,
+                 double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize,
+                 LocalDateTime departureDateTime) {
+        this.driver = driver;
         this.startPostalCode = startPostalCode;
         this.endPostalCode = endPostalCode;
         this.startLocation = startLocation;
         this.endLocation = endLocation;
-        this.driverId = driverId;
         this.routeLength = routeLength;
         this.timeInMinutes = timeInMinutes;
         this.handicapAvailability = handicapAvailability;
         this.passengerAmount = passengerAmount;
         this.carSize = carSize;
-        this.departureTime = departureTime;
+        this.departureDateTime = departureDateTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Route route = (Route) o;
-        return id == route.id && driverId == route.driverId && Double.compare(routeLength, route.routeLength) == 0 && timeInMinutes == route.timeInMinutes && handicapAvailability == route.handicapAvailability && passengerAmount == route.passengerAmount && carSize == route.carSize && Objects.equals(startLocation, route.startLocation) && Objects.equals(endLocation, route.endLocation) && Objects.equals(departureTime, route.departureTime);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, startLocation, endLocation, driverId, routeLength, timeInMinutes, handicapAvailability, passengerAmount, carSize, departureTime);
-    }
+
+
 }

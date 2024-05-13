@@ -1,12 +1,12 @@
 package dk.lyngby.config;
 
-
+import dk.lyngby.model.Driver;
+import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 public class Populate {
     public static void main(String[] args) {
@@ -14,16 +14,19 @@ public class Populate {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         truncateRoutes(emf);
         populateRoutes(emf);
-    }
+        createDrivers(emf);
+        createRoutes(emf);
 
+    }
 
     /**
      * Populates the "route" table with mock data
+     *
      * @param emf Entitymanagerfactory needed for the Entitymanager
      * @author pelle112112
      */
     @NotNull
-    private static void populateRoutes (EntityManagerFactory emf) {
+    private static void populateRoutes(EntityManagerFactory emf) {
         try (EntityManager em = emf.createEntityManager()) {
             // Insert test rows
             em.getTransaction().begin();
@@ -38,15 +41,57 @@ public class Populate {
 
     /**
      * Truncates the "route" table
+     *
      * @param emf Entitymanagerfactory needed for the Entitymanager
      * @author pelle112112
      */
-    private static void truncateRoutes (EntityManagerFactory emf){
-        try(EntityManager em = emf.createEntityManager()){
+    private static void truncateRoutes(EntityManagerFactory emf) {
+        try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY").executeUpdate();
             em.getTransaction().commit();
 
+        }
+    }
+
+
+    public static void createDrivers(EntityManagerFactory emf) {
+        try {
+            EntityManager em = emf.createEntityManager();
+
+            em.getTransaction().begin();
+
+            // Create or fetch Driver objects
+            Driver driver1 = new Driver("John Doe", "XYZ123");
+            em.persist(driver1);
+
+            Driver driver2 = new Driver("Jane Smith", "ABC456");
+            em.persist(driver2);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createRoutes(EntityManagerFactory emf) {
+        try {
+            EntityManager em = emf.createEntityManager();
+
+            em.getTransaction().begin();
+
+            // sample routes with associated drivers
+            Route route1 = new Route("New York", "Los Angeles", LocalDateTime.of(2024, 5, 10, 8, 0));
+            route1.setDriver(em.find(Driver.class, 1)); // Set driver for route1
+            em.persist(route1);
+
+            Route route2 = new Route("London", "Paris", LocalDateTime.of(2024, 5, 15, 10, 30));
+            route2.setDriver(em.find(Driver.class, 2)); // Set driver for route2
+            em.persist(route2);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
