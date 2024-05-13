@@ -1,6 +1,7 @@
 package dk.lyngby.dao;
 
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.model.Route;
 
 import java.util.List;
 
@@ -8,9 +9,9 @@ public interface IDao<T, D> {
 
     T read(Integer d) throws ApiException;
     List<T> readAll();
-    T create(T t);
-    T update(D d, T t);
-    void delete(D d);
+    Route create(Route t);
+    Route update(Long d, Route t);
+    void delete(Long d);
     boolean validatePrimaryKey(D d);
 
 }

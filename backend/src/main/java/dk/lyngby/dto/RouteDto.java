@@ -19,8 +19,8 @@ public class RouteDto {
 
     public RouteDto(Route route) {
         this.id = route.getId();
-        this.departureLocation = route.getDepartureLocation();
-        this.destination = route.getDestination();
+        this.departureLocation = route.getStartLocation();
+        this.destination = route.getEndLocation();
         this.departureDateTime = route.getDepartureDateTime();
     }
 

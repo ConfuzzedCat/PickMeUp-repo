@@ -18,8 +18,11 @@ public class RoutesRoute {
             path("/rides", () -> {
                 get("/", rc::readAll);
                 get("/{id}", rc::read);
+                post("/", rc::create);
                 post("/available_routes", rc::getListOfRoutesClosestToStart);
                 post("/search", rc::searchFilters);
+                put("/{id}", rc::update);
+                delete("/{id}", rc::delete);
             });
         };
     }

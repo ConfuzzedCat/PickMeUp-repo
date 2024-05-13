@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
-import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.dto.RouteDto;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Route;
@@ -24,9 +23,6 @@ import java.util.stream.Collectors;
  */
 
 public class RouteController implements IController<Route, Integer> {
-
-
-
 
     private RouteCalcUtil routeUtil = new RouteCalcUtil();
     private RouteDao dao = RouteDao.getInstance();
@@ -123,10 +119,10 @@ public class RouteController implements IController<Route, Integer> {
         // entity
         Route route = dao.read(id);
         // dto
-        RouteDTO routeDto = new RouteDTO(route);
+        RouteDto routeDto = new RouteDto(route);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDto, RouteDTO.class);
+        ctx.json(routeDto, RouteDto.class);
     }
 
     @Override
@@ -134,12 +130,11 @@ public class RouteController implements IController<Route, Integer> {
         // entity
         List<Route> routeList = dao.readAll();
         // dto
-        List<RouteDTO> routeDTOList = RouteDTO.toDTOList(routeList);
+        List<RouteDto> routeDTOList = RouteDto.toRouteDTOList(routeList);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDTOList, RouteDTO.class);
+        ctx.json(routeDTOList, RouteDto.class);
     }
-
 
 
     @Override
@@ -186,10 +181,10 @@ public class RouteController implements IController<Route, Integer> {
         // Extract the fields dynamically
         List<Route> routes = dao.searchFilters(jsonObject);
 
-        List<RouteDTO> routeDto = RouteDTO.toDTOList(routes);
+        List<RouteDto> routeDto = RouteDto.toRouteDTOList(routes);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDto, RouteDTO.class);
+        ctx.json(routeDto, RouteDto.class);
     }
 
 

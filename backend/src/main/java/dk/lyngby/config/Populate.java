@@ -13,8 +13,8 @@ public class Populate {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         truncateRoutes(emf);
-        populateRoutes(emf);
-        createDrivers(emf);
+        /*populateRoutes(emf);*/
+        //createDrivers(emf);
         createRoutes(emf);
 
     }
@@ -25,7 +25,7 @@ public class Populate {
      * @param emf Entitymanagerfactory needed for the Entitymanager
      * @author pelle112112
      */
-    @NotNull
+    /*@NotNull
     private static void populateRoutes(EntityManagerFactory emf) {
         try (EntityManager em = emf.createEntityManager()) {
             // Insert test rows
@@ -37,7 +37,7 @@ public class Populate {
 
             em.getTransaction().commit();
         }
-    }
+    }*/
 
     /**
      * Truncates the "route" table
@@ -80,14 +80,17 @@ public class Populate {
 
             em.getTransaction().begin();
 
-            // sample routes with associated drivers
-            Route route1 = new Route("New York", "Los Angeles", LocalDateTime.of(2024, 5, 10, 8, 0));
-            route1.setDriver(em.find(Driver.class, 1)); // Set driver for route1
-            em.persist(route1);
+            Driver driver1 = new Driver("John Doe", "XYZ123");
+            em.persist(driver1);
 
-            Route route2 = new Route("London", "Paris", LocalDateTime.of(2024, 5, 15, 10, 30));
-            route2.setDriver(em.find(Driver.class, 2)); // Set driver for route2
-            em.persist(route2);
+            Driver driver2 = new Driver("Jane Smith", "ABC456");
+            em.persist(driver2);
+
+            // sample routes with associated drivers
+            LocalDateTime departureDateTime1 = LocalDateTime.of(2024, 5, 10, 8, 0);
+            Route route1 = new Route(driver1, 10001, 90001, "New York", "Los Angeles",
+                    300.5, 360, true, 4, 2, departureDateTime1);
+            em.persist(route1);
 
             em.getTransaction().commit();
         } catch (Exception e) {

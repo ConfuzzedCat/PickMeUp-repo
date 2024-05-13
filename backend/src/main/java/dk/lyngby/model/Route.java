@@ -21,7 +21,7 @@ public class Route {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id", nullable = false)
+    @JoinColumn(name = "driver_id", nullable = true)
     private Driver driver;
 
     private int startPostalCode;
@@ -60,8 +60,6 @@ public class Route {
         this.carSize = carSize;
         this.departureDateTime = departureDateTime;
     }
-
-
 
 
 }
