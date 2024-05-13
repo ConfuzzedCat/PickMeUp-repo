@@ -32,6 +32,7 @@ public class ApplicationConfig {
         app.start(port);
     }
 
+
     public static void stopServer(Javalin app) {
         app.stop();
     }

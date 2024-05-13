@@ -11,7 +11,7 @@ function createRoute() {
 
   const fetchTrips = async () => {
     try {
-      const data = await facade.fetchData("/api/v1/routes", "GET");
+      const data = await facade.fetchData("routes", "GET");
       setTrips(data);
     } catch (error) {
       console.error("Error fetching trips:", error);
