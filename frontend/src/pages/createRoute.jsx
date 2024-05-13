@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "daisyui/dist/full.css";
+import facade from "../util/apiFacade";
 
 function createRoute() {
   const [trips, setTrips] = useState([]);
 
-  // Function to fetch trips from backend
+  useEffect(() => {
+    fetchTrips();
+  }, []);
+
   const fetchTrips = async () => {
     try {
-      const response = await fetch("/api/v1/routes");
-      console.log(response); // Log the entire response object
-      if (!response.ok) {
-        throw new Error("Failed to fetch trips");
-      }
-      const data = await response.json();
+      const data = await facade.fetchData("/api/v1/routes", "GET");
       setTrips(data);
     } catch (error) {
       console.error("Error fetching trips:", error);
     }
   };
-
-  useEffect(() => {
-    fetchTrips();
-  }, []);
 
   return (
     <div
@@ -85,13 +80,17 @@ function createRoute() {
         <div className="card p-6 w-96">
           <h2 className="mb-4 font-bold">Trips</h2>
           <ul id="tripList" className="flex flex-col gap-2">
-            {trips.map((trip) => (
-              <li key={trip.id}>
-                Departure Location: {trip.departureLocation}, Destination:{" "}
-                {trip.destination}, Departure Date/Time:{" "}
-                {trip.departureDateTime.toLocaleString()}
-              </li>
-            ))}
+            {trips.length > 0 ? (
+              trips.map((trip) => (
+                <li key={trip.id}>
+                  Departure Location: {trip.departureLocation}, Destination:{" "}
+                  {trip.destination}, Departure Date/Time:{" "}
+                  {trip.departureDateTime.toLocaleString()}
+                </li>
+              ))
+            ) : (
+              <li>No trips available</li>
+            )}
           </ul>
         </div>
       </div>
