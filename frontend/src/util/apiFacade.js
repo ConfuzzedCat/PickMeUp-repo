@@ -1,5 +1,5 @@
 const URL = 'http://localhost:7070/api/v1/';
-const HOTEL_ROUTE = "routes"; 
+const ROUTES_ROUTE = 'routes';
 
 function apiFacade() {
   const setToken = (token) => {
@@ -27,13 +27,13 @@ function apiFacade() {
     const opts = {
       method: method,
       headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json"
-      }
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+      },
     };
 
     if (addToken) {
-      opts.headers["Authorization"] = `Bearer ${getToken()}`;
+      opts.headers['Authorization'] = `Bearer ${getToken()}`;
     }
 
     if (payload) {
@@ -43,15 +43,14 @@ function apiFacade() {
     return opts;
   };
 
-  const createRecipe = (recipeData) => {
-    const options = makeOptions("POST", recipeData, true); 
-    return fetch(URL + HOTEL_ROUTE, options).then(handleHttpErrors);
-
+  const createRoute = (routeData) => {
+    const options = makeOptions('POST', routeData, true);
+    return fetch(URL + ROUTES_ROUTE, options).then(handleHttpErrors);
   };
 
-  const updateRecipe = (id, updatedData) => {
-    const options = makeOptions("PUT", updatedData, true); 
-    return fetch(URL + HOTEL_ROUTE + "/" + id, options).then(handleHttpErrors);
+  const updateRoute = (id, updatedData) => {
+    const options = makeOptions('PUT', updatedData, true);
+    return fetch(URL + ROUTES_ROUTE + '/' + id, options).then(handleHttpErrors);
   };
 
   return {
@@ -59,8 +58,8 @@ function apiFacade() {
     setToken,
     getToken,
     fetchData,
-    createRecipe, 
-    updateRecipe,
+    createRoute,
+    updateRoute,
   };
 }
 

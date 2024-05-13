@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import "daisyui/dist/full.css";
 import facade from "../util/apiFacade";
 
-function createRoute() {
+function CreateRoute() {
   const [trips, setTrips] = useState([]);
+  const [formData, setFormData] = useState({
+    departureLocation: "",
+    destination: "",
+    departureDateTime: "",
+  });
 
   useEffect(() => {
     fetchTrips();
@@ -15,6 +20,21 @@ function createRoute() {
       setTrips(data);
     } catch (error) {
       console.error("Error fetching trips:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await facade.createRoute(formData); // Changed from createRecipe to createRoute
+      fetchTrips(); // Refresh the trips list after creating a new trip
+    } catch (error) {
+      console.error("Error creating trip:", error);
     }
   };
 
@@ -38,13 +58,19 @@ function createRoute() {
           <h2 style={{ fontWeight: "bold" }} className="mb-4 text-center">
             Create Trip
           </h2>
-          <form id="tripForm" className="flex flex-col items-center gap-4">
+          <form
+            id="tripForm"
+            className="flex flex-col items-center gap-4"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col">
               <label htmlFor="departureLocation">Departure Location:</label>
               <input
                 type="text"
                 id="departureLocation"
                 name="departureLocation"
+                value={formData.departureLocation}
+                onChange={handleChange}
                 required
                 className="input"
               />
@@ -55,6 +81,8 @@ function createRoute() {
                 type="text"
                 id="destination"
                 name="destination"
+                value={formData.destination}
+                onChange={handleChange}
                 required
                 className="input"
               />
@@ -65,6 +93,8 @@ function createRoute() {
                 type="datetime-local"
                 id="departureDateTime"
                 name="departureDateTime"
+                value={formData.departureDateTime}
+                onChange={handleChange}
                 required
                 className="input"
               />
@@ -98,4 +128,4 @@ function createRoute() {
   );
 }
 
-export default createRoute;
+export default CreateRoute;
