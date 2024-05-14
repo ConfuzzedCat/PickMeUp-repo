@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
 import "./index.css"
 import Routes from "./pages/Routes.jsx";
-import Routes from "./rides.jsx";
+import Rides from "./rides.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
 import { RouterProvider, Route, createRoutesFromElements, createBrowserRouter } from "react-router-dom"
 
