@@ -7,8 +7,8 @@ import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
-import dk.lyngby.model.Route;
 import dk.lyngby.utility.RouteCalcUtil;
+import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import lombok.Getter;
 
@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * @author MrJustMeDahl
  * This controller is related to the route endpoints.
  */
-
 public class RouteController implements IController<Route, Integer> {
 
 
@@ -179,10 +178,5 @@ public class RouteController implements IController<Route, Integer> {
         ctx.res().setStatus(200);
         ctx.json(routeDto, RouteDTO.class);
     }
-
-
-
-
-
-    }
+}
 
