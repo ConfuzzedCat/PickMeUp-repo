@@ -1,9 +1,6 @@
 package dk.lyngby.config;
 
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
 import dk.lyngby.model.Route;
->>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;

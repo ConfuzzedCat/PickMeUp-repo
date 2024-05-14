@@ -98,14 +98,4 @@ class RouteControllerTest {
         assertEquals("Start2",sortedRoutes.get(sortedRoutes.size()-1).getStartLocation());
         assertEquals(4, sortedRoutes.size());
     }
-
-
-
-
-
-
-
-
-
-
 }

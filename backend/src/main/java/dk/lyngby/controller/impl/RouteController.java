@@ -24,11 +24,6 @@ import java.util.stream.Collectors;
  * @author MrJustMeDahl
  * This controller is related to the route endpoints.
  */
-/**
- * @author MrJustMeDahl
- * This controller is related to the route endpoints.
- */
-
 public class RouteController implements IController<Route, Integer> {
 
 
@@ -186,10 +181,5 @@ public class RouteController implements IController<Route, Integer> {
         ctx.res().setStatus(200);
         ctx.json(routeDto, RouteDTO.class);
     }
-
-
-
-
-
-    }
+}
 

@@ -28,8 +28,7 @@ public class Routes {
             app.before(this::requestInfoHandler);
 
             app.routes(() -> {
-                path("/", rideRoute.getRoutes());
-
+                path("/", routesRoute.getRoutes());
             });
 
             app.after(ctx -> LOGGER.info(" Request {} - {} was handled with status code {}", count++, ctx.attribute("requestInfo"), ctx.status()));

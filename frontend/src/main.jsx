@@ -11,7 +11,7 @@ const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/routes" element={<Routes />} />
-      <Route path="/ride" element={<Rides />} />
+      <Route path="/rides" element={<Rides />} />
       <Route path="/available_routes" element={<SearchForRoutes />} />
     </Route>
   )
