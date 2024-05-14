@@ -4,12 +4,9 @@ import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.time.LocalTime;
 
 
 

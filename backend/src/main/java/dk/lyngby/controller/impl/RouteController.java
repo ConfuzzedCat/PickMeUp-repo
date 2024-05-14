@@ -9,10 +9,7 @@ import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
-import dk.lyngby.utility.RouteCalcUtil;
-import dk.lyngby.utility.RouteCalcUtil;
 import io.javalin.http.Context;
-import lombok.Getter;
 import lombok.Getter;
 
 import java.util.HashMap;
