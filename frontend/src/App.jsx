@@ -4,14 +4,15 @@ import {
   Route,
   NavLink,
   Routes,
+  Outlet,
 } from "react-router-dom";
 import "./App.css";
-import Signup from "./signup";
 
 function App() {
   return (
-    <Router>
-      <header>
+
+    <>
+     <div>
         <ul>
           <li>
             <NavLink to="/signup" activeClassName="active">
@@ -19,12 +20,13 @@ function App() {
             </NavLink>
           </li>
         </ul>
-      </header>
+        
+      </div>
 
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </Router>
+  <Outlet>
+    </Outlet>
+
+</>
   );
 }
 
