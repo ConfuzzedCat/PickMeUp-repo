@@ -5,9 +5,16 @@ import facade from "../util/apiFacade"
 function CreateRoute() {
   const [trips, setTrips] = useState([])
   const [formData, setFormData] = useState({
-    departureLocation: "",
-    destination: "",
-    departureDateTime: "",
+    startPostalCode: "",
+    endPostalCode: "",
+    startLocation: "",
+    endLocation: "",
+    routeLength: "",
+    timeInMinutes: "",
+    handicapAvailability: false,
+    passengerAmount: "",
+    carSize: "",
+    departureDateTime: "", // Updated to accept date and time in "yyyy-MM-dd HH:mm" format
   })
 
   useEffect(() => {
@@ -24,18 +31,28 @@ function CreateRoute() {
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    const { name, value, type, checked } = e.target
+    const val = type === "checkbox" ? checked : value
+    setFormData({ ...formData, [name]: val })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await facade.createRoute(formData) // Changed from createRecipe to createRoute
-      fetchTrips() // Refresh the trips list after creating a new trip
+      // Ensure the departureDateTime is formatted correctly before sending
+      const formattedDateTime = formatDateTime(formData.departureDateTime)
+      await facade.createRoute({ ...formData, departureDateTime: formattedDateTime })
+      fetchTrips()
     } catch (error) {
       console.error("Error creating trip:", error)
     }
+  }
+
+  // Function to format date and time to "yyyy-MM-dd HH:mm" format
+  const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime)
+    const formattedDateTime = date.toISOString().slice(0, 16).replace("T", " ")
+    return formattedDateTime
   }
 
   return (
@@ -57,12 +74,40 @@ function CreateRoute() {
           </h2>
           <form id="tripForm" className="flex flex-col items-center gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col">
-              <label htmlFor="departureLocation">Departure Location:</label>
-              <input type="text" id="departureLocation" name="departureLocation" value={formData.departureLocation} onChange={handleChange} required className="input" />
+              <label htmlFor="startPostalCode">Start Postal Code:</label>
+              <input type="text" id="startPostalCode" name="startPostalCode" value={formData.startPostalCode} onChange={handleChange} required className="input" />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="destination">Destination:</label>
-              <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} required className="input" />
+              <label htmlFor="endPostalCode">End Postal Code:</label>
+              <input type="text" id="endPostalCode" name="endPostalCode" value={formData.endPostalCode} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="startLocation">Start Location:</label>
+              <input type="text" id="startLocation" name="startLocation" value={formData.startLocation} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="endLocation">End Location:</label>
+              <input type="text" id="endLocation" name="endLocation" value={formData.endLocation} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="routeLength">Route Length:</label>
+              <input type="number" id="routeLength" name="routeLength" value={formData.routeLength} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="timeInMinutes">Time In Minutes:</label>
+              <input type="number" id="timeInMinutes" name="timeInMinutes" value={formData.timeInMinutes} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="handicapAvailability">Handicap Availability:</label>
+              <input type="checkbox" id="handicapAvailability" name="handicapAvailability" checked={formData.handicapAvailability} onChange={handleChange} className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="passengerAmount">Passenger Amount:</label>
+              <input type="number" id="passengerAmount" name="passengerAmount" value={formData.passengerAmount} onChange={handleChange} required className="input" />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="carSize">Car Size:</label>
+              <input type="number" id="carSize" name="carSize" value={formData.carSize} onChange={handleChange} required className="input" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="departureDateTime">Departure Date/Time:</label>
@@ -79,7 +124,7 @@ function CreateRoute() {
             {trips.length > 0 ? (
               trips.map((trip) => (
                 <li key={trip.id}>
-                  Departure Location: {trip.departureLocation}, Destination: {trip.destination}, Departure Date/Time: {trip.departureDateTime.toLocaleString()}
+                  Start Location: {trip.startLocation}, End Location: {trip.endLocation}, Route Length: {trip.routeLength}, Time In Minutes: {trip.timeInMinutes}, Handicap Availability: {trip.handicapAvailability ? "Yes" : "No"}, Passenger Amount: {trip.passengerAmount}, Car Size: {trip.carSize}, Departure Date/Time: {new Date(trip.departureDateTime).toLocaleString()}
                 </li>
               ))
             ) : (

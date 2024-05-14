@@ -92,6 +92,11 @@ public class Populate {
                     300.5, 360, true, 4, 2, departureDateTime1);
             em.persist(route1);
 
+            LocalDateTime departureDateTime2 = LocalDateTime.of(2024, 5, 10, 8, 0);
+            Route route2 = new Route(driver2, 10001, 90001, "New Jersey", "Los Hermanos",
+                    300.5, 360, true, 4, 2, departureDateTime2);
+            em.persist(route2);
+
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
