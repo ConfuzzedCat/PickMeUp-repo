@@ -9,9 +9,17 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
+import io.javalin.http.Context;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
@@ -54,6 +62,15 @@ public class ApplicationConfig {
     public static void stopServer(Javalin app) {
         app.stop();
     }
+        public static String getProperty(String propName) throws IOException {
+        String result = "";
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+            result = model.getProperties().getProperty(propName);
+        } catch (IOException | XmlPullParserException e){
 
-
+        }
+        return result;
+    }
 }

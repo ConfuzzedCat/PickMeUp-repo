@@ -28,8 +28,7 @@ public class Routes {
             app.before(this::requestInfoHandler);
 
             app.routes(() -> {
-
-                path("/", routesRoute.getRoutes());
+                path("/", rideRoute.getRoutes());
 
             });
 

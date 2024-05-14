@@ -7,9 +7,12 @@ import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
 import dk.lyngby.utility.RouteCalcUtil;
+import dk.lyngby.utility.RouteCalcUtil;
 import io.javalin.http.Context;
+import lombok.Getter;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -17,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author MrJustMeDahl
+ * This controller is related to the route endpoints.
+ */
 /**
  * @author MrJustMeDahl
  * This controller is related to the route endpoints.
