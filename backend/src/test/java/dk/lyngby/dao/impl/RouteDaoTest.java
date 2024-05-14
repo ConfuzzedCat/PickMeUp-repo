@@ -86,7 +86,7 @@ class RouteDaoTest {
         assertEquals(2, routeList.size());
         assertEquals(2, routeList1.size());
 
-        assertEquals("Byagervej 5", routeList.get(0).getStartLocation());
+        assertEquals("Byagervej 1", routeList.get(0).getStartLocation());
         assertEquals("uddrupvej 10", routeList.get(1).getStartLocation());
 
         assertEquals("Madspetersvej 12", routeList1.get(0).getStartLocation());
