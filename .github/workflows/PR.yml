@@ -27,8 +27,5 @@ jobs:
           java-version: "19"
           distribution: "adopt"
 
-      - name: Build with Maven
+      - name: Build and test with Maven
         run: mvn -f backend/pom.xml clean install
-
-      - name: Run unit tests
-        run: mvn -f backend/pom.xml test
