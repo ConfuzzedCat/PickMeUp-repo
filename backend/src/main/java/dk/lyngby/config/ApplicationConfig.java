@@ -1,5 +1,6 @@
 package dk.lyngby.config;
 
+import ch.qos.logback.core.model.Model;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;
@@ -15,10 +16,13 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.FileReader;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
+=======
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
@@ -42,6 +46,8 @@ public class ApplicationConfig {
     public static void startServer(Javalin app, int port) {
         Routes routes = new Routes();
         app.updateConfig(ApplicationConfig::configuration);
+        app.before(ApplicationConfig::corsConfig);
+        app.options("/*", ApplicationConfig::corsConfig);
         app.routes(routes.getRoutes(app));
         app.exception(ApiException.class, EXCEPTION_HANDLER::apiExceptionHandler);
         app.exception(Exception.class, EXCEPTION_HANDLER::exceptionHandler);
@@ -60,6 +66,7 @@ public class ApplicationConfig {
         app.stop();
     }
 
+<<<<<<< HEAD
     public static String getProperty(String propName) throws IOException {
         String result = "";
         try {
@@ -71,4 +78,7 @@ public class ApplicationConfig {
         }
         return result;
     }
+=======
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 }

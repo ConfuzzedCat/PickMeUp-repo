@@ -1,5 +1,6 @@
 package dk.lyngby.dao.impl;
 
+<<<<<<< HEAD
 import dk.lyngby.Model.Route;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.dao.IDao;
@@ -18,10 +19,32 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+=======
+import dk.lyngby.model.Route;
+import dk.lyngby.config.HibernateConfig;
+import dk.lyngby.dao.IDao;
+import dk.lyngby.exception.ApiException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
+
+import java.util.List;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import jakarta.persistence.TypedQuery;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
 public class RouteDao implements IDao {
 
     protected EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+<<<<<<< HEAD
     private static RouteDao instance;
 
     public static RouteDao getInstance(EntityManagerFactory _emf) {
@@ -31,6 +54,11 @@ public class RouteDao implements IDao {
         return instance;
     }
     
+=======
+
+    private static RouteDao instance;
+    private RouteDao(){}
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     public static RouteDao getInstance(){
         if(instance == null){
             instance = new RouteDao();
@@ -38,12 +66,15 @@ public class RouteDao implements IDao {
         return instance;
     }
 
+<<<<<<< HEAD
     private RouteDao(){}
     private RouteDao(EntityManagerFactory _emf)
     {
         this.emf = _emf;
     }
 
+=======
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     /**
      * This method returns a list of routes based on the endLocation + endPostalCode and passengerStartPostalCode
      * @param endLocation is the ending location that the passenger decides
@@ -62,11 +93,28 @@ public class RouteDao implements IDao {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public Object read(Object o) throws ApiException {
         return null;
     }
 
+=======
+
+    @Override
+    public Route read(Integer id) throws ApiException {
+        if (id == null) {
+            throw new ApiException(400, "Primary key must be an integer");
+        }
+        try (var em = emf.createEntityManager())
+        {
+            return em.find(Route.class, id);
+        }
+    }
+
+
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     @Override
     public List readAll() {
         return null;
@@ -84,7 +132,10 @@ public class RouteDao implements IDao {
 
     @Override
     public void delete(Object o) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     }
 
     @Override
@@ -92,15 +143,24 @@ public class RouteDao implements IDao {
         return false;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     /** create a search filter for the routes that searches for routes based
      on multiple criteria such as start location, end location, driverId,
      route length, time in minutes, handicap availability, passenger amount,
      car size, or departure time **/
 
+<<<<<<< HEAD
     public List<Route> searchFilters(JsonObject filters) throws Exception {
         StringBuilder queryString = new StringBuilder("SELECT r FROM Route r WHERE 1 = 1");
         TypedQuery<Route> query;
+=======
+    public List<dk.lyngby.model.Route> searchFilters(JsonObject filters) throws Exception {
+        StringBuilder queryString = new StringBuilder("SELECT r FROM Route r WHERE 1 = 1");
+        TypedQuery<dk.lyngby.model.Route> query;
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
         try (EntityManager em = emf.createEntityManager()) {
             if (filters != null) {
@@ -115,7 +175,11 @@ public class RouteDao implements IDao {
                     }
                 });
 
+<<<<<<< HEAD
                 query = em.createQuery(queryString.toString(), Route.class);
+=======
+                query = em.createQuery(queryString.toString(), dk.lyngby.model.Route.class);
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
                 filters.entrySet().forEach(entry -> {
                     String key = entry.getKey();
@@ -125,7 +189,11 @@ public class RouteDao implements IDao {
                     }
                 });
             } else {
+<<<<<<< HEAD
                 query = em.createQuery("SELECT r FROM Route r", Route.class);
+=======
+                query = em.createQuery("SELECT r FROM Route r", dk.lyngby.model.Route.class);
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
             }
 
             return query.getResultList();

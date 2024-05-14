@@ -3,9 +3,17 @@ import io.javalin.Javalin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
+<<<<<<< HEAD
 import dk.lyngby.Model.Route;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
+=======
+import dk.lyngby.model.Route;
+import dk.lyngby.config.ApplicationConfig;
+import dk.lyngby.config.HibernateConfig;
+
+import java.time.LocalDateTime;
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +28,12 @@ public class RestTest {
 
     private static EntityManagerFactory emfTest;
 
+<<<<<<< HEAD
+=======
+    private static Route r1, r2, r3;
+
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     @BeforeAll
     static void beforeAll(){
         HibernateConfig.setTest(true);
@@ -31,6 +45,7 @@ public class RestTest {
 
     @BeforeEach
     void setup(){
+<<<<<<< HEAD
         try (EntityManager em = emfTest.createEntityManager()) {
             // Insert test rows
 
@@ -41,6 +56,21 @@ public class RestTest {
             em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Nørregade 10','1172','Rovsingsgade 31','2200');").executeUpdate();
             em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Nørregade 10','1172','Duevej 92','2000');").executeUpdate();
             em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Nørregade 10','1172','Frederiksvej 10','2000');").executeUpdate();
+=======
+        try (var em = emfTest.createEntityManager()) {
+            em.getTransaction().begin();
+            // Delete all rows
+            em.createQuery("DELETE FROM Route r").executeUpdate();
+            // Reset sequence
+            //em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
+            // Insert test data
+            r1 = new Route(2200, 1172,"Rovsingsgade 31", "Nørregade 10", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            r2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+            r3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            em.persist(r1);
+            em.persist(r2);
+            em.persist(r3);
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
             em.getTransaction().commit();
         }
@@ -63,7 +93,11 @@ public class RestTest {
                 .contentType("application/json")
                 .body("{\"startLocation\": \"Duevej,22,2000\", \"endLocation\": \"Nørregade,10,1172\"}")
                 .when()
+<<<<<<< HEAD
                 .post(BASE_URL + "/route/available_routes")
+=======
+                .post(BASE_URL + "/rides/available_routes")
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
                 .then()
                 .assertThat()
                 .statusCode(200)

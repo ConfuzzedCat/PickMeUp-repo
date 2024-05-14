@@ -1,5 +1,6 @@
 package dk.lyngby.dao.impl;
 
+<<<<<<< HEAD
 import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.model.Route;
@@ -29,6 +30,48 @@ class RouteDaoTest {
 
     @BeforeEach
     void setUp(){
+=======
+import dk.lyngby.config.ApplicationConfig;
+import dk.lyngby.config.HibernateConfig;
+import jakarta.persistence.EntityManagerFactory;
+import io.javalin.Javalin;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.google.gson.JsonObject;
+import dk.lyngby.model.Route;
+
+import java.time.LocalDateTime;
+
+
+
+class RouteDaoTest {
+    private static EntityManagerFactory emfTest;
+
+    private static RouteDao rDao;
+    private static Route r1, r2, r3;
+    private static Javalin app;
+
+    @BeforeAll
+    static void beforeAll(){
+        HibernateConfig.setTest(true);
+        emfTest = HibernateConfig.getEntityManagerFactory();
+        app = Javalin.create();
+        rDao = RouteDao.getInstance();
+        ApplicationConfig.startServer(app, 7777);
+
+    }
+
+
+    @BeforeEach
+    void setUp() {
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
@@ -36,13 +79,20 @@ class RouteDaoTest {
             // Reset sequence
             //em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
+<<<<<<< HEAD
             r1 = new Route("Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route("Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             r3 = new Route("Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+=======
+            r1 = new Route(2, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            r2 = new Route(1, 1, "Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+            r3 = new Route(2, 3, "Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
             em.persist(r1);
             em.persist(r2);
             em.persist(r3);
 
+<<<<<<< HEAD
             em.getTransaction().commit();
         }
 
@@ -51,6 +101,29 @@ class RouteDaoTest {
     @AfterAll
     static void tearDown() {
         HibernateConfig.setTest(false);
+=======
+            em.persist(new Route(3450, 2300, "Byagervej 5", "Studievej 2", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(3450, 2300, "uddrupvej 10", "Studievej 2", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(3600, 2300, "Emdrupvej 128", "Studievej 2", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(3600, 2300, "Hvidovrevej 128", "Studievej 2", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(3600, 2300, "Rødovrevej 213", "Studievej 2", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(2200, 2100, "Madspetersvej 12", "Firskovvej 18", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(2200, 2100, "Galevej 102", "Firskovvej 18", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(2550, 2100, "Hvidkildevej 12", "Firskovvej 18", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(2300, 2100, "Jagtvej 3", "Firskovvej 18", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+            em.persist(new Route(2800, 2100, "Rovsingsgade 15", "Firskovvej 18", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0)));
+
+
+            em.getTransaction().commit();
+        }
+    }
+
+    @AfterEach
+    void tearDown() {
+
+        HibernateConfig.setTest(false);
+        ApplicationConfig.stopServer(app);
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     }
 
     @Test
@@ -67,6 +140,10 @@ class RouteDaoTest {
 
         assertEquals("Madspetersvej 12", routeList1.get(0).getStartLocation());
         assertEquals("Galevej 102", routeList1.get(1).getStartLocation());
+<<<<<<< HEAD
+=======
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     }
 
     @Test
@@ -84,4 +161,11 @@ class RouteDaoTest {
             fail(e);
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+
+}
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c

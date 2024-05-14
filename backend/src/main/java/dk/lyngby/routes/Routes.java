@@ -5,8 +5,6 @@ import dk.lyngby.exception.ExceptionHandler;
 import io.javalin.Javalin;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.http.Context;
-import io.javalin.validation.ValidationException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +15,6 @@ public class Routes {
     private final ExceptionHandler exceptionController = new ExceptionHandler();
     private final RoutesRoute routesRoute = new RoutesRoute();
     private int count = 0;
-
-    private final RideRoute rideRoute = new RideRoute();
 
     private final Logger LOGGER = LoggerFactory.getLogger(Routes.class);
 
@@ -32,9 +28,14 @@ public class Routes {
             app.before(this::requestInfoHandler);
 
             app.routes(() -> {
+<<<<<<< HEAD
                 // path("/", hotelRoute.getRoutes());
                 path("/", routesRoute.getRoutes());
                 path("/", rideRoute.getRoutes());
+=======
+
+                path("/", routesRoute.getRoutes());
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
             });
 

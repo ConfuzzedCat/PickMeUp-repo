@@ -15,8 +15,16 @@ public class RoutesRoute {
 
     public EndpointGroup getRoutes(){
         return () -> {
+<<<<<<< HEAD
             path("/route", () -> {
                 post("/available_routes", rc::getListOfRoutesClosestToStart);
+=======
+            path("/rides", () -> {
+                get("/", rc::readAll);
+                get("/{id}", rc::read);
+                post("/available_routes", rc::getListOfRoutesClosestToStart);
+                post("/search", rc::searchFilters);
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
             });
         };
     }

@@ -14,6 +14,7 @@ public class Populate {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         truncateRoutes(emf);
         populateRoutes(emf);
+<<<<<<< HEAD
     }
 
 
@@ -36,6 +37,30 @@ public class Populate {
         }
     }
 
+=======
+    }
+
+
+    /**
+     * Populates the "route" table with mock data
+     * @param emf Entitymanagerfactory needed for the Entitymanager
+     * @author pelle112112
+     */
+    @NotNull
+    private static void populateRoutes (EntityManagerFactory emf) {
+        try (EntityManager em = emf.createEntityManager()) {
+            // Insert test rows
+            em.getTransaction().begin();
+
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Nørregade 10','1172','Rovsingsgade 31','2200');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Nørregade 10','1172','Duevej 92','2000');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Nørregade 10','1172','Frederiksvej 10','2000');").executeUpdate();
+
+            em.getTransaction().commit();
+        }
+    }
+
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
     /**
      * Truncates the "route" table
      * @param emf Entitymanagerfactory needed for the Entitymanager
@@ -46,6 +71,7 @@ public class Populate {
             em.getTransaction().begin();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY").executeUpdate();
             em.getTransaction().commit();
+<<<<<<< HEAD
 
         }
     }
@@ -59,22 +85,10 @@ public class Populate {
         Room r103 = new Room(103, new BigDecimal(2520), Room.RoomType.SINGLE);
         Room r104 = new Room(104, new BigDecimal(3200), Room.RoomType.DOUBLE);
         Room r105 = new Room(105, new BigDecimal(4500), Room.RoomType.SUITE);
+=======
+>>>>>>> cfb957b38200def3b5c649896a501c6f7f6bc24c
 
-        Room[] roomArray = {r100, r101, r102, r103, r104, r105};
-        return Set.of(roomArray);
-    }
-
-    @NotNull
-    private static Set<Room> getHilRooms() {
-        Room r111 = new Room(111, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r112 = new Room(112, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r113 = new Room(113, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r114 = new Room(114, new BigDecimal(2520), Room.RoomType.DOUBLE);
-        Room r115 = new Room(115, new BigDecimal(3200), Room.RoomType.DOUBLE);
-        Room r116 = new Room(116, new BigDecimal(4500), Room.RoomType.SUITE);
-
-        Room[] roomArray = {r111, r112, r113, r114, r115, r116};
-        return Set.of(roomArray);
+        }
     }
 
      */
