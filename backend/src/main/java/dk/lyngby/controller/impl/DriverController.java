@@ -38,10 +38,10 @@ public class DriverController {
         ctx.status(201);
     }
 
-    public Handler update(Context ctx, int id) {
+    public Handler update(Context ctx) {
         return context -> {
             Driver driver = context.bodyAsClass(Driver.class);
-            dao.update(id, driver);
+            dao.update(driver);
         };
     }
 
