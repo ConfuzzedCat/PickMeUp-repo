@@ -5,8 +5,9 @@ import "./index.css"
 import Routes from "./pages/Routes.jsx";
 import Rides from "./rides.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
-
 import Signup from "./signup";
+import { RouterProvider, Route, createRoutesFromElements, createBrowserRouter } from 'react-router-dom'
+
 
 const routes = createBrowserRouter(
     createRoutesFromElements(
