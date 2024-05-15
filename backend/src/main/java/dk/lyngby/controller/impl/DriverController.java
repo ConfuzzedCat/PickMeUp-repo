@@ -19,9 +19,17 @@ public class DriverController {
     DriverDao dao = new DriverDao();
 
 
-    public Handler getById() {
-        return ctx -> {
+    public Handler getById(Context ctx) {
+        return Context -> {
             ctx.json(dao.getById(Integer.parseInt(ctx.pathParam("id"))));
+        };
+    }
+
+    public Handler getalldDrivers(Context ctx) {
+        return Context -> {
+            List<Driver> drivers = dao.getalldDrivers();
+            List<DriverDTO> driverDTOs = drivers.stream().map(DriverDTO::new).collect(Collectors.toList());
+            ctx.json(driverDTOs);
         };
     }
 
@@ -34,7 +42,6 @@ public class DriverController {
         return context -> {
             Driver driver = context.bodyAsClass(Driver.class);
             dao.update(id, driver);
-            context.status(202);
         };
     }
 

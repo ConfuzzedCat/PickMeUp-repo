@@ -24,6 +24,13 @@ public class DriverDao {
         }
     }
 
+    public List<Driver> getalldDrivers() {
+      
+        try(EntityManager em = emf.createEntityManager()){
+            return em.createQuery("SELECT * FROM Driver d", Driver.class).getResultList();
+        }
+    }
+
 
   
     public Driver create(Driver driver) {
@@ -37,7 +44,7 @@ public class DriverDao {
         }
     }
 
-    public Driver update(int id, Driver driver) {
+    public Driver update(Driver driver) {
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             driver = em.find(Driver.class, driver.getId());

@@ -11,8 +11,10 @@ public class DriverRoute {
     public EndpointGroup getRoutes(){
         return () -> {
             path("/drivers", () -> {
-                get("/", dc::readAll);
-                get("/{id}", dc::read);
+                get("/", dc::getalldDrivers);
+                get("/{id}", dc::getById);
+                post("/", dc::create);
+                put("/{id}", dc::update);
             });
         };
     }
