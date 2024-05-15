@@ -84,7 +84,7 @@ function Signup() {
   return (
 <>
 <section class="bg-gray-800 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-4 mx-auto md:h-screen lg:py-0">
+  <div class="flex flex-col items-center justify-center px-6 py-4 mx-auto lg:py-0">
     <div class="w-full bg-gray-700 dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow">
       <div class="p-4 space-y-2 md:space-y-4 sm:p-6">
         <h1 class="text-lg font-bold leading-tight tracking-tight text-white md:text-xl dark:text-white">
