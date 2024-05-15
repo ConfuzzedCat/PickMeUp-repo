@@ -113,9 +113,16 @@ public class RouteController implements IController<Route, Integer> {
         }
 
 
+    /**
+     * Reads a single Route entity based on the ID provided in the request context,
+     * converts it to a RouteDTO, and sends it back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @throws ApiException if an error occurs during the process of reading the entity.
+     * @author Deniz Sønnmez
+     */
     @Override
-    public void read(Context ctx) throws ApiException
-    {
+    public void read(Context ctx) throws ApiException {
         // request
         int id = ctx.pathParamAsClass("id", Integer.class).get();
         // entity
@@ -127,6 +134,13 @@ public class RouteController implements IController<Route, Integer> {
         ctx.json(routeDto, RouteDTO.class);
     }
 
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
     @Override
     public void readAll(Context ctx) {
         // entity
