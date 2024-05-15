@@ -11,6 +11,13 @@ javadoc til method og classes. Skal indeholde forfatter og User Story
 fejlhåndter bubbler op til f.eks controller
 Dummy
 
+Branches skal laves ud fra dev.
+Vi laver branches udfra tasks.
+Branches navne skal have us nummer og tasks nummer, som minimium.
+branches skal lukkes når de er merged in i dev.
+
+
+
 I frontend bruger vi Anders' Prettier config*
 I frontend bruger vi React.js
 
