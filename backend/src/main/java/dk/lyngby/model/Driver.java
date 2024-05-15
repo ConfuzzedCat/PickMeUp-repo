@@ -32,14 +32,14 @@ public class Driver {
     @Column(name = "password") 
     String password;
 
-    @Column(name = "Adress")
-    String Adress;
+    @Column(name = "Address")
+    String Address;
 
     public Driver(String email, String fullname, String password, String Adress) {
         this.email = email;
         this.fullname = fullname;
         this.password = password;
-        this.Adress = Adress;
+        this.Address = Adress;
     }
 
     public Driver(int id, String email, String fullname, String password, String Adress) {
@@ -47,7 +47,7 @@ public class Driver {
         this.email = email;
         this.fullname = fullname;
         this.password = password;
-        this.Adress = Adress;
+        this.Address = Adress;
     }
 
     

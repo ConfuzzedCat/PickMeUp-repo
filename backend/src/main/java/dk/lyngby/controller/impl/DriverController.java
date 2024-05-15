@@ -3,40 +3,20 @@ package dk.lyngby.controller.impl;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.DriverDao;
 import dk.lyngby.dto.DriverDTO;
-import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.Driver;
-import dk.lyngby.model.Route;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import lombok.Getter;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class DriverController implements IController<Driver, Integer>{
+public class DriverController {
 
     DriverDao dao = new DriverDao();
-
-    public void readAll(Context ctx) {
-        ctx.json(dao.readAll());
-    }
-
-
-    public void read(Context ctx) throws ApiException {
-         // request
-        int id = ctx.pathParamAsClass("id", Integer.class).get();
-        // entity
-        Driver driver = dao.read(id);
-        // dto
-        DriverDTO driverDto = new DriverDTO(driver); 
-        // response
-        ctx.res().setStatus(200);
-        ctx.json(driverDto, DriverDTO.class);
-    }
 
 
     public Handler getById() {
