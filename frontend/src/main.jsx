@@ -5,7 +5,12 @@ import "./index.css"
 import Routes from "./pages/Routes.jsx";
 import Rides from "./rides.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
-
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
 import Signup from "./signup";
 
 const routes = createBrowserRouter(
