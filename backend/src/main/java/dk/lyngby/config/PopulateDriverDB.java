@@ -36,9 +36,9 @@ public class PopulateDriverDB {
 
     @NotNull
     private static List<Driver> getDrivers() {
-        Driver driver1 = new Driver("name", "test", "test", "test");
-        Driver driver2 = new Driver("name2", "test2", "test2", "test2");
-        Driver driver3 = new Driver("name3", "test3", "test3", "test3");
+        Driver driver1 = new Driver("name", "test", "test", "test", "test".getBytes(), "test".getBytes());
+        Driver driver2 = new Driver("name2", "test2", "test2", "test2", "test2".getBytes(), "test2".getBytes());
+        Driver driver3 = new Driver("name3", "test3", "test3", "test3", "test3".getBytes(), "test3".getBytes());
         Driver[] driverArray = {driver1, driver2, driver3};
         return List.of(driverArray);
     }

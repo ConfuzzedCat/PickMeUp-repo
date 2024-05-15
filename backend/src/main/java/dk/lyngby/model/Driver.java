@@ -1,10 +1,6 @@
 package dk.lyngby.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,27 +23,35 @@ public class Driver {
     String email;
 
     @Column(name = "fullname")
-    String fullname;
+    String fullName;
 
     @Column(name = "password") 
     String password;
 
-    @Column(name = "Address")
-    String Address;
+    @Column(name = "address")
+    String address;
 
-    public Driver(String email, String fullname, String password, String Address) {
+    @Lob()
+    private byte[] drivingLicense; // Billeddata for kørekort
+
+    @Lob
+    private byte[] studentCard; // Billeddata for studiekort
+
+    public Driver(String email, String fullName, String password, String address, byte[] drivingLicense, byte[] studentCard) {
         this.email = email;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.password = password;
-        this.Address = Address;
+        this.address = address;
+        this.drivingLicense = drivingLicense;
+        this.studentCard = studentCard;
     }
 
-    public Driver(int id, String email, String fullname, String password, String Address) {
+    public Driver(int id, String email, String fullName, String password, String address) {
         this.id = id;
         this.email = email;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.password = password;
-        this.Address = Address;
+        this.address = address;
     }
 
     

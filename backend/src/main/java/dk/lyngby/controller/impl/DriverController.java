@@ -25,9 +25,9 @@ public class DriverController {
         };
     }
 
-    public Handler getalldDrivers(Context ctx) {
+    public Handler getallDrivers(Context ctx) {
         return Context -> {
-            List<Driver> drivers = dao.getalldDrivers();
+            List<Driver> drivers = dao.getallDrivers();
             List<DriverDTO> driverDTOs = drivers.stream().map(DriverDTO::new).collect(Collectors.toList());
             ctx.json(driverDTOs);
         };

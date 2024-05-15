@@ -24,7 +24,7 @@ public class DriverDao {
         }
     }
 
-    public List<Driver> getalldDrivers() {
+    public List<Driver> getallDrivers() {
       
         try(EntityManager em = emf.createEntityManager()){
             return em.createQuery("SELECT d FROM Driver d", Driver.class).getResultList();
@@ -34,7 +34,7 @@ public class DriverDao {
 
   
     public Driver create(Driver driver) {
-        driver = new Driver(driver.getEmail(), driver.getFullname(), driver.getPassword(), driver.getAddress());
+        driver = new Driver(driver.getEmail(), driver.getFullName(), driver.getPassword(), driver.getAddress(), driver.getDrivingLicense(), driver.getStudentCard());
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.persist(driver);
@@ -50,7 +50,7 @@ public class DriverDao {
             driver = em.find(Driver.class, driver.getId());
             if (driver != null) {
                 driver.setEmail(driver.getEmail());
-                driver.setFullname(driver.getFullname());
+                driver.setFullName(driver.getFullName());
                 driver.setPassword(driver.getPassword());
                 driver.setAddress(driver.getAddress());
             em.merge(driver);

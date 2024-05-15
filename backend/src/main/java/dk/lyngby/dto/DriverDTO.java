@@ -18,18 +18,21 @@ public class DriverDTO {
 int id; 
 
 String email;
-String fullname; 
+String fullName;
 String password;
-String Address;
+String address;
 
+byte[] drivingLicense; // Billeddata for kørekort
+byte[] studentCard; // Billeddata for studiekort
 
-
-public DriverDTO(int id, String email, String fullname, String password, String Address) {
+public DriverDTO(int id, String email, String fullName, String password, String address, byte[] drivingLicense, byte[] studentCard) {
 this.id = id;
 this.email = email;
-this.fullname = fullname;
+this.fullName = fullName;
 this.password = password;
-this.Address = Address;
+this.address = address;
+this.drivingLicense = drivingLicense;
+this.studentCard = studentCard;
  }
 
 
@@ -37,9 +40,11 @@ this.Address = Address;
 public DriverDTO(Driver driver) {
 this.id= driver.getId();
 this.email = driver.getEmail();
-this.fullname = driver.getFullname();
+this.fullName = driver.getFullName();
 this.password = driver.getPassword();
-this.Address = driver.getAddress();
+this.address = driver.getAddress();
+this.drivingLicense = driver.getDrivingLicense();
+this.studentCard = driver.getStudentCard();
 }
 
 }
