@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Setter
-@Table(name = "driver")
+@Table(name = "Driver")
 
 public class Driver {
     
@@ -35,19 +35,19 @@ public class Driver {
     @Column(name = "Address")
     String Address;
 
-    public Driver(String email, String fullname, String password, String Adress) {
+    public Driver(String email, String fullname, String password, String Address) {
         this.email = email;
         this.fullname = fullname;
         this.password = password;
-        this.Address = Adress;
+        this.Address = Address;
     }
 
-    public Driver(int id, String email, String fullname, String password, String Adress) {
+    public Driver(int id, String email, String fullname, String password, String Address) {
         this.id = id;
         this.email = email;
         this.fullname = fullname;
         this.password = password;
-        this.Address = Adress;
+        this.Address = Address;
     }
 
     

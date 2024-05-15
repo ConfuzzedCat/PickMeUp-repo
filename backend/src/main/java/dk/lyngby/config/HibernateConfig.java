@@ -1,5 +1,6 @@
 package dk.lyngby.config;
 
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
@@ -88,6 +89,7 @@ public class HibernateConfig {
         //configuration.addAnnotatedClass(Hotel.class);
         //configuration.addAnnotatedClass(Room.class);
         configuration.addAnnotatedClass(Route.class);
+        configuration.addAnnotatedClass(Driver.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {

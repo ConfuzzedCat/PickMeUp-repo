@@ -27,14 +27,14 @@ public class DriverDao {
     public List<Driver> getalldDrivers() {
       
         try(EntityManager em = emf.createEntityManager()){
-            return em.createQuery("SELECT * FROM Driver d", Driver.class).getResultList();
+            return em.createQuery("SELECT d FROM Driver d", Driver.class).getResultList();
         }
     }
 
 
   
     public Driver create(Driver driver) {
-        driver = new Driver(driver.getEmail(), driver.getFullname(), driver.getPassword(), driver.getAdress());
+        driver = new Driver(driver.getEmail(), driver.getFullname(), driver.getPassword(), driver.getAddress());
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.persist(driver);

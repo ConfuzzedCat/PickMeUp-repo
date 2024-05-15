@@ -20,16 +20,16 @@ int id;
 String email;
 String fullname; 
 String password;
-String Adress;
+String Address;
 
 
 
-public DriverDTO(int id, String email, String fullname, String password, String Adress) {
+public DriverDTO(int id, String email, String fullname, String password, String Address) {
 this.id = id;
 this.email = email;
 this.fullname = fullname;
 this.password = password;
-this.Adress = Adress;
+this.Address = Address;
  }
 
 
@@ -39,6 +39,7 @@ this.id= driver.getId();
 this.email = driver.getEmail();
 this.fullname = driver.getFullname();
 this.password = driver.getPassword();
+this.Address = driver.getAddress();
 }
 
 }
