@@ -1,25 +1,73 @@
-import React from "react"
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import mockData from "../util/routesData.js"
-import RoutesFilter from "../components/RoutesFilter.jsx"
-import facade from "../util/apiFacade.js"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import facade from "../util/apiFacade.js";
+import RoutesFilter from "../components/RoutesFilter.jsx";
+
+// Sorry, det her var den letteste måde at gøre det på
+function RideModal({ ride, onClose }) {
+    if (!ride) return null;
+
+    const modalStyle = {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000
+    };
+
+    const modalContentStyle = {
+        backgroundColor: "black",
+        padding: 20,
+        borderRadius: 5,
+        width: "80%",
+        maxWidth: 500
+    };
+
+    const closeButtonStyle = {
+        padding: 10,
+        marginTop: 20,
+        cursor: 'pointer'
+    };
+
+    return (
+        <div style={modalStyle}>
+            <div style={modalContentStyle}>
+                <h2>Ride Details</h2>
+                <p><strong>Start Location:</strong> {ride.startLocation}</p>
+                <p><strong>End Location:</strong> {ride.endLocation}</p>
+                <p><strong>Driver ID:</strong> {ride.driverId}</p>
+                <p><strong>Route Length:</strong> {ride.routeLength} km</p>
+                <p><strong>Time in Minutes:</strong> {ride.timeInMinutes} minutes</p>
+                <p><strong>Departure Time:</strong> {ride.departureTime}</p>
+                <button onClick={onClose} style={closeButtonStyle}>Close</button>
+            </div>
+        </div>
+    );
+}
 
 function Routes() {
-  const [routes, setRoutes] = useState([])
+  const [routes, setRoutes] = useState([]);
+  const [selectedRide, setSelectedRide] = useState(null); 
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
-      console.log(data)
-      setRoutes(data)
-    })
-  }, [])
+      setRoutes(data);
+    });
+  }, []);
+
+  const handleShowDetails = (route) => {
+    setSelectedRide(route);
+  };
 
   return (
     <div className="container mx-auto prose-xl">
       <h1>Available Routes</h1>
       <RoutesFilter setRoutes={setRoutes} />
-
       <table className="table">
         <thead>
           <tr>
@@ -32,7 +80,7 @@ function Routes() {
             <th>Passengers</th>
             <th>Car seats</th>
             <th>Handicap Accessibility</th>
-            <th>Actions</th> {/* New column header for actions */}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -48,17 +96,17 @@ function Routes() {
               <td>{route.carSize}</td>
               <td>{route.handicapAvailability ? "Yes" : "No"}</td>
               <td>
-                <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
+                <button onClick={() => handleShowDetails(route)} className="btn btn-sm btn-outline">
                   See More
-                </Link>
-              </td>{" "}
-              {/* Button in a new cell */}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
     </div>
-  )
+  );
 }
 
-export default Routes
+export default Routes;
