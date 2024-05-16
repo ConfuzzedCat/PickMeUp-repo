@@ -3,11 +3,11 @@ package dk.lyngby.model;
 
 
 /**
-* This class is a mockup for a user that is needed for testing and implementation of US-#33-task-#83
+ * This class is a mockup for a user that is needed for testing and implementation of US-#33-task-#83
  * @Author TobiasTonndorff
  * this class can be deleted once a real User class has been implemented
 
-*/
+ */
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -73,4 +73,3 @@ public class UserMock implements Serializable{
         this.lastName = lastName;
     }
 }
-
