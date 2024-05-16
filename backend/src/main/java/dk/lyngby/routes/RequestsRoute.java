@@ -7,8 +7,8 @@ import io.javalin.apibuilder.EndpointGroup;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 /**
- * @author pelle112112
  * This endpointgroup contains endpoints related to Requests
+ * @author pelle112112
  */
 public class RequestsRoute {
 

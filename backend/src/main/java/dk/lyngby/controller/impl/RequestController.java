@@ -43,16 +43,24 @@ public class RequestController implements IController<Request, Integer> {
     /**
      * This method handles the creation of a new Request at the /requests/requests endpoint.
      * @param ctx
+     * @author pelle112112
      */
     @Override
     public void create(Context ctx) {
         Request request = ctx.bodyAsClass(Request.class);
 
-        //Persist to DB
-        //todo: Implement DAO method
+        //Check if the user has already requested for the specific route
+        Boolean requestAlreadyExists = false;
+        if(requestAlreadyExists){
+            ctx.status(403);
+        }
+        else {
+            //Persist to DB
+            //todo: Implement DAO method
 
-        ctx.json(201);
-        ctx.json(request);
+            ctx.json(request);
+            ctx.status(201);
+        }
 
     }
 
