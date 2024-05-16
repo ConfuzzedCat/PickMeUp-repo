@@ -1,19 +1,17 @@
-import React from "react"
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import mockData from "../util/routesData.js"
-import RoutesFilter from "../components/RoutesFilter.jsx"
-import facade from "../util/apiFacade.js"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import facade from "../util/apiFacade";
+import RoutesFilter from "../components/RoutesFilter";
 
 function Routes() {
-  const [routes, setRoutes] = useState([])
+  const [routes, setRoutes] = useState([]);
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
-      console.log(data)
-      setRoutes(data)
-    })
-  }, [])
+      console.log(data);
+      setRoutes(data);
+    });
+  }, []);
 
   return (
     <div className="container mx-auto prose-xl">
@@ -24,13 +22,13 @@ function Routes() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Start location</th>
+            <th>Start Location</th>
             <th>Destination</th>
             <th>Driver</th>
             <th>Time</th>
             <th>Date</th>
             <th>Passengers</th>
-            <th>Car seats</th>
+            <th>Car Size</th>
             <th>Handicap Accessibility</th>
             <th>Actions</th> {/* New column header for actions */}
           </tr>
@@ -51,14 +49,13 @@ function Routes() {
                 <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
                   See More
                 </Link>
-              </td>{" "}
-              {/* Button in a new cell */}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
-export default Routes
+export default Routes;

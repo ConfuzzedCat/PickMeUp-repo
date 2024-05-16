@@ -5,6 +5,7 @@ import "./index.css"
 import Routes from "./pages/Routes.jsx";
 import Rides from "./rides.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
+import RouteDetails from "./components/RouteDetails.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,6 +21,7 @@ const routes = createBrowserRouter(
             <Route path="/routes" element={<Routes />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/rides" element={<Rides />} />
+            <Route path="/route/:id" element={<RouteDetails />} />
         </Route>
     )
 
