@@ -3,6 +3,7 @@ package dk.lyngby.controller.impl;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDTO;
@@ -10,6 +11,7 @@ import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
 import io.javalin.http.Context;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -24,10 +26,15 @@ import java.util.stream.Collectors;
 public class RouteController implements IController<Route, Integer> {
 
 
+    private RouteDao dao;
 
+    public RouteController() {
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+        this.dao = RouteDao.getInstance(emf);
+    }
 
         private RouteCalcUtil routeUtil = new RouteCalcUtil();
-        private RouteDao dao = RouteDao.getInstance();
+
 
         /**
          * This method is handling the context of /route/available_routes endpoint.
