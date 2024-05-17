@@ -1,5 +1,4 @@
 package dk.lyngby.config;
-
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;

@@ -22,12 +22,15 @@ import java.time.format.DateTimeParseException;
 
 public class RouteDao implements IDao {
 
-    protected EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static EntityManagerFactory emf ;
 
     private static RouteDao instance;
+
     private RouteDao(){}
-    public static RouteDao getInstance(){
+
+    public static RouteDao getInstance(EntityManagerFactory _emf){
         if(instance == null){
+            emf = _emf;
             instance = new RouteDao();
         }
         return instance;
@@ -66,8 +69,9 @@ public class RouteDao implements IDao {
 
 
     @Override
-    public List<Route> readAll() {
-        try (var em = emf.createEntityManager()) {
+    public List readAll() {
+        try (var em = emf.createEntityManager())
+        {
             var query = em.createQuery("SELECT r FROM Route r", Route.class);
             return query.getResultList();
         }
