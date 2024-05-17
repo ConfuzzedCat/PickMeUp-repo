@@ -50,7 +50,11 @@ public class RouteDao implements IDao {
             query.setParameter("endLocation", endLocation.replaceAll(",", " "));
             query.setParameter("passengerStartPostalCode", passengerStartPostalCode);
             query.setParameter("endPostalCode", endPostalCode);
-            return query.getResultList();
+            List<Route> allFound = query.getResultList();
+            for(Route r: allFound){
+                r.getRideRequests().size();
+            }
+            return allFound;
         }
     }
 
