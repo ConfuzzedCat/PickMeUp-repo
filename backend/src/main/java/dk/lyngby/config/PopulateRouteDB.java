@@ -1,6 +1,9 @@
 package dk.lyngby.config;
 
+import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.Route;
+import dk.lyngby.model.UserMock;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,15 +23,44 @@ public class PopulateRouteDB {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-
-        routes = getRoutes();
+        UserMock passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
+        UserMock driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
 
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
 
-            for (Route route : routes) {
-                em.persist(route);
+            em.persist(passenger);
+            em.persist(driver);
+
+            em.getTransaction().commit();
+        }
+
+        routes = getRoutes(driver);
+
+        try(EntityManager em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            driver = em.merge(driver);
+            for(Route r: routes){
+                em.persist(r);
+                driver.addRide(r);
             }
+            em.getTransaction().commit();
+        }
+
+        try(EntityManager em = emf.createEntityManager()){
+            em.getTransaction().begin();
+            driver = em.merge(driver);
+            passenger = em.merge(passenger);
+            Route ride1 = em.find(Route.class, routes.get(0).getId());
+            Route ride2 = em.find(Route.class, routes.get(1).getId());
+            Route ride3 = em.find(Route.class, routes.get(2).getId());
+            RideRequest r1 = new RideRequest(passenger, driver, ride1);
+            RideRequest r2 = new RideRequest(passenger, driver, ride2);
+            RideRequest r3 = new RideRequest(passenger, driver, ride3);
+
+            em.persist(r1);
+            em.persist(r2);
+            em.persist(r3);
 
             em.getTransaction().commit();
         }
@@ -37,10 +69,10 @@ public class PopulateRouteDB {
 
 
     @NotNull
-    private static List<Route> getRoutes() {
-        Route route1 = new Route(2, 2, "Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-        Route route2 = new Route(1, 2, "Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
-        Route route3 = new Route(2, 1, "Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+    private static List<Route> getRoutes(UserMock driver) {
+        Route route1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+        Route route2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", driver.getId(), 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+        Route route3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", driver.getId(), 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
         Route[] routeArray = {route1, route2, route3};
         return List.of(routeArray);
     }

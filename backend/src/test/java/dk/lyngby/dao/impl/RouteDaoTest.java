@@ -4,10 +4,7 @@ import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import io.javalin.Javalin;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -70,8 +67,8 @@ class RouteDaoTest {
         }
     }
 
-    @AfterEach
-    void tearDown() {
+    @AfterAll
+    static void tearDown() {
 
         HibernateConfig.setTest(false);
         ApplicationConfig.stopServer(app);

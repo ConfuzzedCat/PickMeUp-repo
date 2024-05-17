@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -50,6 +52,15 @@ public class UserMock implements Serializable{
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @OneToMany
+    private List<Route> rides = new ArrayList<>();
+
+    @OneToMany(mappedBy = "requestSender")
+    private List<RideRequest> outgoingRideRequests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "requestReceiver")
+    private List<RideRequest> incomingRideRequests = new ArrayList<>();
+
     public UserMock(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
@@ -71,5 +82,17 @@ public class UserMock implements Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void addRide(Route newRide){
+        rides.add(newRide);
+    }
+
+    public void addOutgoingRideRequest(RideRequest rideRequest) {
+        outgoingRideRequests.add(rideRequest);
+    }
+
+    public void addIncomingRideRequest(RideRequest rideRequest) {
+        incomingRideRequests.add(rideRequest);
     }
 }

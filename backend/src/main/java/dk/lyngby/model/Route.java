@@ -1,12 +1,11 @@
 package dk.lyngby.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -30,6 +29,8 @@ public class Route {
     private int carSize;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     LocalDateTime departureTime;
+    @OneToMany(mappedBy = "ride")
+    private List<RideRequest> rideRequests;
 
     // Constructor
     public Route(int startPostalCode, int endPostalCode, String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
@@ -44,6 +45,7 @@ public class Route {
         this.passengerAmount = passengerAmount;
         this.carSize = carSize;
         this.departureTime = departureTime;
+        this.rideRequests = new ArrayList<>();
     }
 
     @Override
@@ -57,5 +59,9 @@ public class Route {
     @Override
     public int hashCode() {
         return Objects.hash(id, startLocation, endLocation, driverId, routeLength, timeInMinutes, handicapAvailability, passengerAmount, carSize, departureTime);
+    }
+
+    public void addRideRequest(RideRequest newRideRequest){
+        rideRequests.add(newRideRequest);
     }
 }
