@@ -74,7 +74,7 @@ public class RestTest {
             em.getTransaction().commit();
         }
     }
-    @AfterEach
+    @AfterAll
     void tearDown() {
         HibernateConfig.setTest(false);
         ApplicationConfig.stopServer(app);
