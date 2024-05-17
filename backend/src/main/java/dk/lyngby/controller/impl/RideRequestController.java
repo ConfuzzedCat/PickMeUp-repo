@@ -32,9 +32,12 @@ public class RideRequestController implements IController<RideRequest, Integer> 
 
         //Get the Requests from the DB
         requests = dao.getRideRequestsForUser(id);
+        List<RideRequestDTO> dtos = new ArrayList<>();
+        for(RideRequest r: requests){
+            dtos.add(new RideRequestDTO(r.getId(), r.getRequestSender().getId(), r.getRequestReceiver().getId(), r.getRide().getId()));
+        }
 
-
-        ctx.json(requests);
+        ctx.json(dtos);
         ctx.status(200);
     }
 

@@ -12,7 +12,6 @@ import lombok.Setter;
 @Table(name = "ride_request")
 @NamedQueries({
         @NamedQuery(name = "RideRequest.getAll", query = "SELECT r FROM RideRequest r"),
-        @NamedQuery(name = "RideRequest.getRequestsForUser", query = "SELECT r FROM RideRequest r WHERE r.id.requestSenderID = :id")
 })
 public class RideRequest {
 

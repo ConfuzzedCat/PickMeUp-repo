@@ -74,14 +74,14 @@ public class RideRequestDAO {
     public List<RideRequest> getRideRequestsForUser(int userID) throws ApiException{
         List<RideRequest> requestsForUser;
         try(EntityManager em = emf.createEntityManager()){
-            Query query = em.createNativeQuery("RideRequest.getRequestsForUser");
-            query.setParameter("id", userID);
+            Query query = em.createNativeQuery("SELECT * FROM public.ride_request WHERE request_sender = :userID", RideRequest.class);
+            query.setParameter("userID", userID);
             requestsForUser = query.getResultList();
         }
         if(requestsForUser == null){
             throw new ApiException(500, "Something went wrong with the database.");
         } else if(requestsForUser.isEmpty()){
-            throw new ApiException(200, "There is no requests in the system for user with ID: " + userID);
+            throw new ApiException(404, "There is no requests in the system for user with ID: " + userID);
         }
         return requestsForUser;
     }
