@@ -1,4 +1,8 @@
 package dk.lyngby;
+import dk.lyngby.dto.RideRequestDTO;
+import dk.lyngby.model.RideRequest;
+import dk.lyngby.model.RideRequestID;
+import dk.lyngby.model.UserMock;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,7 +26,9 @@ public class RestTest {
 
     private static EntityManagerFactory emfTest;
 
-    private static Route r1, r2, r3;
+    private Route ride1, ride2, ride3;
+    private UserMock passenger, driver;
+    private RideRequest r1, r2, r3;
 
 
     @BeforeAll
@@ -43,12 +49,24 @@ public class RestTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
-            // Reset sequence
-            //em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
-            r1 = new Route(2200, 1172,"Rovsingsgade 31", "Nørregade 10", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-            r2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
-            r3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
+            driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+            em.persist(passenger);
+            em.persist(driver);
+            ride1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            ride2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", driver.getId(), 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+            ride3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", driver.getId(), 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            Route[] routeArray = {ride1, ride2, ride3};
+            for(Route r: routeArray){
+                em.persist(r);
+                driver.addRide(r);
+            }
+
+            r1 = new RideRequest(passenger, driver, ride1);
+            r2 = new RideRequest(passenger, driver, ride2);
+            r3 = new RideRequest(passenger, driver, ride3);
+
             em.persist(r1);
             em.persist(r2);
             em.persist(r3);
@@ -86,6 +104,24 @@ public class RestTest {
         assertNotEquals("Frederiksvej 11", routeList.get(1).getStartLocation());
     }
 
+    @Test
+    void createRideRequest(){
+        RideRequestDTO rideRequest =
+                given()
+                        .contentType("application/json")
+                        .body("{\"rideRequestSenderID\": 2, \"rideRequestReceiverID\": 2, \"rideID\": 3}")
+                        .when()
+                        .post(BASE_URL + "/requests/requests")
+                        .then()
+                        .assertThat()
+                        .statusCode(201)
+                        .extract().body().jsonPath().getObject("", RideRequestDTO.class);
+        assertEquals(new RideRequestID(2, 3), rideRequest.getId());
+    }
 
+    @Test
+    void getAllRequestsForUser(){
+
+    }
 
 }

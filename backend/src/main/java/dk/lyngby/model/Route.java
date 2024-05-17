@@ -1,5 +1,6 @@
 package dk.lyngby.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Route {
     private int carSize;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     LocalDateTime departureTime;
+    @JsonIgnore
     @OneToMany(mappedBy = "ride")
     private List<RideRequest> rideRequests;
 

@@ -9,6 +9,7 @@ package dk.lyngby.model;
 
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,12 +54,15 @@ public class UserMock implements Serializable{
     private String lastName;
 
     @OneToMany
+    @JsonIgnore
     private List<Route> rides = new ArrayList<>();
 
     @OneToMany(mappedBy = "requestSender")
+    @JsonIgnore
     private List<RideRequest> outgoingRideRequests = new ArrayList<>();
 
     @OneToMany(mappedBy = "requestReceiver")
+    @JsonIgnore
     private List<RideRequest> incomingRideRequests = new ArrayList<>();
 
     public UserMock(String email, String password, String firstName, String lastName) {

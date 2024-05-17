@@ -18,7 +18,6 @@ public class RequestsRoute {
             path("/requests", () -> {
                 get("/{userid}", rc::getAllRequestsByUserId);
                 post("/requests", rc::create);
-
             });
         };
     }

@@ -66,7 +66,9 @@ public class RouteDao implements IDao {
         }
         try (var em = emf.createEntityManager())
         {
-            return em.find(Route.class, id);
+            Route ride = em.find(Route.class, id);
+            ride.getRideRequests().size();
+            return ride;
         }
     }
 
