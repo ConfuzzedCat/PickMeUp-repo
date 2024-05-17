@@ -1,29 +1,33 @@
 package dk.lyngby.controller.impl;
 
+import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
+import dk.lyngby.dao.impl.RideRequestDAO;
 import dk.lyngby.exception.ApiException;
-import dk.lyngby.model.Request;
+import dk.lyngby.model.RideRequest;
 import io.javalin.http.Context;
-import okhttp3.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestController implements IController<Request, Integer> {
+public class RideRequestController implements IController<RideRequest, Integer> {
 
+    private RideRequestDAO dao = RideRequestDAO.getInstance(HibernateConfig.getEntityManagerFactory());
 
     /**
      * This method returns a list of all Requests for a specific user to the /requests/{userid} endpoint.
+     *
      * @param ctx
      * @throws ApiException
      * @author pelle112112
      */
-    public void getAllRequestsByUserId(Context ctx) throws ApiException{
+    public void getAllRequestsByUserId(Context ctx) throws ApiException {
         int id = ctx.pathParamAsClass("userid", Integer.class).get();
-        List<Request> requests = new ArrayList<>();
+        List<RideRequest> requests;
 
         //Get the Requests from the DB
-        //todo: implement DAO Method
+        requests = dao.getRideRequestsForUser(id);
+
 
         ctx.json(requests);
         ctx.status(200);
@@ -36,31 +40,28 @@ public class RequestController implements IController<Request, Integer> {
     }
 
     @Override
-    public void readAll(Context ctx) {
-
+    public void readAll(Context ctx) throws ApiException {
+        List<RideRequest> allRequests = dao.readAll();
+        ctx.json(allRequests);
+        ctx.status(200);
     }
 
     /**
      * This method handles the creation of a new Request at the /requests/requests endpoint.
+     *
      * @param ctx
      * @author pelle112112
      */
     @Override
-    public void create(Context ctx) {
-        Request request = ctx.bodyAsClass(Request.class);
+    public void create(Context ctx) throws ApiException {
+        RideRequest request = ctx.bodyAsClass(RideRequest.class);
 
-        //Check if the user has already requested for the specific route
-        Boolean requestAlreadyExists = false;
-        if(requestAlreadyExists){
-            ctx.status(403);
-        }
-        else {
-            //Persist to DB
-            //todo: Implement DAO method
+        //Persist to DB - exception is thrown if request already exists.
+        dao.create(request);
 
-            ctx.json(request);
-            ctx.status(201);
-        }
+        ctx.json(request);
+        ctx.status(201);
+
 
     }
 
@@ -80,7 +81,7 @@ public class RequestController implements IController<Request, Integer> {
     }
 
     @Override
-    public Request validateEntity(Context ctx) {
+    public RideRequest validateEntity(Context ctx) {
         return null;
     }
 }

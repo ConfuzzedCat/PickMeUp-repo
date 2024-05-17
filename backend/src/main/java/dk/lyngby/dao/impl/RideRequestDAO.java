@@ -3,10 +3,13 @@ package dk.lyngby.dao.impl;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.RideRequestID;
+import dk.lyngby.model.Route;
+import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.List;
 
@@ -24,9 +27,9 @@ public class RideRequestDAO {
         return instance;
     }
 
-    public RideRequest readByID(int requestSenderID, int requestReceiverID) throws ApiException {
+    public RideRequest readByID(int requestSenderID, int rideID) throws ApiException {
         RideRequest rideRequest;
-        RideRequestID id = new RideRequestID(requestSenderID, requestReceiverID);
+        RideRequestID id = new RideRequestID(requestSenderID, rideID);
         try(EntityManager em = emf.createEntityManager()){
             rideRequest = em.find(RideRequest.class, id);
         }
@@ -51,11 +54,19 @@ public class RideRequestDAO {
     }
 
 
-    public RideRequest create(RideRequest rideRequest) {
+    public RideRequest create(RideRequest rideRequest) throws ApiException{
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
+            rideRequest.setRequestSender(em.find(UserMock.class, rideRequest.getRequestSender().getId()));
+            rideRequest.setRequestReceiver(em.find(UserMock.class, rideRequest.getRequestSender().getId()));
+            rideRequest.setRide(em.find(Route.class, rideRequest.getRide().getId()));
+            em.merge(rideRequest.getRequestSender());
+            em.merge(rideRequest.getRequestReceiver());
+            em.merge(rideRequest.getRide());
             em.persist(rideRequest);
             em.getTransaction().commit();
+        } catch (ConstraintViolationException e) {
+            throw new ApiException(409, "You have already applied to join this ride.");
         }
         return rideRequest;
     }

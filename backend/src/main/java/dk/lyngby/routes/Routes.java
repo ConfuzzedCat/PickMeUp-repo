@@ -1,6 +1,5 @@
 package dk.lyngby.routes;
 
-import dk.lyngby.controller.impl.RequestController;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import io.javalin.Javalin;
