@@ -1,7 +1,6 @@
 package dk.lyngby.routes;
 
-import dk.lyngby.controller.impl.RequestController;
-import dk.lyngby.controller.impl.RouteController;
+import dk.lyngby.controller.impl.RideRequestController;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -12,14 +11,13 @@ import static io.javalin.apibuilder.ApiBuilder.*;
  */
 public class RequestsRoute {
 
-    private final RequestController rc = new RequestController();
+    private final RideRequestController rc = new RideRequestController();
 
     public EndpointGroup getRoutes(){
         return () -> {
             path("/requests", () -> {
                 get("/{userid}", rc::getAllRequestsByUserId);
                 post("/requests", rc::create);
-
             });
         };
     }

@@ -13,7 +13,7 @@ public class Populate {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         truncateRoutes(emf);
-        populateRoutes(emf);
+        //populateRoutes(emf);
     }
 
 
