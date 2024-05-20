@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+/**
+ * @Author MrJustMeDahl
+ * This class represents the combined primary key of the RideRequest entity.
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
