@@ -1,12 +1,13 @@
 package dk.lyngby.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -40,14 +41,17 @@ public class Route {
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
-
+    
     @Column(name = "departure_date_time", nullable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private LocalDateTime departureDateTime;
+    LocalDateTime departureTime;
+    @JsonIgnore
+    @OneToMany(mappedBy = "ride")
+    private List<RideRequest> rideRequests;
 
     public Route(Driver driver, int startPostalCode, int endPostalCode, String startLocation, String endLocation,
                  double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize,
-                 LocalDateTime departureDateTime) {
+                 LocalDateTime departureTime) {
         this.driver = driver;
         this.startPostalCode = startPostalCode;
         this.endPostalCode = endPostalCode;
@@ -58,8 +62,17 @@ public class Route {
         this.handicapAvailability = handicapAvailability;
         this.passengerAmount = passengerAmount;
         this.carSize = carSize;
-        this.departureDateTime = departureDateTime;
+        this.departureTime = departureTime;
+        this.rideRequests = new ArrayList<>();
     }
 
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startLocation, endLocation, driver, routeLength, timeInMinutes, handicapAvailability, passengerAmount, carSize, departureTime);
+    }
+
+    public void addRideRequest(RideRequest newRideRequest){
+        rideRequests.add(newRideRequest);
+    }
 }

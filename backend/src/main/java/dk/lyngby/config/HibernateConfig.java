@@ -3,7 +3,9 @@ package dk.lyngby.config;
 import dk.lyngby.model.Driver;
 /*import dk.lyngby.model.Hotel;
 import dk.lyngby.model.Room;*/
+import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.Route;
+import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -87,10 +89,10 @@ public class HibernateConfig {
 
 
     private static void getAnnotationConfiguration(Configuration configuration) {
-        //TODO: Remove. Kept for Reference
-        //configuration.addAnnotatedClass(Hotel.class);
         configuration.addAnnotatedClass(Driver.class);
         configuration.addAnnotatedClass(Route.class);
+        configuration.addAnnotatedClass(RideRequest.class);
+        configuration.addAnnotatedClass(UserMock.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {

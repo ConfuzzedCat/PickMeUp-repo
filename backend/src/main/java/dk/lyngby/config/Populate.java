@@ -4,7 +4,6 @@ import dk.lyngby.model.Driver;
 import dk.lyngby.model.Route;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -13,10 +12,7 @@ public class Populate {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         truncateRoutes(emf);
-        /*populateRoutes(emf);*/
-        //createDrivers(emf);
-        createRoutes(emf);
-
+        //populateRoutes(emf);
     }
 
     /**
