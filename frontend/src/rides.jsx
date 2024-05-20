@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import RequestButton from "./components/RequestButton";
 
 function RideModal({ ride, onClose }) {
     if (!ride) return null;
@@ -41,6 +42,7 @@ function RideModal({ ride, onClose }) {
                 <p><strong>Route Length:</strong> {ride.routeLength} km</p>
                 <p><strong>Time in Minutes:</strong> {ride.timeInMinutes} minutes</p>
                 <p><strong>Departure Time:</strong> {`${ride.departureTime[0]}:${ride.departureTime[1]}`}</p>
+                <RequestButton ride={ride} />
                 <button onClick={onClose} style={closeButtonStyle}>Close</button>
             </div>
         </div>
