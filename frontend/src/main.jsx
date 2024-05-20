@@ -12,6 +12,7 @@ import {
   Route,
 } from "react-router-dom";
 import Signup from "./signup";
+import Requests from "./components/Requests.jsx";
 
 const routes = createBrowserRouter(
     createRoutesFromElements(
@@ -20,6 +21,7 @@ const routes = createBrowserRouter(
             <Route path="/routes" element={<Routes />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/rides" element={<Rides />} />
+            <Route path="/requests" element={<Requests/>} />
         </Route>
     )
 

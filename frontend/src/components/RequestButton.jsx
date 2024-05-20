@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import rideRequestFetching from "../datafetching/rideRequestFetching";
+import { redirect, useNavigate } from "react-router-dom";
 
 const RequestButton = ({ ride }) => {
 
@@ -10,6 +11,7 @@ const RequestButton = ({ ride }) => {
 };
 
   //mock a user
+  //TODO: remove mock and get user from DB
   const user1 = {
     id: 2,
     email : "123@mail.com",
@@ -29,16 +31,20 @@ const RequestButton = ({ ride }) => {
     rideRequestReceiverID: selectedRide.driverId,
     rideID: selectedRide.id
   };
+  let creation = false;
 
   const rejectRequestDuplicationMessage = () => {
     window.alert("A request already exists for this ride!")
+    creation = true;
   };
+  const navigate = useNavigate();
   
-
-
   const handleClick = () => {
     console.log(newRequest);
-    rideRequestFetching(newRequest, rejectRequestDuplicationMessage); 
+    rideRequestFetching(newRequest, rejectRequestDuplicationMessage)
+    if(creation === false){
+      navigate("/requests");
+    }
   };
 
   return (
