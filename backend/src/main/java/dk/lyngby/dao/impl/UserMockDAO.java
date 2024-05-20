@@ -25,9 +25,10 @@ public class UserMockDAO implements IDao<UserMock, String> {
         }
         return instance;
     }
-
+    // TODO: Clarification needed, is the id meant to be a string or integer? Remove the proxy read method below when fixed. from @ConfuzzedCat
     @Override
-    public UserMock read(Integer d) throws ApiException {
+    //public UserMock read(Integer d) throws ApiException { // this is what it was, need to make it a string to be able to compile.
+    public UserMock read(String d) throws ApiException {
         UserMock found;
         try(EntityManager em = emf.createEntityManager()){
             found = em.find(UserMock.class, d);
@@ -35,6 +36,10 @@ public class UserMockDAO implements IDao<UserMock, String> {
             found.getIncomingRideRequests().size();
         }
         return found;
+    }
+    
+    public UserMock read(Integer d) throws ApiException {
+        return read(d.toString());
     }
 
     @Override

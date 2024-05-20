@@ -1,59 +1,80 @@
 package dk.lyngby.dto;
 
-import dk.lyngby.model.Driver;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dk.lyngby.model.Route;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.Objects;
 @Getter
-@NoArgsConstructor
-public class RouteDto {
+public class RouteDTO {
 
-    private Integer id;
-
+    private String startPostalCode;
+    private String endPostalCode;
     private String startLocation;
     private String endLocation;
-    private LocalDateTime departureDateTime;
-    private Integer startPostalCode;
-    private Integer endPostalCode;
+    private int driverId;
     private double routeLength;
     private int timeInMinutes;
     private boolean handicapAvailability;
     private int passengerAmount;
     private int carSize;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    LocalDateTime departureTime;
 
-    public RouteDto(Route route) {
-        this.id = route.getId();
-        this.startPostalCode = route.getStartPostalCode();
-        this.endPostalCode = route.getEndPostalCode();
+    public RouteDTO(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        this.driverId = driverId;
+        this.routeLength = routeLength;
+        this.timeInMinutes = timeInMinutes;
+        this.handicapAvailability = handicapAvailability;
+        this.passengerAmount = passengerAmount;
+        this.carSize = carSize;
+        this.departureTime = departureTime;
+    }
+
+    public RouteDTO(Route route) {
         this.startLocation = route.getStartLocation();
         this.endLocation = route.getEndLocation();
+        this.driverId = route.getDriver().getId();
         this.routeLength = route.getRouteLength();
         this.timeInMinutes = route.getTimeInMinutes();
         this.handicapAvailability = route.isHandicapAvailability();
         this.passengerAmount = route.getPassengerAmount();
         this.carSize = route.getCarSize();
-        this.departureDateTime = route.getDepartureDateTime();
+        this.departureTime = route.getDepartureTime();
+
     }
 
-    public static List<RouteDto> toRouteDTOList(List<Route> routes) {
-        return routes.stream().map(RouteDto::new).collect(Collectors.toList());
+    public RouteDTO(String startPostalCode, String endPostalCode, String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+        this.startPostalCode = startPostalCode;
+        this.endPostalCode = endPostalCode;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        this.driverId = driverId;
+        this.routeLength = routeLength;
+        this.timeInMinutes = timeInMinutes;
+        this.handicapAvailability = handicapAvailability;
+        this.passengerAmount = passengerAmount;
+        this.carSize = carSize;
+        this.departureTime = departureTime;
+    }
+
+    public static List<RouteDTO> toDTOList(List<Route> routeList) {
+        return routeList.stream().map(RouteDTO::new).toList();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RouteDto routeDto)) return false;
-
-        return getId().equals(routeDto.getId());
+        if (!(o instanceof RouteDTO routeDto)) return false;
+        return driverId == routeDto.driverId;
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return Objects.hash(driverId);
     }
 }

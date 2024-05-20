@@ -6,10 +6,10 @@ import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
-import dk.lyngby.dto.RouteDto;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
+import dk.lyngby.dto.RouteDTO;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.Getter;
@@ -135,10 +135,10 @@ public class RouteController implements IController<Route, Integer> {
         // entity
         Route route = dao.read(id);
         // dto
-        RouteDto routeDto = new RouteDto(route);
+        RouteDTO routeDto = new RouteDTO(route);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDto, RouteDto.class);
+        ctx.json(routeDto, RouteDTO.class);
     }
 
     /**
@@ -153,10 +153,10 @@ public class RouteController implements IController<Route, Integer> {
         // entity
         List<Route> routeList = dao.readAll();
         // dto
-        List<RouteDto> routeDTOList = RouteDto.toRouteDTOList(routeList);
+        List<RouteDTO> routeDTOList = RouteDTO.toDTOList(routeList);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDTOList, RouteDto.class);
+        ctx.json(routeDTOList, RouteDTO.class);
     }
 
 
@@ -164,23 +164,23 @@ public class RouteController implements IController<Route, Integer> {
     public void create(Context ctx) {
         Route jsonRequest = ctx.bodyAsClass(Route.class);
         Route route = dao.create(jsonRequest);
-        RouteDto routeDto = new RouteDto(route);
+        RouteDTO routeDto = new RouteDTO(route);
         ctx.res().setStatus(201);
-        ctx.json(routeDto, RouteDto.class);
+        ctx.json(routeDto, RouteDTO.class);
     }
 
     @Override
     public void update(Context ctx) {
-        long id = ctx.pathParamAsClass("id", Long.class).get();
+        Integer id = ctx.pathParamAsClass("id", Integer.class).get();
         Route update = dao.update(id, validateEntity(ctx));
-        RouteDto routeDto = new RouteDto(update);
+        RouteDTO routeDto = new RouteDTO(update);
         ctx.res().setStatus(200);
         ctx.json(routeDto, Route.class);
     }
 
     @Override
     public void delete(Context ctx) {
-        long id = ctx.pathParamAsClass("id", Long.class).get();
+        Integer id = ctx.pathParamAsClass("id", Integer.class).get();
         dao.delete(id);
         ctx.res().setStatus(204);
     }
@@ -204,10 +204,10 @@ public class RouteController implements IController<Route, Integer> {
         // Extract the fields dynamically
         List<Route> routes = dao.searchFilters(jsonObject);
 
-        List<RouteDto> routeDto = RouteDto.toRouteDTOList(routes);
+        List<RouteDTO> routeDto = RouteDTO.toDTOList(routes);
         // response
         ctx.res().setStatus(200);
-        ctx.json(routeDto, RouteDto.class);
+        ctx.json(routeDto, RouteDTO.class);
     }
 }
 

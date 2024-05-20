@@ -34,6 +34,11 @@ public class Driver {
         this.licenseNumber = licenseNumber;
     }
 
+    public Driver(UserMock driver, String licenseNumber){
+        this.driverName = String.format("{0} {1}", driver.getFirstName(), driver.getLastName());
+        this.licenseNumber = licenseNumber;
+    }
+
     public void setRoutes(Set<Route> routes) {
         if(routes != null) {
             this.routes = routes;

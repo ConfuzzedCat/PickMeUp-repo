@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IDao<T, D> {
 
-    T read(Integer d) throws ApiException;
+    T read(D d) throws ApiException;
     List<T> readAll();
-    Route create(Route t);
-    Route update(Long d, Route t);
-    void delete(Long d);
+    T create(T t);
+    T update(D d, T t);
+    void delete(D d);
     boolean validatePrimaryKey(D d);
 
 }

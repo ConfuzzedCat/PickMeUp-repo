@@ -3,10 +3,7 @@ package dk.lyngby.dao.impl;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.exception.ApiException;
-import dk.lyngby.model.RideRequest;
-import dk.lyngby.model.RideRequestID;
-import dk.lyngby.model.Route;
-import dk.lyngby.model.UserMock;
+import dk.lyngby.model.*;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
@@ -22,7 +19,8 @@ public class RideRequestDAOTest {
     private static EntityManagerFactory emfTest;
     private static RideRequestDAO dao;
     private Route ride1, ride2, ride3;
-    private UserMock passenger, driver;
+    private UserMock passenger, driverMock;
+    private Driver driver;
     private RideRequest r1, r2, r3;
 
     @BeforeAll
@@ -47,21 +45,22 @@ public class RideRequestDAOTest {
             //em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
             passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
-            driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+            driverMock = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+            driver = new Driver(driverMock, "LN12345");
             em.persist(passenger);
             em.persist(driver);
-            ride1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-            ride2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", driver.getId(), 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
-            ride3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", driver.getId(), 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            ride1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            ride2 = new Route(driver,2000, 1172, "Duevej 92", "Nørregade 10", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+            ride3 = new Route(driver, 2000, 1172, "Frederiksvej 10", "Nørregade 10", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
             Route[] routeArray = {ride1, ride2, ride3};
             for(Route r: routeArray){
                 em.persist(r);
-                driver.addRide(r);
+                driverMock.addRide(r);
             }
 
-            r1 = new RideRequest(passenger, driver, ride1);
-            r2 = new RideRequest(passenger, driver, ride2);
-            r3 = new RideRequest(passenger, driver, ride3);
+            r1 = new RideRequest(passenger, driverMock, ride1);
+            r2 = new RideRequest(passenger, driverMock, ride2);
+            r3 = new RideRequest(passenger, driverMock, ride3);
 
             em.persist(r1);
             em.persist(r2);
@@ -97,10 +96,10 @@ public class RideRequestDAOTest {
 
     @Test
     void createTest() throws ApiException{
-        RideRequest rideRequest = dao.create(new RideRequest(driver, driver, ride2));
+        RideRequest rideRequest = dao.create(new RideRequest(driverMock, driverMock, ride2));
         assertEquals(new RideRequestID(2, 2), rideRequest.getId());
 
-        assertThrows(ApiException.class, () -> dao.create(new RideRequest(passenger, driver, ride1)));
+        assertThrows(ApiException.class, () -> dao.create(new RideRequest(passenger, driverMock, ride1)));
     }
 
     @Test

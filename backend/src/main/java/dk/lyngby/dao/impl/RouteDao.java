@@ -1,5 +1,6 @@
 package dk.lyngby.dao.impl;
 
+import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.model.Route;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.dao.IDao;
@@ -20,7 +21,7 @@ import java.time.format.DateTimeParseException;
 
 
 
-public class RouteDao implements IDao {
+public class RouteDao implements IDao<Route, Integer> {
 
     private static EntityManagerFactory emf ;
 
@@ -94,13 +95,13 @@ public class RouteDao implements IDao {
     }
 
     @Override
-    public Route update(Long id, Route updatedRoute) {
+    public Route update(Integer id, Route updatedRoute) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Route route = em.find(Route.class, id);
             route.setStartLocation(updatedRoute.getStartLocation());
             route.setEndLocation(updatedRoute.getEndLocation());
-            route.setDepartureDateTime(updatedRoute.getDepartureDateTime());
+            route.setDepartureTime(updatedRoute.getDepartureTime());
             em.merge(route);
             em.getTransaction().commit();
             return route;
@@ -108,7 +109,7 @@ public class RouteDao implements IDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Route route = em.find(Route.class, id);
@@ -118,7 +119,7 @@ public class RouteDao implements IDao {
     }
 
     @Override
-    public boolean validatePrimaryKey(Object o) {
+    public boolean validatePrimaryKey(Integer id) {
         return false;
     }
 
