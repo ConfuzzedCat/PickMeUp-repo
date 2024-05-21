@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import RequestButton from "./components/RequestButton";
+// Dette bliver ikke brugt mere, men jeg sletter den ikke fordi så kan man se hvad der er blevet ændret
 
 function RideModal({ ride, onClose }) {
     if (!ride) return null;
