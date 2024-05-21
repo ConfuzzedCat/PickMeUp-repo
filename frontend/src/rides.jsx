@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+
+import RequestButton from "./components/RequestButton";
 // Dette bliver ikke brugt mere, men jeg sletter den ikke fordi så kan man se hvad der er blevet ændret
+
 function RideModal({ ride, onClose }) {
     if (!ride) return null;
 
@@ -41,6 +44,7 @@ function RideModal({ ride, onClose }) {
                 <p><strong>Route Length:</strong> {ride.routeLength} km</p>
                 <p><strong>Time in Minutes:</strong> {ride.timeInMinutes} minutes</p>
                 <p><strong>Departure Time:</strong> {`${ride.departureTime[0]}:${ride.departureTime[1]}`}</p>
+                <RequestButton ride={ride} />
                 <button onClick={onClose} style={closeButtonStyle}>Close</button>
             </div>
         </div>

@@ -14,6 +14,9 @@ public class Routes {
 
     private final ExceptionHandler exceptionController = new ExceptionHandler();
     private final RoutesRoute routesRoute = new RoutesRoute();
+    private final RequestsRoute requestsRoute = new RequestsRoute();
+
+    private final ReviewRoute reviewRoute = new ReviewRoute();
     private int count = 0;
 
     private final Logger LOGGER = LoggerFactory.getLogger(Routes.class);
@@ -29,6 +32,8 @@ public class Routes {
 
             app.routes(() -> {
                 path("/", routesRoute.getRoutes());
+                path("/", requestsRoute.getRoutes());
+                path("/", reviewRoute.getRoutes());
             });
 
             app.after(ctx -> LOGGER.info(" Request {} - {} was handled with status code {}", count++, ctx.attribute("requestInfo"), ctx.status()));

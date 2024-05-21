@@ -3,6 +3,7 @@ package dk.lyngby.controller.impl;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RouteDao;
 import dk.lyngby.dto.RouteDTO;
@@ -10,6 +11,7 @@ import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
 import io.javalin.http.Context;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -24,10 +26,15 @@ import java.util.stream.Collectors;
 public class RouteController implements IController<Route, Integer> {
 
 
+    private RouteDao dao;
 
+    public RouteController() {
+        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+        this.dao = RouteDao.getInstance(emf);
+    }
 
         private RouteCalcUtil routeUtil = new RouteCalcUtil();
-        private RouteDao dao = RouteDao.getInstance();
+
 
         /**
          * This method is handling the context of /route/available_routes endpoint.
@@ -113,9 +120,16 @@ public class RouteController implements IController<Route, Integer> {
         }
 
 
+    /**
+     * Reads a single Route entity based on the ID provided in the request context,
+     * converts it to a RouteDTO, and sends it back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @throws ApiException if an error occurs during the process of reading the entity.
+     * @author Deniz Sønnmez
+     */
     @Override
-    public void read(Context ctx) throws ApiException
-    {
+    public void read(Context ctx) throws ApiException {
         // request
         int id = ctx.pathParamAsClass("id", Integer.class).get();
         // entity
@@ -127,6 +141,13 @@ public class RouteController implements IController<Route, Integer> {
         ctx.json(routeDto, RouteDTO.class);
     }
 
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
     @Override
     public void readAll(Context ctx) {
         // entity
