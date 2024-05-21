@@ -1,25 +1,27 @@
-import React from "react"
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import mockData from "../util/routesData.js"
-import RoutesFilter from "../components/RoutesFilter.jsx"
-import facade from "../util/apiFacade.js"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import facade from "../util/apiFacade.js";
+import RoutesFilter from "../components/RoutesFilter.jsx";
+import RideModal from "../components/RideModal.jsx";
 
 function Routes() {
-  const [routes, setRoutes] = useState([])
+  const [routes, setRoutes] = useState([]);
+  const [selectedRide, setSelectedRide] = useState(null); 
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
-      console.log(data)
-      setRoutes(data)
-    })
-  }, [])
+      setRoutes(data);
+    });
+  }, []);
+
+  const handleShowDetails = (route) => {
+    setSelectedRide(route);
+  };
 
   return (
     <div className="container mx-auto prose-xl">
       <h1>Available Routes</h1>
       <RoutesFilter setRoutes={setRoutes} />
-
       <table className="table">
         <thead>
           <tr>
@@ -32,7 +34,7 @@ function Routes() {
             <th>Passengers</th>
             <th>Car seats</th>
             <th>Handicap Accessibility</th>
-            <th>Actions</th> {/* New column header for actions */}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -48,17 +50,17 @@ function Routes() {
               <td>{route.carSize}</td>
               <td>{route.handicapAvailability ? "Yes" : "No"}</td>
               <td>
-                <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
+                <button onClick={() => handleShowDetails(route)} className="btn btn-sm btn-outline">
                   See More
-                </Link>
-              </td>{" "}
-              {/* Button in a new cell */}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
     </div>
-  )
+  );
 }
 
-export default Routes
+export default Routes;
