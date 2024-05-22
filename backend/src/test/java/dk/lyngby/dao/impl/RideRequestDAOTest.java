@@ -105,7 +105,7 @@ public class RideRequestDAOTest {
 
     @Test
     void getRideRequestsForUserTest() throws ApiException{
-        List<RideRequest> rideRequests = dao.getRideRequestsForUser(1);
+        List<RideRequest> rideRequests = dao.getIncomingRideRequestsForUser(1);
         assertEquals(3, rideRequests.size());
     }
 }

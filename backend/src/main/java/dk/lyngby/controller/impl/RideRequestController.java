@@ -20,18 +20,39 @@ public class RideRequestController implements IController<RideRequest, Integer> 
     private RideRequestDAO dao = RideRequestDAO.getInstance(HibernateConfig.getEntityManagerFactory());
 
     /**
-     * This method returns a list of all Requests for a specific user to the /requests/{userid} endpoint.
+     * This method returns a list of all outgoing Requests for a specific user to the /requests/incoming/{userid} endpoint.
      *
      * @param ctx
      * @throws ApiException
      * @author pelle112112
      */
-    public void getAllRequestsByUserId(Context ctx) throws ApiException {
+    public void getAllOutgoingRequestsByUserId(Context ctx) throws ApiException {
         int id = ctx.pathParamAsClass("userid", Integer.class).get();
         List<RideRequest> requests;
 
         //Get the Requests from the DB
-        requests = dao.getRideRequestsForUser(id);
+        requests = dao.getOutgoingRideRequestsForUser(id);
+        List<RideRequestDTO> dtos = new ArrayList<>();
+        for(RideRequest r: requests){
+            dtos.add(new RideRequestDTO(r.getId(), r.getRequestSender().getId(), r.getRequestReceiver().getId(), r.getRide().getId()));
+        }
+
+        ctx.json(dtos);
+        ctx.status(200);
+    }
+
+    /**
+     * This method returns a list of all incoming Requests for a specific user to the /requests/outgoing/{userid} endpoint.
+     * @param ctx
+     * @throws ApiException
+     * @author MrJustMeDahl
+     */
+    public void getAllIncomingRequestsByUserId(Context ctx) throws ApiException{
+        int id = ctx.pathParamAsClass("userid", Integer.class).get();
+        List<RideRequest> requests;
+
+        //Get the Requests from the DB
+        requests = dao.getIncomingRideRequestsForUser(id);
         List<RideRequestDTO> dtos = new ArrayList<>();
         for(RideRequest r: requests){
             dtos.add(new RideRequestDTO(r.getId(), r.getRequestSender().getId(), r.getRequestReceiver().getId(), r.getRide().getId()));
