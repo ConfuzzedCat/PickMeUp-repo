@@ -7,7 +7,7 @@ import RatingReviewModal from "../components/RatingReviewModal.jsx";
 function Routes() {
   const [routes, setRoutes] = useState([]);
   const [selectedRide, setSelectedRide] = useState(null);
-  const [selectedReview, setSelectedReview] = useState(null);
+  const [selectedRatingReview, setSelectedRatingReview] = useState(null);
 
   useEffect(() => {
     facade.fetchData("routes/", "GET").then((data) => {
@@ -19,8 +19,8 @@ function Routes() {
     setSelectedRide(route);
   };
 
-  const handleShowReviewDetails = (driver) => {
-    setSelectedReview(driver);
+  const handleShowRatingReview = (driver) => {
+    setSelectedRatingReview(driver);
   };
 
   return (
@@ -34,7 +34,7 @@ function Routes() {
             <th>Start location</th>
             <th>Destination</th>
             <th>Driver</th>
-            <th>🌟</th>
+            <th>Rating</th>
             <th>Time</th>
             <th>Date</th>
             <th>Passengers</th>
@@ -51,7 +51,7 @@ function Routes() {
               <td>{route.endLocation}</td>
               <td>{route.driverId}</td>
               <td>
-                <p onClick={() => handleShowReviewDetails(route.driver)}>🌟🌟🌟🌟🌟</p>
+                <p onClick={() => handleShowRatingReview(route.driver)}>🌟🌟🌟🌟🌟</p>
               </td>
               <td>{route.timeInMinutes}</td>
               <td>{route.departureTime}</td>
@@ -62,16 +62,15 @@ function Routes() {
                 <button onClick={() => handleShowRideDetails(route)} className="btn btn-sm btn-outline">
                   Ride Details
                 </button>
-                <button onClick={() => handleShowReviewDetails(route.driver)} className="btn btn-sm btn-outline">
-                  Review
-                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
-      {selectedReview && <RatingReviewModal driver={selectedReview} onClose={() => setSelectedReview(null)} />}
+      {selectedRatingReview && (
+        <RatingReviewModal driver={selectedRatingReview} onClose={() => setSelectedRatingReview(null)} />
+      )}
     </div>
   );
 }
