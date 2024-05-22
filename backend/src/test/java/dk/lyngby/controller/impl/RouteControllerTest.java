@@ -36,6 +36,7 @@ class RouteControllerTest {
 
     @BeforeAll
     static void beforeAll() {
+        HibernateConfig.setTest(true);
         emfTest = HibernateConfig.getEntityManagerFactory();
         routeController = new RouteController();
         app = Javalin.create();

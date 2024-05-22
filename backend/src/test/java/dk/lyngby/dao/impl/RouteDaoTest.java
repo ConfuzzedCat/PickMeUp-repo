@@ -4,10 +4,7 @@ import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 import io.javalin.Javalin;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ class RouteDaoTest {
         HibernateConfig.setTest(true);
         emfTest = HibernateConfig.getEntityManagerFactory();
         app = Javalin.create();
-        rDao = RouteDao.getInstance();
+        rDao = RouteDao.getInstance(emfTest);
         ApplicationConfig.startServer(app, 7777);
 
     }
@@ -43,9 +40,10 @@ class RouteDaoTest {
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
-            em.createQuery("DELETE FROM Route r").executeUpdate();
-            // Reset sequence
-            //em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.ride_request RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
             // Insert test data
             r1 = new Route(2, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route(1, 1, "Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
@@ -70,8 +68,8 @@ class RouteDaoTest {
         }
     }
 
-    @AfterEach
-    void tearDown() {
+    @AfterAll
+    static void tearDown() {
 
         HibernateConfig.setTest(false);
         ApplicationConfig.stopServer(app);
@@ -79,7 +77,7 @@ class RouteDaoTest {
 
     @Test
     void getPassengerRoutesWithFilter() {
-        RouteDao routeDao = RouteDao.getInstance();
+        RouteDao routeDao = RouteDao.getInstance(emfTest);
         List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej,2", 2300, 3450);
         List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej,18", 2100, 2200);
 
