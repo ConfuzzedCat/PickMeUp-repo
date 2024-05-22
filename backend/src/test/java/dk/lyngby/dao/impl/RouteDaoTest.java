@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 class RouteDaoTest {
     private static EntityManagerFactory emfTest;
 
-    private static RouteDao rDao;
+    private static RouteDAO rDao;
     private static Route r1, r2, r3;
     private static Javalin app;
 
@@ -29,7 +29,7 @@ class RouteDaoTest {
         HibernateConfig.setTest(true);
         emfTest = HibernateConfig.getEntityManagerFactory();
         app = Javalin.create();
-        rDao = RouteDao.getInstance(emfTest);
+        rDao = RouteDAO.getInstance(emfTest);
         ApplicationConfig.startServer(app, 7777);
 
     }
@@ -77,7 +77,7 @@ class RouteDaoTest {
 
     @Test
     void getPassengerRoutesWithFilter() {
-        RouteDao routeDao = RouteDao.getInstance(emfTest);
+        RouteDAO routeDao = RouteDAO.getInstance(emfTest);
         List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej,2", 2300, 3450);
         List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej,18", 2100, 2200);
 
