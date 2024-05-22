@@ -49,4 +49,8 @@ public class RideRequest {
         requestSender.addOutgoingRideRequest(this);
         requestReceiver.addIncomingRideRequest(this);
     }
+
+    public RideRequest(int id){
+
+    }
 }
