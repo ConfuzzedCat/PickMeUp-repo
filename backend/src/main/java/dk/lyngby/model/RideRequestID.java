@@ -28,4 +28,5 @@ public class RideRequestID implements Serializable {
         return Objects.equals(requestSenderID, that.requestSenderID) &&
                 Objects.equals(rideID, that.rideID);
     }
+
 }

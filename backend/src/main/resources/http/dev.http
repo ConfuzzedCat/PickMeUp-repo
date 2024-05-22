@@ -82,3 +82,9 @@ Content-Type: application/json
     "carSize": 7,
     "departureTime": "09:00"
 }
+
+###
+GET http://localhost:7070/api/v1/passengerinfo/1
+Content-Type: application/json
+
+

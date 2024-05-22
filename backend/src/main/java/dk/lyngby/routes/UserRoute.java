@@ -17,7 +17,7 @@ public class UserRoute {
 
         public EndpointGroup getInfo(){
             return () -> {
-                path("/passengerInfo", () -> {
+                path("/passengerinfo", () -> {
                     get("/{id}", rc::read);
                 });
             };
