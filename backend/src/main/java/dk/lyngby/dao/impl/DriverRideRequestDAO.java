@@ -12,14 +12,11 @@ public class DriverRideRequestDAO {
     private static EntityManagerFactory emf;
     private static DriverRideRequestDAO instance;
 
-    private RideRequestDAO rideRequestDAO;
-    private RouteDao routeDAO;
-
     /**
      * Singleton pattern
      */
-    public static DriverRideRequestDAO getInstance(EntityManagerFactory _emf){
-        if(instance == null){
+    public static DriverRideRequestDAO getInstance(EntityManagerFactory _emf) {
+        if (instance == null) {
             emf = _emf;
             instance = new DriverRideRequestDAO();
         }
@@ -27,8 +24,6 @@ public class DriverRideRequestDAO {
     }
 
     private DriverRideRequestDAO() {
-        this.rideRequestDAO = RideRequestDAO.getInstance(emf);
-        this.routeDAO = RouteDao.getInstance(emf);
     }
 
     /**
