@@ -53,6 +53,7 @@ class RouteDaoTest {
             r1 = new Route(d1, 1, 2,"Start1", "End1", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route(d1, 2, 1,"Start2", "End2", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             r3 = new Route(d1, 1, 2, "Start3", "End3", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            em.persist(d1);
             em.persist(r1);
             em.persist(r2);
             em.persist(r3);
