@@ -46,7 +46,7 @@ function RatingReviewModal({ driver, onClose }) {
         },
         {
             rating: 3.8,
-            review: "Good ride but the car could have been cleaner."
+            review: "Good ride but the car could have been cleaner. He did play Kendrick Lamarr though!"
         },
         {
             rating: 5.0,
@@ -81,8 +81,8 @@ function RatingReviewModal({ driver, onClose }) {
                 {mockReviews.map((review, index) => (
                     <div key={index} style={{ marginBottom: 20 }}>
                         <p><strong>Ride {index + 1}</strong></p>
-                        <p><strong>Rating:</strong> {ride.rating}</p>
-                        <p><strong>Review:</strong> {ride.review}</p>
+                        <p><strong>Rating:</strong> {review.rating}</p>
+                        <p><strong>Review:</strong> {review.review}</p>
                     </div>
                 ))}
                 <button onClick={onClose} style={closeButtonStyle}>Close</button>
