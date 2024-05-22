@@ -68,9 +68,9 @@ function Routes() {
         </tbody>
       </table>
       {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
-      {selectedRatingReview && (
+      {selectedRatingReview && 
         <RatingReviewModal driver={selectedRatingReview} onClose={() => setSelectedRatingReview(null)} />
-      )}
+      }
     </div>
   );
 }
