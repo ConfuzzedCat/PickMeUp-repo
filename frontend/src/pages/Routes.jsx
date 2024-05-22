@@ -10,7 +10,7 @@ function Routes() {
   const [selectedReview, setSelectedReview] = useState(null);
 
   useEffect(() => {
-    facade.fetchData("rides/", "GET").then((data) => {
+    facade.fetchData("routes/", "GET").then((data) => {
       setRoutes(data);
     });
   }, []);
@@ -50,7 +50,9 @@ function Routes() {
               <td>{route.startLocation}</td>
               <td>{route.endLocation}</td>
               <td>{route.driverId}</td>
-              <td><p onClick={() => handleShowReviewDetails(driver)}>🌟🌟🌟🌟🌟</p></td>
+              <td>
+                <p onClick={() => handleShowReviewDetails(route.driver)}>🌟🌟🌟🌟🌟</p>
+              </td>
               <td>{route.timeInMinutes}</td>
               <td>{route.departureTime}</td>
               <td>{route.passengerAmount}</td>
@@ -60,7 +62,7 @@ function Routes() {
                 <button onClick={() => handleShowRideDetails(route)} className="btn btn-sm btn-outline">
                   Ride Details
                 </button>
-                <button onClick={() => handleShowReviewDetails(route.driverId)} className="btn btn-sm btn-outline">
+                <button onClick={() => handleShowReviewDetails(route.driver)} className="btn btn-sm btn-outline">
                   Review
                 </button>
               </td>
