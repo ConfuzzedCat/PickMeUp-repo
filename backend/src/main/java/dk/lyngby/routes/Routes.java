@@ -15,6 +15,7 @@ public class Routes {
     private final ExceptionHandler exceptionController = new ExceptionHandler();
     private final RoutesRoute routesRoute = new RoutesRoute();
     private final RequestsRoute requestsRoute = new RequestsRoute();
+    private final UserRoute userRoute = new UserRoute();
 
     private final ReviewRoute reviewRoute = new ReviewRoute();
     private int count = 0;
@@ -33,6 +34,7 @@ public class Routes {
             app.routes(() -> {
                 path("/", routesRoute.getRoutes());
                 path("/", requestsRoute.getRoutes());
+                path("/", userRoute.getInfo());
                 path("/", reviewRoute.getRoutes());
             });
 
