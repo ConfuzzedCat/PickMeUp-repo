@@ -51,7 +51,7 @@ function Routes() {
               <td>{route.endLocation}</td>
               <td>{route.driverId}</td>
               <td>
-                <p onClick={() => handleShowRatingReview(route.driver)}>🌟🌟🌟🌟🌟</p>
+                <button onClick={() => handleShowRatingReview(route.driver)} classname="btn btn-sm btn-outline">🌟🌟🌟🌟🌟</button>
               </td>
               <td>{route.timeInMinutes}</td>
               <td>{route.departureTime}</td>
