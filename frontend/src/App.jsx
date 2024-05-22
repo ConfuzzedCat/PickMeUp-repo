@@ -6,31 +6,53 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
-import "./App.css";
 
 function App() {
   return (
-
     <>
-     <div>
-        <ul>
+      <nav className="bg-gray-800">
+        <ul className="flex">
           <li>
-            <NavLink to="/signup" activeClassName="active"> Signup</NavLink>
-            <NavLink to="/routes" activeClassName="active"> Routes</NavLink>
-            <NavLink to="/requests" activeClassName="active"> Requests</NavLink>
-            <NavLink to="/available_routes" activeClassName="active"> Search for Routes</NavLink>
-
-
+            <NavLink
+              to="/signup"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Signup
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/routes"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Routes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/requests"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/available_routes"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Search for Routes
+            </NavLink>
           </li>
         </ul>
-        
-      </div>
-
-  <Outlet>
-    </Outlet>
-
-</>
+      </nav>
+      <Outlet />
+    </>
   );
 }
 
-export default App
+export default App;
