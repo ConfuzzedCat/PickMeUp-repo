@@ -128,9 +128,9 @@ public class RouteDao implements IDao<Route, Integer> {
      route length, time in minutes, handicap availability, passenger amount,
      car size, or departure time **/
 
-    public List<dk.lyngby.model.Route> searchFilters(JsonObject filters) throws Exception {
+    public List<Route> searchFilters(JsonObject filters) throws Exception {
         StringBuilder queryString = new StringBuilder("SELECT r FROM Route r WHERE 1 = 1");
-        TypedQuery<dk.lyngby.model.Route> query;
+        TypedQuery<Route> query;
 
         try (EntityManager em = emf.createEntityManager()) {
             if (filters != null) {
@@ -145,7 +145,7 @@ public class RouteDao implements IDao<Route, Integer> {
                     }
                 });
 
-                query = em.createQuery(queryString.toString(), dk.lyngby.model.Route.class);
+                query = em.createQuery(queryString.toString(), Route.class);
 
                 filters.entrySet().forEach(entry -> {
                     String key = entry.getKey();
@@ -155,7 +155,7 @@ public class RouteDao implements IDao<Route, Integer> {
                     }
                 });
             } else {
-                query = em.createQuery("SELECT r FROM Route r", dk.lyngby.model.Route.class);
+                query = em.createQuery("SELECT r FROM Route r", Route.class);
             }
 
             return query.getResultList();

@@ -72,6 +72,14 @@ public class Route {
         return Objects.hash(id, startLocation, endLocation, driver, routeLength, timeInMinutes, handicapAvailability, passengerAmount, carSize, departureTime);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(id, route.id) && Objects.equals(driver.getId(), route.getDriver().getId()) && Double.compare(routeLength, route.routeLength) == 0 && timeInMinutes == route.timeInMinutes && handicapAvailability == route.handicapAvailability && passengerAmount == route.passengerAmount && carSize == route.carSize && Objects.equals(startLocation, route.startLocation) && Objects.equals(endLocation, route.endLocation) && Objects.equals(departureTime, route.departureTime);
+    }
+
     public void addRideRequest(RideRequest newRideRequest){
         rideRequests.add(newRideRequest);
     }
