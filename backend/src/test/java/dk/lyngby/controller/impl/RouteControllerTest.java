@@ -51,6 +51,7 @@ class RouteControllerTest {
             em.getTransaction().begin();
             // Delete all rows
             em.createQuery("DELETE FROM Route r").executeUpdate();
+            em.createQuery("DELETE FROM Driver d").executeUpdate();
             // Reset sequence
 //            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
