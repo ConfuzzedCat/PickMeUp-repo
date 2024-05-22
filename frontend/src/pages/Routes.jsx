@@ -10,7 +10,7 @@ function Routes() {
   const [selectedRatingReview, setSelectedRatingReview] = useState(null);
 
   useEffect(() => {
-    facade.fetchData("routes/", "GET").then((data) => {
+    facade.fetchData("rides/", "GET").then((data) => {
       setRoutes(data);
     });
   }, []);
