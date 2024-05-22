@@ -15,9 +15,12 @@ function App() {
      <div>
         <ul>
           <li>
-            <NavLink to="/signup" activeClassName="active">
-              Signup
-            </NavLink>
+            <NavLink to="/signup" activeClassName="active"> Signup</NavLink>
+            <NavLink to="/routes" activeClassName="active"> Routes</NavLink>
+            <NavLink to="/requests" activeClassName="active"> Requests</NavLink>
+            <NavLink to="/available_routes" activeClassName="active"> Search for Routes</NavLink>
+
+
           </li>
         </ul>
         

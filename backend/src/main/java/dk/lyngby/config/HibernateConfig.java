@@ -89,6 +89,9 @@ public class HibernateConfig {
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Route.class);
         configuration.addAnnotatedClass(Driver.class);
+        configuration.addAnnotatedClass(RideRequest.class);
+        configuration.addAnnotatedClass(UserMock.class);
+
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
