@@ -49,11 +49,11 @@ public class RestTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
             // Insert test data
             passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
+            driverMock = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
             driver = new Driver(driverMock, "LN12345");
-
             em.persist(passenger);
             em.persist(driver);
-
+            em.persist(driverMock);
             ride1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             ride2 = new Route(driver, 2000, 1172, "Duevej 92", "Nørregade 10", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             ride3 = new Route(driver, 2000, 1172, "Frederiksvej 10", "Nørregade 10", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
@@ -120,27 +120,12 @@ public class RestTest {
     }
 
     @Test
-    void getAllOutgoingRequestsForUser(){
+    void getAllRequestsForUser(){
         List<RideRequestDTO> rideRequestDTOS =
                 given()
                         .contentType("application/json")
                         .when()
-                        .get(BASE_URL + "/requests/outgoing/1")
-                        .then()
-                        .assertThat()
-                        .statusCode(200)
-                        .extract().body().jsonPath().getList("", RideRequestDTO.class);
-        assertEquals(new RideRequestID(1, 1), rideRequestDTOS.get(0).getId());
-        assertEquals(3, rideRequestDTOS.size());
-    }
-
-    @Test
-    void getAllIncomingRequestsForUser(){
-        List<RideRequestDTO> rideRequestDTOS =
-                given()
-                        .contentType("application/json")
-                        .when()
-                        .get(BASE_URL + "/requests/incoming/2")
+                        .get(BASE_URL + "/requests/1")
                         .then()
                         .assertThat()
                         .statusCode(200)
