@@ -3,8 +3,7 @@ package dk.lyngby.routes;
 import dk.lyngby.controller.impl.ReviewController;
 import io.javalin.apibuilder.EndpointGroup;
 
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class ReviewRoute {
     private final ReviewController rc = new ReviewController();
@@ -13,6 +12,8 @@ public class ReviewRoute {
         return () -> {
             path("/reviews", () -> {
                 post("/", rc::create);
+                get("/{id}", rc::read);
+                get("/driver/{id}", rc::readAll);
             });
         };
     }

@@ -14,6 +14,9 @@ import dk.lyngby.model.UserMock;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ReviewController implements IController<Review, Integer> {
 
@@ -45,10 +48,37 @@ public ReviewController() {
 
     }
 
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
     @Override
     public void readAll(Context ctx) {
+        List<Review> reviews = reviewDAO.readAll();
+        List<ReviewDTO> reviewDtos = ReviewDTO.toReviewDTOList(reviews);
         ctx.res().setStatus(200);
         ctx.json(reviewDAO.readAll(), ReviewDTO.class);
+    }
+
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
+    public void readAllByDriver(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).check(this::validatePrimaryKey, "Not a valid id").get();
+        List<Review> reviews = reviewDAO.readAll();
+        List<ReviewDTO> reviewDtos = reviews.stream()
+                .filter(r -> r.getDriver().getId() == id)
+                .map(ReviewDTO::new)
+                .collect(Collectors.toList());
+        ctx.res().setStatus(200);
+        ctx.json(reviewDtos);
     }
 
     @Override
