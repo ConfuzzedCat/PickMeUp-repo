@@ -72,6 +72,11 @@ public class UserMock implements Serializable{
         this.lastName = lastName;
     }
 
+    public UserMock (String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }

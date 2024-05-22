@@ -30,7 +30,7 @@ public class UserMockDAO implements IDao<UserMock, String> {
     //public UserMock read(Integer d) throws ApiException { // this is what it was, need to make it a string to be able to compile.
     public UserMock read(String d) throws ApiException {
         UserMock found;
-        try(EntityManager em = emf.createEntityManager()){
+        try (EntityManager em = emf.createEntityManager()) {
             found = em.find(UserMock.class, d);
             found.getOutgoingRideRequests().size();
             found.getIncomingRideRequests().size();
@@ -40,6 +40,18 @@ public class UserMockDAO implements IDao<UserMock, String> {
     
     public UserMock read(Integer d) throws ApiException {
         return read(d.toString());
+    }
+
+    public UserMock readInfo(Integer d) throws ApiException {
+        UserMock info;
+        try (var em = emf.createEntityManager()) {
+            info = em.find(UserMock.class, d);
+            info.getFirstName();
+            info.getLastName();
+            info.getEmail();
+        }
+            return info;
+
     }
 
     @Override
