@@ -53,6 +53,7 @@ public class RestTest {
             driver = new Driver(driverMock, "LN12345");
             em.persist(passenger);
             em.persist(driver);
+            em.persist(driverMock);
             ride1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             ride2 = new Route(driver, 2000, 1172, "Duevej 92", "Nørregade 10", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             ride3 = new Route(driver, 2000, 1172, "Frederiksvej 10", "Nørregade 10", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
