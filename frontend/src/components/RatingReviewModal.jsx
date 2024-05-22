@@ -31,11 +31,7 @@ function RatingReviewModal({ driver, onClose }) {
     const closeButtonStyle = {
         padding: 10,
         marginTop: 20,
-        cursor: 'pointer',
-        backgroundColor: 'red',
-        color: 'white',
-        border: 'none',
-        borderRadius: 5
+        cursor: 'pointer'
     };
 
 
@@ -67,6 +63,7 @@ function RatingReviewModal({ driver, onClose }) {
         {
             rating: 4.7,
             review: "Very pleasant ride. The car was clean and the driver was friendly."
+            
         }
     ];
     
