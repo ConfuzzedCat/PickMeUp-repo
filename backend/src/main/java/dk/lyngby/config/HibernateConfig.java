@@ -1,5 +1,6 @@
 package dk.lyngby.config;
 
+import dk.lyngby.model.Review;
 import dk.lyngby.model.Driver;
 import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.Route;
@@ -91,7 +92,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Driver.class);
         configuration.addAnnotatedClass(RideRequest.class);
         configuration.addAnnotatedClass(UserMock.class);
-
+        configuration.addAnnotatedClass(Review.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
