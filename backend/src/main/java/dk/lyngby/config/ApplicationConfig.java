@@ -1,6 +1,4 @@
 package dk.lyngby.config;
-
-import ch.qos.logback.core.model.Model;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.exception.ExceptionHandler;
 import dk.lyngby.routes.Routes;
@@ -9,9 +7,6 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
-
-import java.io.FileReader;
-import java.io.IOException;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
@@ -54,6 +49,4 @@ public class ApplicationConfig {
     public static void stopServer(Javalin app) {
         app.stop();
     }
-
-
 }

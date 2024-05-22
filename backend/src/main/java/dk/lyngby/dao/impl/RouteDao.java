@@ -67,7 +67,11 @@ public class RouteDao implements IDao {
 
     @Override
     public List readAll() {
-        return null;
+        try (var em = emf.createEntityManager())
+        {
+            var query = em.createQuery("SELECT r FROM Route r", Route.class);
+            return query.getResultList();
+        }
     }
 
     @Override
