@@ -6,7 +6,7 @@ import Routes from "./pages/Routes.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
 import Signup from "./signup";
 import { RouterProvider, Route, createRoutesFromElements, createBrowserRouter } from 'react-router-dom'
-
+import Requests from "./components/Requests.jsx";
 
 const routes = createBrowserRouter(
     createRoutesFromElements(
