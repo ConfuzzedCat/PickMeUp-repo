@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
 import "./index.css"
 import Routes from "./pages/Routes.jsx";
-import Rides from "./rides.jsx";
+
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
 import {
   createBrowserRouter,
@@ -20,7 +20,7 @@ const routes = createBrowserRouter(
             <Route path="/available_routes" element={<SearchForRoutes />} />
             <Route path="/routes" element={<Routes />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/rides" element={<Rides />} />
+            
             <Route path="/requests" element={<Requests/>} />
         </Route>
     )
