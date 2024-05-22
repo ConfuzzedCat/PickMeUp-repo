@@ -6,21 +6,32 @@ import dk.lyngby.dao.impl.DriverRideRequestDAO;
 import dk.lyngby.dto.DriverRideRequestDTO;
 import dk.lyngby.exception.ApiException;
 import io.javalin.http.Context;
+import jakarta.persistence.EntityManagerFactory;
 
 public class DriverRideRequestController implements IController<Void, Void> {
 
     private DriverRideRequestDAO dao = DriverRideRequestDAO.getInstance(HibernateConfig.getEntityManagerFactory());
 
-    public void acceptRideRequest(Context ctx) throws ApiException {
+
+
+    public void acceptRideRequest(Context ctx) {
         DriverRideRequestDTO requestDTO = ctx.bodyAsClass(DriverRideRequestDTO.class);
-        dao.acceptRideRequest(requestDTO.getRequestSenderID(), requestDTO.getRideID());
-        ctx.status(200).result("Ride request accepted successfully");
+        try {
+            dao.acceptRideRequest(requestDTO.getRequestSenderID(), requestDTO.getRideID());
+            ctx.status(200).result("Ride request accepted successfully");
+        } catch (ApiException e) {
+            ctx.status(e.getStatusCode()).result(e.getMessage());
+        }
     }
 
-    public void declineRideRequest(Context ctx) throws ApiException {
+    public void declineRideRequest(Context ctx) {
         DriverRideRequestDTO requestDTO = ctx.bodyAsClass(DriverRideRequestDTO.class);
-        dao.declineRideRequest(requestDTO.getRequestSenderID(), requestDTO.getRideID());
-        ctx.status(200).result("Ride request declined successfully");
+        try {
+            dao.declineRideRequest(requestDTO.getRequestSenderID(), requestDTO.getRideID());
+            ctx.status(200).result("Ride request declined successfully");
+        } catch (ApiException e) {
+            ctx.status(e.getStatusCode()).result(e.getMessage());
+        }
     }
 
     @Override
@@ -58,3 +69,4 @@ public class DriverRideRequestController implements IController<Void, Void> {
         return null;
     }
 }
+
