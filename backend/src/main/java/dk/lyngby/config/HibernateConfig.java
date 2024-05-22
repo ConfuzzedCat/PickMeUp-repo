@@ -1,15 +1,16 @@
 package dk.lyngby.config;
 
-import dk.lyngby.model.*;
-/*import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;*/
+import dk.lyngby.model.Review;
+import dk.lyngby.model.RideRequest;
+import dk.lyngby.model.Route;
+import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
+import dk.lyngby.model.Driver;
 import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -91,6 +92,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(RideRequest.class);
         configuration.addAnnotatedClass(UserMock.class);
         configuration.addAnnotatedClass(Review.class);
+
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {

@@ -119,12 +119,27 @@ public class RestTest {
     }
 
     @Test
-    void getAllRequestsForUser(){
+    void getAllOutgoingRequestsForUser(){
         List<RideRequestDTO> rideRequestDTOS =
                 given()
                         .contentType("application/json")
                         .when()
-                        .get(BASE_URL + "/requests/1")
+                        .get(BASE_URL + "/requests/outgoing/1")
+                        .then()
+                        .assertThat()
+                        .statusCode(200)
+                        .extract().body().jsonPath().getList("", RideRequestDTO.class);
+        assertEquals(new RideRequestID(1, 1), rideRequestDTOS.get(0).getId());
+        assertEquals(3, rideRequestDTOS.size());
+    }
+
+    @Test
+    void getAllIncomingRequestsForUser(){
+        List<RideRequestDTO> rideRequestDTOS =
+                given()
+                        .contentType("application/json")
+                        .when()
+                        .get(BASE_URL + "/requests/incoming/2")
                         .then()
                         .assertThat()
                         .statusCode(200)

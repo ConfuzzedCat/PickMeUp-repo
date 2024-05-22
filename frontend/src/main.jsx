@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
 import "./index.css"
 import Routes from "./pages/Routes.jsx";
-import Rides from "./rides.jsx";
 import SearchForRoutes from "./components/SearchForRoutes.jsx";
 import {
   createBrowserRouter,
