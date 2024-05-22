@@ -1,5 +1,6 @@
 package dk.lyngby.controller.impl;
 
+import com.google.gson.JsonObject;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.model.Review;
@@ -15,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewControllerTest {
@@ -83,7 +83,7 @@ class ReviewControllerTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(review.getId()));
+                .body("id", equalTo(1));
     }
 
     @Test
@@ -98,16 +98,23 @@ class ReviewControllerTest {
 
     @Test
     void create() {
-      Review r2 = new Review(route, user, "ok driver ","maybe recommend", 3.0);
-      given()
+     // Review r2 = new Review(route, user, "ok driver ","maybe recommend", 3.0);
+        JsonObject json = new JsonObject();
+        json.addProperty("routeId", route.getId());
+        json.addProperty("userId", user.getId());
+        json.addProperty("title", "ok driver");
+        json.addProperty("description", "maybe recommend");
+        json.addProperty("rating", 3.0);
+
+        given()
                 .contentType("application/json")
-                .body(r2)
+                .body(json.toString())
                 .when()
-                .post(BASE_URL+"/")
+                .post(BASE_URL + "/")
                 .then()
                 .assertThat()
                 .statusCode(201)
-                .extract().body().jsonPath().getInt("id");
+                .body("id", notNullValue());
 
     }
 
