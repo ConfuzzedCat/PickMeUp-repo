@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DriverRideRequestControllerTest {
 
     private static Javalin app;
-    private static final String BASE_URL = "http://localhost:7777/requests/";
+    private static final String BASE_URL = "http://localhost:7777/api/v1/requests/";
     private static EntityManagerFactory emfTest;
     private static ObjectMapper objectMapper;
     private Route ride1;
