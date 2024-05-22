@@ -48,6 +48,10 @@ class RouteControllerTest {
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
+            em.createNativeQuery("TRUNCATE TABLE public.ride_request RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             // Reset sequence
 //            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
