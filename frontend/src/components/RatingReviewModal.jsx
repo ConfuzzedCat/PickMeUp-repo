@@ -3,7 +3,6 @@ import React from 'react';
 function RatingReviewModal({ driver, onClose }) {
     if (!driver || driver.length === 0) return null;
 
-
     const modalStyle = {
         position: "fixed",
         top: 0,
@@ -22,10 +21,7 @@ function RatingReviewModal({ driver, onClose }) {
         padding: 20,
         borderRadius: 5,
         width: "80%",
-        maxWidth: 500,
-        color: "white",
-        overflowY: "auto",
-        maxHeight: "80vh"
+        maxWidth: 500
     };
 
     const closeButtonStyle = {
