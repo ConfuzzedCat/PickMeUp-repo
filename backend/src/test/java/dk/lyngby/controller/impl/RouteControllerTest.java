@@ -52,6 +52,7 @@ class RouteControllerTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             // Reset sequence
 //            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();

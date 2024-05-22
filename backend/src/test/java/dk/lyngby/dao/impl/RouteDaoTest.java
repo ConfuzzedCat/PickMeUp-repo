@@ -44,6 +44,7 @@ class RouteDaoTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             // Insert test data
             r1 = new Route(2, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
