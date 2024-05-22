@@ -10,6 +10,7 @@ import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.RideRequestID;
 import dk.lyngby.model.Route;
 import dk.lyngby.model.UserMock;
+import dk.lyngby.routes.RequestsRoute;
 import io.javalin.Javalin;
 import io.restassured.RestAssured;
 import jakarta.persistence.EntityManagerFactory;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DriverRideRequestControllerTest {
 
     private static Javalin app;
-    private static final String BASE_URL = "http://localhost:7777/requests/driver/";
+    private static final String BASE_URL = "http://localhost:7777/requests/";
     private static EntityManagerFactory emfTest;
     private static ObjectMapper objectMapper;
     private Route ride1;
@@ -37,10 +38,10 @@ public class DriverRideRequestControllerTest {
         emfTest = HibernateConfig.getEntityManagerFactory();
         app = Javalin.create();
 
-        // Manually register routes for the test
-        DriverRideRequestController controller = new DriverRideRequestController(emfTest);
-        app.post("/requests/driver/accept", controller::acceptRideRequest);
-        app.post("/requests/driver/decline", controller::declineRideRequest);
+        // Register routes directly
+        app.routes(() -> {
+            new RequestsRoute().getRoutes();
+        });
 
         ApplicationConfig.startServer(app, 7777);
         RestAssured.baseURI = "http://localhost";
@@ -84,6 +85,7 @@ public class DriverRideRequestControllerTest {
         try {
             DriverRideRequestDTO requestDTO = new DriverRideRequestDTO(passenger.getId(), ride1.getId(), true);
             String jsonRequest = objectMapper.writeValueAsString(requestDTO);
+            System.out.println(jsonRequest);
 
             given().
                     contentType("application/json").
