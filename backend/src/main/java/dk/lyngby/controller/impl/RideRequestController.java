@@ -3,7 +3,7 @@ package dk.lyngby.controller.impl;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RideRequestDAO;
-import dk.lyngby.dao.impl.RouteDao;
+import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dao.impl.UserMockDAO;
 import dk.lyngby.dto.RideRequestDTO;
 import dk.lyngby.exception.ApiException;
@@ -20,18 +20,39 @@ public class RideRequestController implements IController<RideRequest, Integer> 
     private RideRequestDAO dao = RideRequestDAO.getInstance(HibernateConfig.getEntityManagerFactory());
 
     /**
-     * This method returns a list of all Requests for a specific user to the /requests/{userid} endpoint.
+     * This method returns a list of all outgoing Requests for a specific user to the /requests/incoming/{userid} endpoint.
      *
      * @param ctx
      * @throws ApiException
      * @author pelle112112
      */
-    public void getAllRequestsByUserId(Context ctx) throws ApiException {
+    public void getAllOutgoingRequestsByUserId(Context ctx) throws ApiException {
         int id = ctx.pathParamAsClass("userid", Integer.class).get();
         List<RideRequest> requests;
 
         //Get the Requests from the DB
-        requests = dao.getRideRequestsForUser(id);
+        requests = dao.getOutgoingRideRequestsForUser(id);
+        List<RideRequestDTO> dtos = new ArrayList<>();
+        for(RideRequest r: requests){
+            dtos.add(new RideRequestDTO(r.getId(), r.getRequestSender().getId(), r.getRequestReceiver().getId(), r.getRide().getId()));
+        }
+
+        ctx.json(dtos);
+        ctx.status(200);
+    }
+
+    /**
+     * This method returns a list of all incoming Requests for a specific user to the /requests/outgoing/{userid} endpoint.
+     * @param ctx
+     * @throws ApiException
+     * @author MrJustMeDahl
+     */
+    public void getAllIncomingRequestsByUserId(Context ctx) throws ApiException{
+        int id = ctx.pathParamAsClass("userid", Integer.class).get();
+        List<RideRequest> requests;
+
+        //Get the Requests from the DB
+        requests = dao.getIncomingRideRequestsForUser(id);
         List<RideRequestDTO> dtos = new ArrayList<>();
         for(RideRequest r: requests){
             dtos.add(new RideRequestDTO(r.getId(), r.getRequestSender().getId(), r.getRequestReceiver().getId(), r.getRide().getId()));
@@ -63,7 +84,7 @@ public class RideRequestController implements IController<RideRequest, Integer> 
     @Override
     public void create(Context ctx) throws ApiException {
         UserMockDAO userDAO = UserMockDAO.getInstance(HibernateConfig.getEntityManagerFactory());
-        RouteDao routeDAO = RouteDao.getInstance(HibernateConfig.getEntityManagerFactory());
+        RouteDAO routeDAO = RouteDAO.getInstance(HibernateConfig.getEntityManagerFactory());
         RideRequestDTO dto = ctx.bodyAsClass(RideRequestDTO.class);
         UserMock requestSender = userDAO.read(dto.getRideRequestSenderID());
         UserMock requestReceiver = userDAO.read(dto.getRideRequestReceiverID());
