@@ -102,6 +102,6 @@ class RouteControllerTest {
 
         assertEquals("Start1",sortedRoutes.get(0).getStartLocation());
         assertEquals("Start2",sortedRoutes.get(sortedRoutes.size()-1).getStartLocation());
-        assertEquals(4, sortedRoutes.size());
+        assertEquals(2, sortedRoutes.size());
     }
 }
