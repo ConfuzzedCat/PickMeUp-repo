@@ -14,24 +14,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.eclipse.jetty.server.Authentication;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "review")
 @Getter
 @NoArgsConstructor
-public class Review {
+public class Review implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
     @ManyToOne
-    @JoinColumn(name = "userMock_id")
+    @JoinColumn(name = "userMock_id", nullable = false)
     private UserMock userMock;
 
     @Column(name = "title", length = 255, nullable = false)

@@ -89,6 +89,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Route.class);
         configuration.addAnnotatedClass(RideRequest.class);
         configuration.addAnnotatedClass(UserMock.class);
+        configuration.addAnnotatedClass(dk.lyngby.model.Review.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
