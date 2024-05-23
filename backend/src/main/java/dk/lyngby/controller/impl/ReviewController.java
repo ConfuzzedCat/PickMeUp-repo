@@ -84,18 +84,15 @@ public ReviewController() {
 
 
     @Override
-    public void create(Context ctx) {
-        String token = ctx.header("Authorization").split(" ")[1];
+    public void create(Context ctx) throws ApiException {
+      //  String token = ctx.header("Authorization").split(" ")[1];
         //TODO:fix this when we have user
        //UserMockDTO userMockDTO = TOKEN_FACTORY.verifyToken(token);
         //UserMock user = userDAO.read(userMockDTO.getEmail());
 
-
-
-
         Gson gson = new Gson();
         int route = gson.fromJson(ctx.body(), JsonObject.class).get("routeId").getAsInt();
-        int userId = userMock.getId();
+        int userId = gson.fromJson(ctx.body(), JsonObject.class).get("userId").getAsInt();
         String title = gson.fromJson(ctx.body(), JsonObject.class).get("title").getAsString();
         String description = gson.fromJson(ctx.body(), JsonObject.class).get("description").getAsString();
         double rating = gson.fromJson(ctx.body(), JsonObject.class).get("rating").getAsDouble();
@@ -108,7 +105,6 @@ public ReviewController() {
 
         ctx.res().setStatus(201);
         ctx.json(reviewDto, ReviewDTO.class);
-
 
     }
 

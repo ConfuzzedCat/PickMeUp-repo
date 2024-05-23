@@ -11,9 +11,12 @@ public class ReviewRoute {
     public EndpointGroup getRoutes(){
         return () -> {
             path("/reviews", () -> {
+                get("/", rc::readAll);
                 post("/", rc::create);
                 get("/{id}", rc::read);
-                get("/driver/{id}", rc::readAll);
+                get("/driver/{id}", rc::readAllByDriver);
+                put("/{id}", rc::update);
+                delete("/{id}", rc::delete);
             });
         };
     }
