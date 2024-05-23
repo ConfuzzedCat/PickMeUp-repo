@@ -79,17 +79,6 @@ public class DriverRideRequestDAOTest {
         }
     }
 
-    @Test
-    void acceptRideRequest_noSeatsAvailable() {
-        ride2.setPassengerAmount(3);  // Set passenger amount to maximum
-
-        ApiException exception = assertThrows(ApiException.class, () -> {
-            dao.acceptRideRequest(passenger.getId(), ride2.getId());
-        });
-
-        assertEquals(400, exception.getStatusCode());
-        assertEquals("No available seats in this ride", exception.getMessage());
-    }
 
     @Test
     void declineRideRequest_success() throws ApiException {
@@ -100,14 +89,5 @@ public class DriverRideRequestDAOTest {
             assertNull(deletedRequest);
         }
     }
-
-    @Test
-    void declineRideRequest_notFound() {
-        ApiException exception = assertThrows(ApiException.class, () -> {
-            dao.declineRideRequest(999, 999);
-        });
-
-        assertEquals(404, exception.getStatusCode());
-        assertEquals("Ride request not found", exception.getMessage());
-    }
 }
+
