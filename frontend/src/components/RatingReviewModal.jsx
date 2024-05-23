@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function RatingReviewModal({ driver, onClose }) {
-    if (!driver || driver.length === 0) return null;
+    const [reviews, setReviews] = useState([]);
 
+    useEffect(() => {
+        if (driver) {
+            const url = `http://localhost:7070/api/v1/reviews/driver/${driver}`;
+            console.log("Fetching reviews from:", url);
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Reviews loaded:", data);
+                    setReviews(data);
+                })
+                .catch(err => {
+                    console.error("Failed to fetch reviews:", err);
+                });
+        }
+    }, [driver]);
 
     const modalStyle = {
         position: "fixed",
@@ -34,54 +54,24 @@ function RatingReviewModal({ driver, onClose }) {
         cursor: 'pointer'
     };
 
-
-    const mockReviews = [
-        {
-            rating: 4.5,
-            review: "Great ride, very comfortable and smooth."
-        },
-        {
-            rating: 3.8,
-            review: "Good ride but the car could have been cleaner. He did play Kendrick Lamarr though!"
-        },
-        {
-            rating: 5.0,
-            review: "Excellent experience! The driver was very polite and punctual."
-        },
-        {
-            rating: 4.2,
-            review: "Nice ride, but the traffic was terrible."
-        },
-        {
-            rating: 2.9,
-            review: "The driver was late and the car was not well-maintained."
-        },
-        {
-            rating: 3.5,
-            review: "Average ride, nothing special but got me to my destination."
-        },
-        {
-            rating: 4.7,
-            review: "Very pleasant ride. The car was clean and the driver was friendly."
-            
-        }
-    ];
-    
-
-
-
-
     return (
         <div style={modalStyle}>
             <div style={modalContentStyle}>
                 <h2>Ride Reviews</h2>
-                {mockReviews.map((review, index) => (
-                    <div key={index} style={{ marginBottom: 20 }}>
-                        <p><strong>Ride {index + 1}</strong></p>
-                        <p><strong>Rating:</strong> {review.rating}</p>
-                        <p><strong>Review:</strong> {review.review}</p>
-                    </div>
-                ))}
+                {reviews.length > 0 ? (
+                    reviews.map((review, index) => (
+                        <div key={index} style={{ marginBottom: 20 }}>
+                            <p><strong>Ride ID:</strong> {review.id}</p>
+                            <p><strong>Description:</strong> {review.description}</p>
+                            <p><strong>Rating:</strong> {review.rating}</p>
+                            <p><strong>Title:</strong> {review.title}</p>
+                            <p><strong>Route ID:</strong> {review.route_id}</p>
+                            <p><strong>User ID:</strong> {review.usermock_id}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No reviews available.</p>
+                )}
                 <button onClick={onClose} style={closeButtonStyle}>Close</button>
             </div>
         </div>
