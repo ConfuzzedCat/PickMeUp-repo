@@ -3,7 +3,7 @@ package dk.lyngby.controller.impl;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.RideRequestDAO;
-import dk.lyngby.dao.impl.RouteDao;
+import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dao.impl.UserMockDAO;
 import dk.lyngby.dto.RideRequestDTO;
 import dk.lyngby.exception.ApiException;
@@ -84,7 +84,7 @@ public class RideRequestController implements IController<RideRequest, Integer> 
     @Override
     public void create(Context ctx) throws ApiException {
         UserMockDAO userDAO = UserMockDAO.getInstance(HibernateConfig.getEntityManagerFactory());
-        RouteDao routeDAO = RouteDao.getInstance(HibernateConfig.getEntityManagerFactory());
+        RouteDAO routeDAO = RouteDAO.getInstance(HibernateConfig.getEntityManagerFactory());
         RideRequestDTO dto = ctx.bodyAsClass(RideRequestDTO.class);
         UserMock requestSender = userDAO.read(dto.getRideRequestSenderID());
         UserMock requestReceiver = userDAO.read(dto.getRideRequestReceiverID());

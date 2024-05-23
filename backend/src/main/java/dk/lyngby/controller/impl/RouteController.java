@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
-import dk.lyngby.dao.impl.RouteDao;
+import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 public class RouteController implements IController<Route, Integer> {
 
 
-    private RouteDao dao;
+    private RouteDAO dao;
 
     public RouteController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-        this.dao = RouteDao.getInstance(emf);
+        this.dao = RouteDAO.getInstance(emf);
     }
 
         private RouteCalcUtil routeUtil = new RouteCalcUtil();

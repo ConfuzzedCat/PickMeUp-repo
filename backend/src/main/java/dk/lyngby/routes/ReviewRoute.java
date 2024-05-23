@@ -14,6 +14,7 @@ public class ReviewRoute {
                 get("/", rc::readAll);
                 post("/", rc::create);
                 get("/{id}", rc::read);
+                get("/driver/{id}", rc::readAllByDriver);
                 put("/{id}", rc::update);
                 delete("/{id}", rc::delete);
             });
