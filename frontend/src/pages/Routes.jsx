@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import facade from "../util/apiFacade";
 import RoutesFilter from "../components/RoutesFilter";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import facade from "../util/apiFacade.js";
+import RoutesFilter from "../components/RoutesFilter.jsx";
+import RideModal from "../components/RideModal.jsx";
 
 function Routes() {
   const [routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState([]);
+  const [selectedRide, setSelectedRide] = useState(null);
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
@@ -12,6 +19,13 @@ function Routes() {
       setRoutes(data);
     });
   }, []);
+      setRoutes(data);
+    });
+  }, []);
+
+  const handleShowDetails = (route) => {
+    setSelectedRide(route);
+  };
 
   return (
     <div className="container mx-auto prose-xl">
@@ -46,14 +60,17 @@ function Routes() {
               <td>{route.carSize}</td>
               <td>{route.handicapAvailability ? "Yes" : "No"}</td>
               <td>
-                <Link to={`/route/${route.id}`} className="btn btn-sm btn-outline">
+                <button onClick={() => handleShowDetails(route)} className="btn btn-sm btn-outline">
                   See More
                 </Link>
+              </td>
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
     </div>
   );
 }
