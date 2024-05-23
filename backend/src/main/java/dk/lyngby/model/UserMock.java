@@ -92,6 +92,10 @@ public class UserMock implements Serializable{
         rides.add(newRide);
     }
 
+    public boolean hasRiddenRoute(Route route) {
+        return rides.contains(route);
+    }
+
     public void addOutgoingRideRequest(RideRequest rideRequest) {
         outgoingRideRequests.add(rideRequest);
     }

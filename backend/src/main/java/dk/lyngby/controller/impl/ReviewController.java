@@ -32,8 +32,7 @@ public class ReviewController implements IController<Review, Integer> {
 
     @Override
     public void create(Context ctx) throws ApiException {
-        Gson gson = new Gson();
-        JsonObject json = gson.fromJson(ctx.body(), JsonObject.class);
+        JsonObject json = ctx.bodyAsClass(JsonObject.class);
         int routeId = json.get("routeId").getAsInt();
         int userId = json.get("userId").getAsInt();
         String title = json.get("title").getAsString();
@@ -44,13 +43,13 @@ public class ReviewController implements IController<Review, Integer> {
         UserMock user = userDAO.read(userId);
 
         try {
-            if (PasOnRideValUtil.isUserPassengerOnRide(userId, routeId)) {
+            if (user.hasRiddenRoute(route)) {
                 Review review = new Review(route, user, title, description, rating);
                 reviewDAO.create(review);
                 ReviewDTO reviewDto = new ReviewDTO(review);
                 ctx.json(reviewDto).status(201);
             } else {
-                throw new ApiException(400, "User is not a passenger on this ride");
+                throw new ApiException(400, "User has not been on this ride");
             }
         } catch (ApiException e) {
             ctx.status(e.getStatusCode()).result(e.getMessage());
