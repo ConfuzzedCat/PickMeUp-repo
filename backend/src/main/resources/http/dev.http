@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:7070/api/v1/rides/available_routes
+POST http://localhost:7070/api/v1/rides/available_routes
 Content-Type: application/json
 
 {

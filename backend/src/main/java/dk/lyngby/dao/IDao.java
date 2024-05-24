@@ -1,12 +1,13 @@
 package dk.lyngby.dao;
 
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.model.Route;
 
 import java.util.List;
 
 public interface IDao<T, D> {
 
-    T read(Integer d) throws ApiException;
+    T read(D d) throws ApiException;
     List<T> readAll();
     T create(T t);
     T update(D d, T t);

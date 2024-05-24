@@ -40,7 +40,7 @@ this.studentCard = studentCard;
 public DriverDTO(Driver driver) {
 this.id= driver.getId();
 this.email = driver.getEmail();
-this.fullName = driver.getFullName();
+this.fullName = driver.getDriverName();
 this.password = driver.getPassword();
 this.address = driver.getAddress();
 this.drivingLicense = driver.getDrivingLicense();

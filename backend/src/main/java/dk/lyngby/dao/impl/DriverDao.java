@@ -34,7 +34,7 @@ public class DriverDao {
 
   
     public Driver create(Driver driver) {
-        driver = new Driver(driver.getEmail(), driver.getFullName(), driver.getPassword(), driver.getAddress(), driver.getDrivingLicense(), driver.getStudentCard());
+        driver = new Driver(driver.getEmail(), driver.getDriverName(), driver.getPassword(), driver.getAddress(), driver.getDrivingLicense(), driver.getStudentCard(), driver.getLicenseNumber());
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.persist(driver);
@@ -50,7 +50,7 @@ public class DriverDao {
             driver = em.find(Driver.class, driver.getId());
             if (driver != null) {
                 driver.setEmail(driver.getEmail());
-                driver.setFullName(driver.getFullName());
+                driver.setDriverName(driver.getDriverName());
                 driver.setPassword(driver.getPassword());
                 driver.setAddress(driver.getAddress());
             em.merge(driver);

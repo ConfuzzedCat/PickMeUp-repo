@@ -2,6 +2,7 @@ package dk.lyngby.config;
 
 import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.Route;
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -25,17 +27,19 @@ public class PopulateRouteDB {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         UserMock passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
         UserMock driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+        Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
 
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
 
             em.persist(passenger);
             em.persist(driver);
+            em.persist(driver1);
 
             em.getTransaction().commit();
         }
 
-        routes = getRoutes(driver);
+        routes = getRoutes(driver1);
 
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
@@ -69,10 +73,10 @@ public class PopulateRouteDB {
 
 
     @NotNull
-    private static List<Route> getRoutes(UserMock driver) {
-        Route route1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-        Route route2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", driver.getId(), 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
-        Route route3 = new Route(2000, 1172, "Frederiksvej 10", "Nørregade 10", driver.getId(), 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+    private static List<Route> getRoutes(Driver driver) {
+        Route route1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+        Route route2 = new Route(driver, 2000, 1172, "Duevej 92", "Nørregade 10", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+        Route route3 = new Route(driver, 2000, 1172, "Frederiksvej 10", "Nørregade 10", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
         Route[] routeArray = {route1, route2, route3};
         return List.of(routeArray);
     }

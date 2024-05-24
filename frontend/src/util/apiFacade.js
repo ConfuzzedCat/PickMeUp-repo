@@ -35,9 +35,21 @@ function apiFacade() {
         return opts;
     }
 
+    const createRoute = (routeData) => {
+        const options = makeOptions('POST', routeData, true);
+        return fetch(URL + "rides", options).then(handleHttpErrors);
+    };
+
+    const updateRoute = (id, updatedData) => {
+        const options = makeOptions('PUT', updatedData, true);
+        return fetch(URL + "rides" + '/' + id, options).then(handleHttpErrors);
+    };
+
     return {
         fetchData,
-        makeOptions
+        makeOptions,
+        createRoute,
+        updateRoute,
     }
 
 }

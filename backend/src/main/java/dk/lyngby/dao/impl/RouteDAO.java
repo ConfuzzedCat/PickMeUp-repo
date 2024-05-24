@@ -1,5 +1,6 @@
 package dk.lyngby.dao.impl;
 
+import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.model.Route;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.dao.IDao;
@@ -20,7 +21,7 @@ import java.time.format.DateTimeParseException;
 
 
 
-public class RouteDAO implements IDao {
+public class RouteDAO implements IDao<Route, Integer> {
 
     private static EntityManagerFactory emf ;
 
@@ -84,21 +85,41 @@ public class RouteDAO implements IDao {
     }
 
     @Override
-    public Object create(Object o) {
-        return null;
+    public Route create(Route route) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.persist(route);
+            em.getTransaction().commit();
+            return route;
+        }
     }
 
     @Override
-    public Object update(Object o, Object o2) {
-        return null;
+    public Route update(Integer id, Route updatedRoute) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Route route = em.find(Route.class, id);
+            route.setStartLocation(updatedRoute.getStartLocation());
+            route.setEndLocation(updatedRoute.getEndLocation());
+            route.setDepartureTime(updatedRoute.getDepartureTime());
+            em.merge(route);
+            em.getTransaction().commit();
+            return route;
+        }
     }
 
     @Override
-    public void delete(Object o) {
+    public void delete(Integer id) {
+        try (var em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            Route route = em.find(Route.class, id);
+            em.remove(route);
+            em.getTransaction().commit();
+        }
     }
 
     @Override
-    public boolean validatePrimaryKey(Object o) {
+    public boolean validatePrimaryKey(Integer id) {
         return false;
     }
 
@@ -107,9 +128,9 @@ public class RouteDAO implements IDao {
      route length, time in minutes, handicap availability, passenger amount,
      car size, or departure time **/
 
-    public List<dk.lyngby.model.Route> searchFilters(JsonObject filters) throws Exception {
+    public List<Route> searchFilters(JsonObject filters) throws Exception {
         StringBuilder queryString = new StringBuilder("SELECT r FROM Route r WHERE 1 = 1");
-        TypedQuery<dk.lyngby.model.Route> query;
+        TypedQuery<Route> query;
 
         try (EntityManager em = emf.createEntityManager()) {
             if (filters != null) {
@@ -124,7 +145,7 @@ public class RouteDAO implements IDao {
                     }
                 });
 
-                query = em.createQuery(queryString.toString(), dk.lyngby.model.Route.class);
+                query = em.createQuery(queryString.toString(), Route.class);
 
                 filters.entrySet().forEach(entry -> {
                     String key = entry.getKey();
@@ -134,7 +155,7 @@ public class RouteDAO implements IDao {
                     }
                 });
             } else {
-                query = em.createQuery("SELECT r FROM Route r", dk.lyngby.model.Route.class);
+                query = em.createQuery("SELECT r FROM Route r", Route.class);
             }
 
             return query.getResultList();
