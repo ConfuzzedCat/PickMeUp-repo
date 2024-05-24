@@ -3,10 +3,7 @@ package dk.lyngby.dao.impl;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.exception.ApiException;
-import dk.lyngby.model.RideRequest;
-import dk.lyngby.model.RideRequestID;
-import dk.lyngby.model.Route;
-import dk.lyngby.model.UserMock;
+import dk.lyngby.model.*;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
@@ -21,7 +18,9 @@ public class DriverRideRequestDAOTest {
     private static EntityManagerFactory emfTest;
     private static DriverRideRequestDAO dao;
     private Route ride1, ride2;
-    private UserMock passenger, driver;
+    private UserMock passenger;
+    private Driver driver;
+
     private RideRequest r1, r2;
 
     @BeforeAll
@@ -41,24 +40,29 @@ public class DriverRideRequestDAOTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.driver RESTART IDENTITY CASCADE").executeUpdate();
 
             passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
-            driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+            UserMock user = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
+            driver = new Driver(user, "LN123");
             em.persist(passenger);
+            em.persist(user);  // Persist user here
             em.persist(driver);
-            ride1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-            ride2 = new Route(2000, 1172, "Duevej 92", "Nørregade 10", driver.getId(), 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+
+            ride1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            ride2 = new Route(driver, 2000, 1172, "Duevej 92", "Nørregade 10", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             em.persist(ride1);
             em.persist(ride2);
 
-            r1 = new RideRequest(passenger, driver, ride1);
-            r2 = new RideRequest(passenger, driver, ride2);
+            r1 = new RideRequest(passenger, user, ride1);
+            r2 = new RideRequest(passenger, user, ride2);
             em.persist(r1);
             em.persist(r2);
 
             em.getTransaction().commit();
         }
     }
+
 
     @AfterAll
     static void tearDown() {

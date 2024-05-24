@@ -6,10 +6,7 @@ import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.dao.impl.DriverRideRequestDAO;
 import dk.lyngby.dto.DriverRideRequestDTO;
-import dk.lyngby.model.RideRequest;
-import dk.lyngby.model.RideRequestID;
-import dk.lyngby.model.Route;
-import dk.lyngby.model.UserMock;
+import dk.lyngby.model.*;
 import dk.lyngby.routes.RequestsRoute;
 import io.javalin.Javalin;
 import io.restassured.RestAssured;
@@ -29,7 +26,8 @@ public class DriverRideRequestControllerTest {
     private static EntityManagerFactory emfTest;
     private static ObjectMapper objectMapper;
     private Route ride1;
-    private UserMock passenger, driver;
+    private UserMock passenger;
+    private Driver driver;
     private RideRequest r1;
 
     @BeforeAll
@@ -59,20 +57,32 @@ public class DriverRideRequestControllerTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.driver RESTART IDENTITY CASCADE").executeUpdate();
 
+            // Create and persist passenger
             passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
-            driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
             em.persist(passenger);
+
+            // Create and persist user (driver)
+            UserMock user = new UserMock("driver@driversen", "driver123", "John", "Johnson");
+            em.persist(user);
+
+            // Create and persist driver
+            driver = new Driver(user, "LN123456");
             em.persist(driver);
-            ride1 = new Route(2200, 1172, "Rovsingsgade 31", "Nørregade 10", driver.getId(), 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+
+            // Create and persist route
+            ride1 = new Route(driver, 2200, 1172, "Rovsingsgade 31", "Nørregade 10", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             em.persist(ride1);
 
-            r1 = new RideRequest(passenger, driver, ride1);
+            // Create and persist ride request
+            r1 = new RideRequest(passenger, user, ride1);
             em.persist(r1);
 
             em.getTransaction().commit();
         }
     }
+
 
     @AfterAll
     static void tearDown() {
