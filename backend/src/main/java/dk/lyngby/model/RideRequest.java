@@ -31,7 +31,7 @@ public class RideRequest {
 
     @ManyToOne
     @JoinColumn(name = "request_receiver")
-    private UserMock requestReceiver;
+    private Driver requestReceiver;
 
     @MapsId("rideID")
     @ManyToOne
@@ -39,7 +39,7 @@ public class RideRequest {
 
     private boolean accepted;
 
-    public RideRequest(UserMock requestSender, UserMock requestReceiver, Route ride){
+    public RideRequest(UserMock requestSender, Driver requestReceiver, Route ride){
         id = new RideRequestID(requestSender.getId(), ride.getId());
         this.requestSender = requestSender;
         this.requestReceiver = requestReceiver;

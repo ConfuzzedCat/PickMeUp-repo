@@ -13,7 +13,17 @@ public class DriverDao {
 
     Driver driver = new Driver();
 
-    EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static DriverDao instance;
+
+
+    private static EntityManagerFactory emf;
+
+    public static DriverDao getInstance(EntityManagerFactory _emf) {
+        if (instance == null) {
+            emf = _emf;
+            instance = new DriverDao();
+        }
+        return instance;    }
 
 
 

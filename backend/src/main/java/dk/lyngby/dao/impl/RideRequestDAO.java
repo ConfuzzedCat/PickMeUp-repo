@@ -1,10 +1,7 @@
 package dk.lyngby.dao.impl;
 
 import dk.lyngby.exception.ApiException;
-import dk.lyngby.model.RideRequest;
-import dk.lyngby.model.RideRequestID;
-import dk.lyngby.model.Route;
-import dk.lyngby.model.UserMock;
+import dk.lyngby.model.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Query;
@@ -84,7 +81,7 @@ public class RideRequestDAO {
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             rideRequest.setRequestSender(em.find(UserMock.class, rideRequest.getRequestSender().getId()));
-            rideRequest.setRequestReceiver(em.find(UserMock.class, rideRequest.getRequestSender().getId()));
+            rideRequest.setRequestReceiver(em.find(Driver.class, rideRequest.getRequestSender().getId()));
             rideRequest.setRide(em.find(Route.class, rideRequest.getRide().getId()));
             em.merge(rideRequest.getRequestSender());
             em.merge(rideRequest.getRequestReceiver());

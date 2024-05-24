@@ -76,7 +76,7 @@ public class DriverRideRequestControllerTest {
             em.persist(ride1);
 
             // Create and persist ride request
-            r1 = new RideRequest(passenger, user, ride1);
+            r1 = new RideRequest(passenger, driver, ride1);
             em.persist(r1);
 
             em.getTransaction().commit();

@@ -65,9 +65,9 @@ public class RestTest {
                 driverMock.addRide(r);
             }
 
-            r1 = new RideRequest(passenger, driverMock, ride1);
-            r2 = new RideRequest(passenger, driverMock, ride2);
-            r3 = new RideRequest(passenger, driverMock, ride3);
+            r1 = new RideRequest(passenger, driver, ride1);
+            r2 = new RideRequest(passenger, driver, ride2);
+            r3 = new RideRequest(passenger, driver, ride3);
 
             em.persist(r1);
             em.persist(r2);
@@ -111,14 +111,14 @@ public class RestTest {
         RideRequestDTO rideRequest =
                 given()
                         .contentType("application/json")
-                        .body("{\"rideRequestSenderID\": 2, \"rideRequestReceiverID\": 2, \"rideID\": 3}")
+                        .body("{\"rideRequestSenderID\": 1, \"rideRequestReceiverID\": 2, \"rideID\": 3}")
                         .when()
                         .post(BASE_URL + "/requests/requests")
                         .then()
                         .assertThat()
                         .statusCode(201)
                         .extract().body().jsonPath().getObject("", RideRequestDTO.class);
-        assertEquals(new RideRequestID(2, 3), rideRequest.getId());
+        assertEquals(new RideRequestID(1, 3), rideRequest.getId());
     }
 
     @Test

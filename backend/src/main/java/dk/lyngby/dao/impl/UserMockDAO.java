@@ -33,7 +33,6 @@ public class UserMockDAO implements IDao<UserMock, String> {
         try (EntityManager em = emf.createEntityManager()) {
             found = em.find(UserMock.class, d);
             found.getOutgoingRideRequests().size();
-            found.getIncomingRideRequests().size();
         }
         return found;
     }

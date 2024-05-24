@@ -61,12 +61,10 @@ public class RideRequestDAOTest {
                 driverMock.addRide(r);
             }
 
-            r1 = new RideRequest(passenger, driverMock, ride1);
-            r2 = new RideRequest(passenger, driverMock, ride2);
-            r3 = new RideRequest(passenger, driverMock, ride3);
+            r1 = new RideRequest(passenger, driver, ride1);
+            r3 = new RideRequest(passenger, driver, ride3);
 
             em.persist(r1);
-            em.persist(r2);
             em.persist(r3);
 
             em.getTransaction().commit();
@@ -99,10 +97,10 @@ public class RideRequestDAOTest {
 
     @Test
     void createTest() throws ApiException{
-        RideRequest rideRequest = dao.create(new RideRequest(driverMock, driverMock, ride2));
-        assertEquals(new RideRequestID(2, 2), rideRequest.getId());
+        RideRequest rideRequest = dao.create(new RideRequest(passenger, driver, ride2));
+        assertEquals(new RideRequestID(1, 2), rideRequest.getId());
 
-        assertThrows(ApiException.class, () -> dao.create(new RideRequest(passenger, driverMock, ride1)));
+        assertThrows(ApiException.class, () -> dao.create(new RideRequest(passenger, driver, ride1)));
     }
 
     @Test
@@ -113,7 +111,7 @@ public class RideRequestDAOTest {
 
     @Test
     void getIncomingRideRequestsForUserTest() throws ApiException{
-        List<RideRequest> rideRequests = dao.getIncomingRideRequestsForUser(2);
+        List<RideRequest> rideRequests = dao.getIncomingRideRequestsForUser(1);
         assertEquals(3, rideRequests.size());
     }
 }

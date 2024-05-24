@@ -1,13 +1,12 @@
 package dk.lyngby.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -44,6 +43,14 @@ public class Driver {
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Route> routes = new HashSet<>();
 
+    @OneToMany(mappedBy = "requestReceiver")
+    @JsonIgnore
+    private List<RideRequest> incomingRideRequests = new ArrayList<>();
+
+
+
+
+
     public Driver(String email, String driverName, String password, String address, byte[] drivingLicense, byte[] studentCard, String licenseNumber) {
         this.email = email;
         this.driverName = driverName;
@@ -77,7 +84,9 @@ public class Driver {
         }
     }
 
-
+    public void addIncomingRideRequest(RideRequest rideRequest) {
+        incomingRideRequests.add(rideRequest);
+    }
 
     public void addRoute(Route route) {
         if (route != null) {

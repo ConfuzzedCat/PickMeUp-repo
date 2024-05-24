@@ -61,9 +61,7 @@ public class UserMock implements Serializable{
     @JsonIgnore
     private List<RideRequest> outgoingRideRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "requestReceiver")
-    @JsonIgnore
-    private List<RideRequest> incomingRideRequests = new ArrayList<>();
+
 
     public UserMock(String email, String password, String firstName, String lastName) {
         this.email = email;
@@ -101,7 +99,4 @@ public class UserMock implements Serializable{
         outgoingRideRequests.add(rideRequest);
     }
 
-    public void addIncomingRideRequest(RideRequest rideRequest) {
-        incomingRideRequests.add(rideRequest);
-    }
 }

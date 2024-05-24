@@ -2,11 +2,13 @@ package dk.lyngby.controller.impl;
 
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
+import dk.lyngby.dao.impl.DriverDao;
 import dk.lyngby.dao.impl.RideRequestDAO;
 import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dao.impl.UserMockDAO;
 import dk.lyngby.dto.RideRequestDTO;
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.RideRequest;
 import dk.lyngby.model.Route;
 import dk.lyngby.model.UserMock;
@@ -84,10 +86,11 @@ public class RideRequestController implements IController<RideRequest, Integer> 
     @Override
     public void create(Context ctx) throws ApiException {
         UserMockDAO userDAO = UserMockDAO.getInstance(HibernateConfig.getEntityManagerFactory());
+        DriverDao driverDAO = DriverDao.getInstance(HibernateConfig.getEntityManagerFactory());
         RouteDAO routeDAO = RouteDAO.getInstance(HibernateConfig.getEntityManagerFactory());
         RideRequestDTO dto = ctx.bodyAsClass(RideRequestDTO.class);
         UserMock requestSender = userDAO.read(dto.getRideRequestSenderID());
-        UserMock requestReceiver = userDAO.read(dto.getRideRequestReceiverID());
+        Driver requestReceiver = driverDAO.getById(dto.getRideRequestReceiverID());
         Route ride = routeDAO.read(dto.getRideID());
         //Persist to DB - exception is thrown if request already exists.
         RideRequest rideRequest = dao.create(new RideRequest(requestSender, requestReceiver, ride));

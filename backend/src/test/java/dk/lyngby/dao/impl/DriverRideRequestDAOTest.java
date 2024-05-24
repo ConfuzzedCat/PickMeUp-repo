@@ -54,8 +54,8 @@ public class DriverRideRequestDAOTest {
             em.persist(ride1);
             em.persist(ride2);
 
-            r1 = new RideRequest(passenger, user, ride1);
-            r2 = new RideRequest(passenger, user, ride2);
+            r1 = new RideRequest(passenger, driver, ride1);
+            r2 = new RideRequest(passenger, driver, ride2);
             em.persist(r1);
             em.persist(r2);
 
