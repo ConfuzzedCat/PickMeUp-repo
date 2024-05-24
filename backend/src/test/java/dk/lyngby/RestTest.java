@@ -1,5 +1,6 @@
 package dk.lyngby;
 import dk.lyngby.dto.RideRequestDTO;
+import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.model.*;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManager;
@@ -88,7 +89,7 @@ public class RestTest {
      */
     @Test
     void calculateRoutes(){
-        List<Route> routeList =
+        List<RouteDTO> routeList =
                 given()
                 .contentType("application/json")
                 .body("{\"startLocation\": \"Duevej,22,2000\", \"endLocation\": \"Nørregade,10,1172\"}")
@@ -97,7 +98,7 @@ public class RestTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .extract().body().jsonPath().getList("", Route.class);
+                .extract().body().jsonPath().getList("", RouteDTO.class);
         assertEquals(2, routeList.size());
         assertEquals("Duevej 92", routeList.get(0).getStartLocation());
         assertEquals(2000, routeList.get(0).getStartPostalCode());

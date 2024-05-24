@@ -20,8 +20,23 @@ public class Driver {
     @Column(name = "driver_id", nullable = false, unique = true)
     private Integer id;
 
+    @Column(name = "email")
+    String email;
+
     @Column(name = "driver_name", nullable = false)
     private String driverName;
+
+    @Column(name = "password")
+    String password;
+
+    @Column(name = "address")
+    String address;
+
+    @Lob()
+    private byte[] drivingLicense; // Billeddata for kørekort
+
+    @Lob
+    private byte[] studentCard; // Billeddata for studiekort
 
     @Column(name = "driver_license_number", nullable = false, unique = true)
     private String licenseNumber;
@@ -29,13 +44,27 @@ public class Driver {
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Route> routes = new HashSet<>();
 
-    public Driver(String driverName, String licenseNumber) {
+    public Driver(String email, String driverName, String password, String address, byte[] drivingLicense, byte[] studentCard, String licenseNumber) {
+        this.email = email;
         this.driverName = driverName;
         this.licenseNumber = licenseNumber;
+        this.password = password;
+        this.address = address;
+        this.drivingLicense = drivingLicense;
+        this.studentCard = studentCard;
+    }
+
+    public Driver(String email, String driverName, String password, String address, String licenseNumber, Set<Route> routes) {
+        this.email = email;
+        this.driverName = driverName;
+        this.password = password;
+        this.address = address;
+        this.licenseNumber = licenseNumber;
+        this.routes = routes;
     }
 
     public Driver(UserMock driver, String licenseNumber){
-        this.driverName = String.format("{0} {1}", driver.getFirstName(), driver.getLastName());
+        this.driverName = driver.getFirstName() + " " + driver.getLastName();
         this.licenseNumber = licenseNumber;
     }
 
@@ -47,6 +76,8 @@ public class Driver {
             }
         }
     }
+
+
 
     public void addRoute(Route route) {
         if (route != null) {

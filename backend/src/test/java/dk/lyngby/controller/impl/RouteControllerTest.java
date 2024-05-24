@@ -4,6 +4,7 @@ import dk.lyngby.model.Driver;
 import dk.lyngby.model.Route;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
+import dk.lyngby.model.UserMock;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -11,10 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
 
@@ -34,7 +32,7 @@ class RouteControllerTest {
     private static EntityManagerFactory emfTest;
     private static Route r1, r2, r3;
     private static Driver d1;
-    private static HashMap<Route, Double> chosenRoute = new HashMap<>();
+    private static HashMap<Route, Double> chosenRoute;
 
     @BeforeAll
     static void beforeAll() {
@@ -55,7 +53,8 @@ class RouteControllerTest {
             // Reset sequence
 //            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
-            d1 = new Driver("John Johnson", "LN123456");
+            UserMock driver = new UserMock("driver@driversen", "driver123", "John", "Johnson");
+            d1 = new Driver(driver, "LN123456");
             r1 = new Route(d1, 1, 2,"Start1", "End1", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route(d1, 2, 1,"Start2", "End2", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
             r3 = new Route(d1, 1, 2, "Start3", "End3", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
@@ -63,7 +62,8 @@ class RouteControllerTest {
             em.persist(r1);
             em.persist(r2);
             em.persist(r3);
-            
+
+            chosenRoute = new HashMap<>();
 
             chosenRoute.put(r1, 117.00);
             chosenRoute.put(r2, 450.0);
@@ -72,6 +72,16 @@ class RouteControllerTest {
             em.getTransaction().commit();
         }
 
+    }
+
+    @AfterEach
+    void afterEach() {
+        try (var em = emfTest.createEntityManager()) {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
+            em.createQuery("DELETE FROM Route r").executeUpdate();
+            em.getTransaction().commit();
+        }
     }
 
     @AfterAll
@@ -103,6 +113,6 @@ class RouteControllerTest {
 
         assertEquals("Start1",sortedRoutes.get(0).getStartLocation());
         assertEquals("Start2",sortedRoutes.get(sortedRoutes.size()-1).getStartLocation());
-        assertEquals(4, sortedRoutes.size());
+        assertEquals(2, sortedRoutes.size());
     }
 }

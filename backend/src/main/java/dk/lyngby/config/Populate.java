@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class Populate {
     public static void main(String[] args) {
@@ -58,10 +59,10 @@ public class Populate {
             em.getTransaction().begin();
 
             // Create or fetch Driver objects
-            Driver driver1 = new Driver("John Doe", "XYZ123");
+            Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
             em.persist(driver1);
 
-            Driver driver2 = new Driver("Jane Smith", "ABC456");
+            Driver driver2 = new Driver("email2@email.dk", "Jane Doe", "password", "address", "ABC143", new HashSet<>());
             em.persist(driver2);
 
             em.getTransaction().commit();
@@ -76,10 +77,11 @@ public class Populate {
 
             em.getTransaction().begin();
 
-            Driver driver1 = new Driver("John Doe", "XYZ123");
+            // Create or fetch Driver objects
+            Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
             em.persist(driver1);
 
-            Driver driver2 = new Driver("Jane Smith", "ABC456");
+            Driver driver2 = new Driver("email2@email.dk", "Jane Doe", "password", "address", "ABC143", new HashSet<>());
             em.persist(driver2);
 
             // sample routes with associated drivers

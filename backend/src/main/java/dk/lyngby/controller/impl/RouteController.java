@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
-import dk.lyngby.dao.impl.RouteDao;
+import dk.lyngby.dao.impl.RouteDAO;
+import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
-import dk.lyngby.dto.RouteDTO;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.Getter;
@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
 public class RouteController implements IController<Route, Integer> {
 
 
-    private RouteDao dao;
+    private RouteDAO dao;
 
     public RouteController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-        this.dao = RouteDao.getInstance(emf);
+        this.dao = RouteDAO.getInstance(emf);
     }
 
         private RouteCalcUtil routeUtil = new RouteCalcUtil();
@@ -68,7 +68,7 @@ public class RouteController implements IController<Route, Integer> {
         // Filter routes that is so far away that it would be unreasonable to walk to the route's starting location.
         // Sort the routes so that the routes which is closest to the location of the user is shown first.
 
-        ctx.json(sortedRoutes(chosenRoutes, 10000));
+        ctx.json(RouteDTO.toDTOList(sortedRoutes(chosenRoutes, 10000)));
         ctx.status(200);
 
     }

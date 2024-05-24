@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public class PopulateRouteDB {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         UserMock passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
         UserMock driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
-        Driver driver1 = new Driver("John Driver", "LP12345");
+        Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
 
         try (var em = emf.createEntityManager()) {
             em.getTransaction().begin();
