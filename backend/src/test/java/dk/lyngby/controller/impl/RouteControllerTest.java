@@ -48,6 +48,7 @@ class RouteControllerTest {
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
+            em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             em.createQuery("DELETE FROM Driver d").executeUpdate();
             // Reset sequence

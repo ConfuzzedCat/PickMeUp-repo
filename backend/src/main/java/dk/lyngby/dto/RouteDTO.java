@@ -1,7 +1,6 @@
 package dk.lyngby.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import dk.lyngby.model.Driver;
 import dk.lyngby.model.Route;
 import lombok.Getter;
 
