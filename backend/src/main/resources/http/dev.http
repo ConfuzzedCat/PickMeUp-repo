@@ -86,5 +86,3 @@ Content-Type: application/json
 ###
 GET http://localhost:7070/api/v1/passengerinfo/1
 Content-Type: application/json
-
-

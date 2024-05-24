@@ -2,6 +2,8 @@ package dk.lyngby.routes;
 
 import dk.lyngby.controller.impl.RideRequestController;
 import io.javalin.apibuilder.EndpointGroup;
+import jakarta.persistence.EntityManagerFactory;
+import dk.lyngby.controller.impl.DriverRideRequestController;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -12,6 +14,8 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 public class RequestsRoute {
 
     private final RideRequestController rc = new RideRequestController();
+    private final DriverRideRequestController drc = new DriverRideRequestController();
+
 
     public EndpointGroup getRoutes(){
         return () -> {
@@ -19,6 +23,8 @@ public class RequestsRoute {
                 get("/outgoing/{userid}", rc::getAllOutgoingRequestsByUserId);
                 get("/incoming/{userid}", rc::getAllIncomingRequestsByUserId);
                 post("/requests", rc::create);
+                post("/accept", drc::acceptRideRequest);
+                post("/decline", drc::declineRideRequest);
             });
         };
     }
