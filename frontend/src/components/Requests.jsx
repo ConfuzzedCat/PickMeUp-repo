@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import facade from "../util/apiFacade.js"
+import { userFetching } from "../datafetching/UserInfo.js";
+import UserInfoComponent from "./UserInfo.jsx"
 
 const Requests = () => {
     const initUser = {
-        userID: 1,
+        userID: 2,
         role: 'driver'
     }
     const [user, setUser] = useState(initUser)
+    const [passengerInfo, setPassengerInfo] = useState([])
+    const [chosenRideRequest, setChosenRideRequest] = useState(null)
     const [incomingRequests, setIncomingRequests] = useState([])
     const [outgoingRequests, setOutgoingRequests] = useState([])
 
@@ -23,6 +27,11 @@ const Requests = () => {
         }
     }, [])
 
+    const handlePassengerInfo = (userID, rideRequestID) => {
+        setChosenRideRequest(rideRequestID)
+        userFetching(userID, (data) => setPassengerInfo(data))
+    }
+
     return (
         <>
             <div>
@@ -35,15 +44,24 @@ const Requests = () => {
                                     <td>Sender of Request:</td>
                                     <td>Receiver of Request:</td>
                                     <td>Ride:</td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 {incomingRequests.map((request) => (
-                                    <tr key={request.id}>
-                                        <td>{request.rideRequestSenderID}</td>
-                                        <td>{request.rideRequestReceiverID}</td>
-                                        <td>{request.rideID}</td>
-                                    </tr>
+                                    <React.Fragment key={request.id}>
+                                        <tr>
+                                            <td>{request.rideRequestSenderID}</td>
+                                            <td>{request.rideRequestReceiverID}</td>
+                                            <td>{request.rideID}</td>
+                                            <td><button onClick={() => handlePassengerInfo(request.rideRequestSenderID, request.id)}>See passenger info</button></td>
+                                        </tr>
+                                        {chosenRideRequest === request.id && (
+                                            <tr>
+                                                {UserInfoComponent(passengerInfo)}
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                             </tbody>
                         </table>

@@ -1,5 +1,5 @@
 export function userFetching(Id, callback) {
-    const url = 'http://localhost:7070/api/v1/users';
+    const url = 'http://localhost:7070/api/v1/passengerinfo';
 
     const handleHttpErrors = (res) => {
         if(!res.ok){

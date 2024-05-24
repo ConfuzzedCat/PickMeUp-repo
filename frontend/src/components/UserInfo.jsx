@@ -19,11 +19,11 @@ function userInfo(user) {
             </thead>
             <tbody>
             <tr>
-                <td>{user.name}</td>
-                <td>{user.city}</td>
-                <td>{user.educationInstitution}</td>
+                <td>{user.firstName} {user.lastName}</td>
+                <td>København</td>
+                <td>CPHBusiness</td>
                 <td>
-                    <checkbox>{user.verified}</checkbox>
+                    <input type="checkbox" checked/>
                 </td>
             </tr>
             </tbody>
