@@ -25,6 +25,9 @@ public class RouteDTO {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     LocalDateTime departureTime;
 
+    // Default constructor needed by Jackson
+    public RouteDTO() {}
+
 
     public RouteDTO(Route route) {
         this.id = route.getId();
