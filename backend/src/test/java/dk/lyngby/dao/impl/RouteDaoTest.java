@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 class RouteDaoTest {
     private static EntityManagerFactory emfTest;
 
-    private static RouteDao rDao;
+    private static RouteDAO rDao;
     private static Route r1, r2, r3;
     private static Javalin app;
 
@@ -29,7 +29,7 @@ class RouteDaoTest {
         HibernateConfig.setTest(true);
         emfTest = HibernateConfig.getEntityManagerFactory();
         app = Javalin.create();
-        rDao = RouteDao.getInstance(emfTest);
+        rDao = RouteDAO.getInstance(emfTest);
         ApplicationConfig.startServer(app, 7777);
 
     }
@@ -44,6 +44,8 @@ class RouteDaoTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
+            em.createQuery("DELETE FROM Route r").executeUpdate();
             // Insert test data
             r1 = new Route(2, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route(1, 1, "Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
@@ -77,7 +79,7 @@ class RouteDaoTest {
 
     @Test
     void getPassengerRoutesWithFilter() {
-        RouteDao routeDao = RouteDao.getInstance(emfTest);
+        RouteDAO routeDao = RouteDAO.getInstance(emfTest);
         List<Route> routeList = routeDao.getPassengerRoutesWithFilter("Studievej,2", 2300, 3450);
         List<Route> routeList1 = routeDao.getPassengerRoutesWithFilter("Firskovvej,18", 2100, 2200);
 

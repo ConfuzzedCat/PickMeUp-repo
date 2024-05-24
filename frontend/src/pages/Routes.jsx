@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import facade from "../util/apiFacade.js";
 import RoutesFilter from "../components/RoutesFilter.jsx";
 import RideModal from "../components/RideModal.jsx";
+import RatingReviewModal from "../components/RatingReviewModal.jsx";
 
 function Routes() {
   const [routes, setRoutes] = useState([]);
-  const [selectedRide, setSelectedRide] = useState(null); 
+  const [selectedRide, setSelectedRide] = useState(null);
+  const [selectedRatingReview, setSelectedRatingReview] = useState(null);
 
   useEffect(() => {
     facade.fetchData("rides/", "GET").then((data) => {
@@ -14,8 +15,12 @@ function Routes() {
     });
   }, []);
 
-  const handleShowDetails = (route) => {
+  const handleShowRideDetails = (route) => {
     setSelectedRide(route);
+  };
+
+  const handleShowRatingReview = (driver) => {
+    setSelectedRatingReview(driver);
   };
 
   return (
@@ -29,6 +34,7 @@ function Routes() {
             <th>Start location</th>
             <th>Destination</th>
             <th>Driver</th>
+            <th>Rating</th>
             <th>Time</th>
             <th>Date</th>
             <th>Passengers</th>
@@ -44,14 +50,17 @@ function Routes() {
               <td>{route.startLocation}</td>
               <td>{route.endLocation}</td>
               <td>{route.driverId}</td>
+              <td>
+                <button onClick={() => handleShowRatingReview(route.driverId)} className="btn btn-sm btn-outline">🌟🌟🌟🌟🌟</button>
+              </td>
               <td>{route.timeInMinutes}</td>
               <td>{route.departureTime}</td>
               <td>{route.passengerAmount}</td>
               <td>{route.carSize}</td>
               <td>{route.handicapAvailability ? "Yes" : "No"}</td>
               <td>
-                <button onClick={() => handleShowDetails(route)} className="btn btn-sm btn-outline">
-                  See More
+                <button onClick={() => handleShowRideDetails(route)} className="btn btn-sm btn-outline">
+                  Ride Details
                 </button>
               </td>
             </tr>
@@ -59,6 +68,9 @@ function Routes() {
         </tbody>
       </table>
       {selectedRide && <RideModal ride={selectedRide} onClose={() => setSelectedRide(null)} />}
+      {selectedRatingReview && 
+        <RatingReviewModal driver={selectedRatingReview} onClose={() => setSelectedRatingReview(null)} />
+      }
     </div>
   );
 }

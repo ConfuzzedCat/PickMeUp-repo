@@ -1,6 +1,8 @@
 package dk.lyngby.dto;
 
+import dk.lyngby.model.UserMock;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -12,6 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserMockDTO {
 
     private Integer id;
@@ -29,11 +32,18 @@ public class UserMockDTO {
         this.lastName = lastName;
     }
 
+    public UserMockDTO(UserMock user) {
+        //todo Should also include city and if user is verified
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+    }
+
     public UserMockDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
 
     }
-
 
 }

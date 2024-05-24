@@ -1,4 +1,4 @@
-import RequestButton from "./components/RequestButton";
+import RequestButton from "./RequestButton";
 
 function RideModal({ ride, onClose }) {
     if (!ride) return null;
