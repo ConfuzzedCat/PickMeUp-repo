@@ -50,7 +50,7 @@ class RouteControllerTest {
             // Delete all rows
             em.createQuery("DELETE FROM Route r").executeUpdate();
             // Reset sequence
-//            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
+
             // Insert test data
             r1 = new Route(1, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             r2 = new Route(2, 1,"Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
