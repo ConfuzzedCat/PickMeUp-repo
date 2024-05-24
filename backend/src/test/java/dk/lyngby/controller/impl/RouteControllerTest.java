@@ -10,10 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +29,7 @@ class RouteControllerTest {
     private static RouteController routeController;
     private static EntityManagerFactory emfTest;
     private static Route r1, r2, r3;
-    private static HashMap<Route, Double> chosenRoute = new HashMap<>();
+    private static HashMap<Route, Double> chosenRoute ;
 
     @BeforeAll
     static void beforeAll() {
@@ -48,6 +45,11 @@ class RouteControllerTest {
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
+            //em.createNativeQuery("TRUNCATE TABLE public.ride_request RESTART IDENTITY CASCADE").executeUpdate();
+            //em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
+            //em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
+            //em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             // Reset sequence
 
@@ -59,6 +61,8 @@ class RouteControllerTest {
             em.persist(r2);
             em.persist(r3);
 
+            chosenRoute = new HashMap<>();
+
             chosenRoute.put(r1, 117.00);
             chosenRoute.put(r2, 450.0);
             chosenRoute.put(r3, 1500.0);
@@ -66,6 +70,16 @@ class RouteControllerTest {
             em.getTransaction().commit();
         }
 
+    }
+
+    @AfterEach
+    void afterEach() {
+        try (var em = emfTest.createEntityManager()) {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Review r").executeUpdate();
+            em.createQuery("DELETE FROM Route r").executeUpdate();
+            em.getTransaction().commit();
+        }
     }
 
     @AfterAll
@@ -97,6 +111,6 @@ class RouteControllerTest {
 
         assertEquals("Start1",sortedRoutes.get(0).getStartLocation());
         assertEquals("Start2",sortedRoutes.get(sortedRoutes.size()-1).getStartLocation());
-        assertEquals(4, sortedRoutes.size());
+        assertEquals(2, sortedRoutes.size());
     }
 }

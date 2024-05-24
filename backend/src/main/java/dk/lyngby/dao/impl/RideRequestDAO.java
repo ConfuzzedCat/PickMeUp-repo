@@ -104,10 +104,32 @@ public class RideRequestDAO {
      * @return List of RideRequest that the user has sent.
      * @throws ApiException if there is no list for some reason, or if there is no RideRequests for the given user.
      */
-    public List<RideRequest> getRideRequestsForUser(int userID) throws ApiException{
+    public List<RideRequest> getOutgoingRideRequestsForUser(int userID) throws ApiException{
         List<RideRequest> requestsForUser;
         try(EntityManager em = emf.createEntityManager()){
             Query query = em.createNativeQuery("SELECT * FROM public.ride_request WHERE request_sender = :userID", RideRequest.class);
+            query.setParameter("userID", userID);
+            requestsForUser = query.getResultList();
+        }
+        if(requestsForUser == null){
+            throw new ApiException(500, "Something went wrong with the database.");
+        } else if(requestsForUser.isEmpty()){
+            throw new ApiException(404, "There is no requests in the system for user with ID: " + userID);
+        }
+        return requestsForUser;
+    }
+
+    /**
+     * @Author: MrJustMeDahl
+     * Method used for retrieving all RideRequests that a single user has received.
+     * @param userID ID of the user.
+     * @return List of RideRequest that the user has received.
+     * @throws ApiException if there is no list for some reason, or if there is no RideRequests for the given user.
+     */
+    public List<RideRequest> getIncomingRideRequestsForUser(int userID) throws ApiException {
+        List<RideRequest> requestsForUser;
+        try(EntityManager em = emf.createEntityManager()){
+            Query query = em.createNativeQuery("SELECT * FROM public.ride_request WHERE request_receiver = :userID", RideRequest.class);
             query.setParameter("userID", userID);
             requestsForUser = query.getResultList();
         }

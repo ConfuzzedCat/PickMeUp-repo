@@ -20,18 +20,18 @@ import java.time.format.DateTimeParseException;
 
 
 
-public class RouteDao implements IDao {
+public class RouteDAO implements IDao {
 
     private static EntityManagerFactory emf ;
 
-    private static RouteDao instance;
+    private static RouteDAO instance;
 
-    private RouteDao(){}
+    private RouteDAO(){}
 
-    public static RouteDao getInstance(EntityManagerFactory _emf){
+    public static RouteDAO getInstance(EntityManagerFactory _emf){
         if(instance == null){
             emf = _emf;
-            instance = new RouteDao();
+            instance = new RouteDAO();
         }
         return instance;
     }
