@@ -8,6 +8,10 @@ import io.javalin.http.Context;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
 
@@ -31,7 +35,7 @@ public class ApplicationConfig {
         Routes routes = new Routes();
         app.updateConfig(ApplicationConfig::configuration);
         app.before(ApplicationConfig::corsConfig);
-        app.options("/*", ApplicationConfig::corsConfig);
+        app.options("/", ApplicationConfig::corsConfig);
         app.routes(routes.getRoutes(app));
         app.exception(ApiException.class, EXCEPTION_HANDLER::apiExceptionHandler);
         app.exception(Exception.class, EXCEPTION_HANDLER::exceptionHandler);

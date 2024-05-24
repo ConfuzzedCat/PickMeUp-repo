@@ -60,7 +60,7 @@ public ReviewController() {
         List<Review> reviews = reviewDAO.readAll();
         List<ReviewDTO> reviewDtos = ReviewDTO.toReviewDTOList(reviews);
         ctx.res().setStatus(200);
-        ctx.json(reviewDAO.readAll(), ReviewDTO.class);
+        ctx.json(reviewDtos, ReviewDTO.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public ReviewController() {
         int driverId = ctx.pathParamAsClass("id", Integer.class).check(this::validatePrimaryKey, "Not a valid id").get();
         List<Review> reviews = reviewDAO.readAll();
         List<ReviewDTO> reviewDtos = reviews.stream()
-                .filter(r -> r.getRoute().getDriverId() == driverId)
+                .filter(r -> r.getRoute().getDriver().getId() == driverId)
                 .map(ReviewDTO::new)
                 .collect(Collectors.toList());
         ctx.res().setStatus(200);

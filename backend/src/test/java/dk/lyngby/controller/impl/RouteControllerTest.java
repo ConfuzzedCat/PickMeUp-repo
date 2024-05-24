@@ -1,8 +1,10 @@
 package dk.lyngby.controller.impl;
 
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.Route;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
+import dk.lyngby.model.UserMock;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -29,7 +31,8 @@ class RouteControllerTest {
     private static RouteController routeController;
     private static EntityManagerFactory emfTest;
     private static Route r1, r2, r3;
-    private static HashMap<Route, Double> chosenRoute ;
+    private static Driver d1;
+    private static HashMap<Route, Double> chosenRoute;
 
     @BeforeAll
     static void beforeAll() {
@@ -45,18 +48,18 @@ class RouteControllerTest {
         try (var em = emfTest.createEntityManager()) {
             em.getTransaction().begin();
             // Delete all rows
-            //em.createNativeQuery("TRUNCATE TABLE public.ride_request RESTART IDENTITY CASCADE").executeUpdate();
-            //em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
-            //em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
-            //em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
             em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
+            em.createQuery("DELETE FROM Driver d").executeUpdate();
             // Reset sequence
 //            em.createNativeQuery("ALTER SEQUENCE id RESTART WITH 1").executeUpdate();
             // Insert test data
-            r1 = new Route(1, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
-            r2 = new Route(2, 1,"Start2", "End2", 2, 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
-            r3 = new Route(1, 2, "Start3", "End3", 3, 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            UserMock driver = new UserMock("driver@driversen", "driver123", "John", "Johnson");
+            d1 = new Driver(driver, "LN123456");
+            r1 = new Route(d1, 1, 2,"Start1", "End1", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            r2 = new Route(d1, 2, 1,"Start2", "End2", 8.2, 25, false, 2, 3, LocalDateTime.of(2024, 5, 9, 8, 30));
+            r3 = new Route(d1, 1, 2, "Start3", "End3", 15.0, 40, true, 5, 7, LocalDateTime.of(2024, 5, 11, 9, 0));
+            em.persist(d1);
             em.persist(r1);
             em.persist(r2);
             em.persist(r3);

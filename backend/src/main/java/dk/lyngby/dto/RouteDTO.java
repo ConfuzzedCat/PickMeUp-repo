@@ -11,8 +11,8 @@ import java.util.Objects;
 public class RouteDTO {
 
     private int id;
-    private String startPostalCode;
-    private String endPostalCode;
+    private int startPostalCode;
+    private int endPostalCode;
     private String startLocation;
     private String endLocation;
     private int driverId;
@@ -24,23 +24,17 @@ public class RouteDTO {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     LocalDateTime departureTime;
 
-    public RouteDTO(String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.driverId = driverId;
-        this.routeLength = routeLength;
-        this.timeInMinutes = timeInMinutes;
-        this.handicapAvailability = handicapAvailability;
-        this.passengerAmount = passengerAmount;
-        this.carSize = carSize;
-        this.departureTime = departureTime;
-    }
+    // Default constructor needed by Jackson
+    public RouteDTO() {}
+
 
     public RouteDTO(Route route) {
         this.id = route.getId();
+        this.startPostalCode = route.getStartPostalCode();
+        this.endPostalCode = route.getEndPostalCode();
         this.startLocation = route.getStartLocation();
         this.endLocation = route.getEndLocation();
-        this.driverId = route.getDriverId();
+        this.driverId = route.getDriver().getId();
         this.routeLength = route.getRouteLength();
         this.timeInMinutes = route.getTimeInMinutes();
         this.handicapAvailability = route.isHandicapAvailability();
@@ -50,19 +44,6 @@ public class RouteDTO {
 
     }
 
-    public RouteDTO(String startPostalCode, String endPostalCode, String startLocation, String endLocation, int driverId, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
-        this.startPostalCode = startPostalCode;
-        this.endPostalCode = endPostalCode;
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.driverId = driverId;
-        this.routeLength = routeLength;
-        this.timeInMinutes = timeInMinutes;
-        this.handicapAvailability = handicapAvailability;
-        this.passengerAmount = passengerAmount;
-        this.carSize = carSize;
-        this.departureTime = departureTime;
-    }
 
     public static List<RouteDTO> toDTOList(List<Route> routeList) {
         return routeList.stream().map(RouteDTO::new).toList();

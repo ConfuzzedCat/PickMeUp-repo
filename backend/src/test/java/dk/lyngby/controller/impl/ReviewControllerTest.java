@@ -3,6 +3,7 @@ package dk.lyngby.controller.impl;
 import com.google.gson.JsonObject;
 import dk.lyngby.config.ApplicationConfig;
 import dk.lyngby.config.HibernateConfig;
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.Review;
 import dk.lyngby.model.Route;
 import dk.lyngby.model.UserMock;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -48,18 +50,23 @@ class ReviewControllerTest {
             em.createNativeQuery("TRUNCATE TABLE public.usermock RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY CASCADE").executeUpdate();
             em.createNativeQuery("TRUNCATE TABLE public.usermock_route RESTART IDENTITY CASCADE").executeUpdate();
+            em.createNativeQuery("TRUNCATE TABLE public.driver RESTART IDENTITY CASCADE").executeUpdate();
             em.createQuery("DELETE FROM Review r").executeUpdate();
             em.createQuery("DELETE FROM Route r").executeUpdate();
             em.createQuery("DELETE FROM UserMock r").executeUpdate();
+            em.createQuery("DELETE FROM Driver r").executeUpdate();
 
 
-           em.createNativeQuery("ALTER SEQUENCE route_id_seq RESTART WITH 1").executeUpdate();
+           em.createNativeQuery("ALTER SEQUENCE route_route_id_seq RESTART WITH 1").executeUpdate();
             em.createNativeQuery("ALTER SEQUENCE usermock_id_seq RESTART WITH 1").executeUpdate();
             em.createNativeQuery("ALTER SEQUENCE review_id_seq RESTART WITH 1").executeUpdate();
-            // incert data
-            route = new Route(1, 2,"Start1", "End1", 1, 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
+            em.createNativeQuery("ALTER SEQUENCE driver_driver_id_seq RESTART WITH 1").executeUpdate();
+            // insert data
+            Driver d = new Driver("driver@driversen", "driver123", "John", "Johnson", "LN123456", new HashSet<>());
+            route = new Route(d, 2, 2, "Start1", "End1", 10.2, 30, true, 3, 5, LocalDateTime.of(2024, 5, 10, 8, 0));
             user = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
 
+            em.persist(d);
             em.persist(route);
             em.persist(user);
             review = new Review (route, user, "Great driver ","Great driver, would recommend", 5.0);
@@ -92,7 +99,7 @@ class ReviewControllerTest {
     void readAll() {
         given()
                 .when()
-                .get(BASE_URL)
+                .get(BASE_URL + "/")
                 .then()
                 .statusCode(200)
                 .body("size()", is(1));

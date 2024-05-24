@@ -1,11 +1,13 @@
 package dk.lyngby.config;
 
+import dk.lyngby.model.Driver;
 import dk.lyngby.model.Review;
 import dk.lyngby.model.Route;
 import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class PopulateReviewDB {
 
@@ -14,8 +16,10 @@ public class PopulateReviewDB {
 
         UserMock reviewer1 = new UserMock("user1@example.com", "password1", "User", "One");
         UserMock reviewer2 = new UserMock("user2@example.com", "password2", "User", "Two");
-        Route route1 = new Route(2200, 1172, "Lyngby Hovedgade", "Dtu", 1, 12.0, 20, true, 4, 4, LocalDateTime.now());
-        Route route2 = new Route(2800, 1172, "Nørreport", "Kgs. Nytorv", 2, 3.0, 10, false, 2, 3, LocalDateTime.now());
+        Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
+
+        Route route1 = new Route(driver1, 2200, 1172, "Lyngby Hovedgade", "Dtu", 12.0, 20, true, 4, 4, LocalDateTime.now());
+        Route route2 = new Route(driver1, 2800, 1172, "Nørreport", "Kgs. Nytorv", 3.0, 10, false, 2, 3, LocalDateTime.now());
 
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
@@ -23,6 +27,7 @@ public class PopulateReviewDB {
 
             em.persist(reviewer1);
             em.persist(reviewer2);
+            em.persist(driver1);
             em.persist(route1);
             em.persist(route2);
 
