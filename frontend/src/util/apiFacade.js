@@ -45,8 +45,20 @@ function apiFacade() {
         return fetch(URL + "rides" + '/' + id, options).then(handleHttpErrors);
     };
 
+    const acceptRequest = (requestSenderID, rideID, accepted) => {
+        const options = makeOptions('POST', { requestSenderID, rideID, accepted }, true);
+        return fetch(URL + "requests/accept", options).then(handleHttpErrors);
+    }
+
+    const rejectRequest = (requestSenderID, rideID, accepted) => {
+        const options = makeOptions('POST', { requestSenderID, rideID, accepted }, true);
+        return fetch(URL + "requests/reject", options).then(handleHttpErrors);
+    }
+
     return {
         fetchData,
+        acceptRequest,
+        rejectRequest,
         makeOptions,
         createRoute,
         updateRoute,
