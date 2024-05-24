@@ -16,7 +16,8 @@ public class RequestsRoute {
     public EndpointGroup getRoutes(){
         return () -> {
             path("/requests", () -> {
-                get("/{userid}", rc::getAllRequestsByUserId);
+                get("/outgoing/{userid}", rc::getAllOutgoingRequestsByUserId);
+                get("/incoming/{userid}", rc::getAllIncomingRequestsByUserId);
                 post("/requests", rc::create);
             });
         };

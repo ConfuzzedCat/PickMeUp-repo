@@ -10,6 +10,7 @@ import java.util.Objects;
 @Getter
 public class RouteDTO {
 
+    private int id;
     private String startPostalCode;
     private String endPostalCode;
     private String startLocation;
@@ -36,6 +37,7 @@ public class RouteDTO {
     }
 
     public RouteDTO(Route route) {
+        this.id = route.getId();
         this.startLocation = route.getStartLocation();
         this.endLocation = route.getEndLocation();
         this.driverId = route.getDriverId();

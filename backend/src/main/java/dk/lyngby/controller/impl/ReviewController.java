@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
 import dk.lyngby.dao.impl.ReviewDAO;
-import dk.lyngby.dao.impl.RouteDao;
+import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dao.impl.UserMockDAO;
 import dk.lyngby.dto.ReviewDTO;
 import dk.lyngby.exception.ApiException;
@@ -14,6 +14,9 @@ import dk.lyngby.model.UserMock;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ReviewController implements IController<Review, Integer> {
 
@@ -21,14 +24,14 @@ public class ReviewController implements IController<Review, Integer> {
     //private final TokenFactory TOKEN_FACTORY = TokenFactory.getInstance();
 
     private static ReviewDAO reviewDAO;
-    private static RouteDao routeDao;
+    private static RouteDAO routeDao;
     private static UserMockDAO userDAO;
     private static UserMock userMock;
 
 public ReviewController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         this.reviewDAO = ReviewDAO.getInstance(emf);
-        this.routeDao = RouteDao.getInstance(emf);
+        this.routeDao = RouteDAO.getInstance(emf);
         this.userDAO = UserMockDAO.getInstance(emf);
     }
 
@@ -45,25 +48,51 @@ public ReviewController() {
 
     }
 
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
     @Override
     public void readAll(Context ctx) {
+        List<Review> reviews = reviewDAO.readAll();
+        List<ReviewDTO> reviewDtos = ReviewDTO.toReviewDTOList(reviews);
         ctx.res().setStatus(200);
         ctx.json(reviewDAO.readAll(), ReviewDTO.class);
     }
 
+    /**
+     * Reads all Route entities, converts them to a list of RouteDTOs,
+     * and sends the list back as a JSON response.
+     *
+     * @param ctx the Javalin context containing the request data and methods for response handling.
+     * @author Deniz Sønnmez
+     */
+    public void readAllByDriver(Context ctx) {
+        // Hent driver id fra path parameter og valider det
+        int driverId = ctx.pathParamAsClass("id", Integer.class).check(this::validatePrimaryKey, "Not a valid id").get();
+        List<Review> reviews = reviewDAO.readAll();
+        List<ReviewDTO> reviewDtos = reviews.stream()
+                .filter(r -> r.getRoute().getDriverId() == driverId)
+                .map(ReviewDTO::new)
+                .collect(Collectors.toList());
+        ctx.res().setStatus(200);
+        ctx.json(reviewDtos);
+    }
+
+
     @Override
-    public void create(Context ctx) {
-        String token = ctx.header("Authorization").split(" ")[1];
+    public void create(Context ctx) throws ApiException {
+      //  String token = ctx.header("Authorization").split(" ")[1];
         //TODO:fix this when we have user
        //UserMockDTO userMockDTO = TOKEN_FACTORY.verifyToken(token);
         //UserMock user = userDAO.read(userMockDTO.getEmail());
 
-
-
-
         Gson gson = new Gson();
         int route = gson.fromJson(ctx.body(), JsonObject.class).get("routeId").getAsInt();
-        int userId = userMock.getId();
+        int userId = gson.fromJson(ctx.body(), JsonObject.class).get("userId").getAsInt();
         String title = gson.fromJson(ctx.body(), JsonObject.class).get("title").getAsString();
         String description = gson.fromJson(ctx.body(), JsonObject.class).get("description").getAsString();
         double rating = gson.fromJson(ctx.body(), JsonObject.class).get("rating").getAsDouble();
@@ -76,7 +105,6 @@ public ReviewController() {
 
         ctx.res().setStatus(201);
         ctx.json(reviewDto, ReviewDTO.class);
-
 
     }
 

@@ -5,6 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @Author MrJustMeDahl
+ * This class represents the requests sent from a passenger to a driver in regards to joining a specific ride.
+ * Keep in mind that this entity's primary key is a combined key from the passenger ID and ride ID.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -42,5 +48,9 @@ public class RideRequest {
         ride.addRideRequest(this);
         requestSender.addOutgoingRideRequest(this);
         requestReceiver.addIncomingRideRequest(this);
+    }
+
+    public RideRequest(int id){
+
     }
 }

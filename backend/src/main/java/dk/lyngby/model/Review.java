@@ -27,7 +27,7 @@ public class Review {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "route_id")
     private Route route;
 
     @ManyToOne
