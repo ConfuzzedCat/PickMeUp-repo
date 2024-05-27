@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <nav className="bg-gray-800">
+        <ul className="flex justify-center">
+        <li>
+            <NavLink
+              to="/"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium mx-3"
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/signup"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium mx-3"
+            >
+              Signup
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/routes"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium mx-5"
+            >
+              Routes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/requests"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium mx-3"
+            >
+              Requests
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/available_routes"
+              activeClassName="bg-green-500"
+              className="text-white px-3 py-2 rounded-md text-sm font-medium mx-3"
+            >
+              Search for Routes
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

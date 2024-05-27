@@ -1,14 +1,17 @@
 package dk.lyngby.config;
 
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
+import dk.lyngby.model.Review;
+import dk.lyngby.model.Driver;
+import dk.lyngby.model.RideRequest;
+import dk.lyngby.model.Route;
+import dk.lyngby.model.UserMock;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
+import dk.lyngby.model.Driver;
 import java.util.Properties;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -22,7 +25,7 @@ public class HibernateConfig {
 
             Properties props = new Properties();
 
-                props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/exam");
+                props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/pickmeup");
                 props.put("hibernate.connection.username", "postgres");
                 props.put("hibernate.connection.password", "postgres");
                 props.put("hibernate.show_sql", "true"); // show sql in console
@@ -85,9 +88,11 @@ public class HibernateConfig {
 
 
     private static void getAnnotationConfiguration(Configuration configuration) {
-        //TODO: Remove. Kept for Reference
-        //configuration.addAnnotatedClass(Hotel.class);
-        //configuration.addAnnotatedClass(Room.class);
+        configuration.addAnnotatedClass(Route.class);
+        configuration.addAnnotatedClass(Driver.class);
+        configuration.addAnnotatedClass(RideRequest.class);
+        configuration.addAnnotatedClass(UserMock.class);
+        configuration.addAnnotatedClass(Review.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {

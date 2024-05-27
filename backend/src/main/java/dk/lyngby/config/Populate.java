@@ -1,59 +1,103 @@
 package dk.lyngby.config;
 
-
-import dk.lyngby.model.Hotel;
-import dk.lyngby.model.Room;
+import dk.lyngby.model.Driver;
+import dk.lyngby.model.Route;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class Populate {
     public static void main(String[] args) {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+        truncateRoutes(emf);
+        //populateRoutes(emf);
+    }
 
-        /* "Saved" for reference
-        Set<Room> calRooms = getCalRooms();
-        Set<Room> hilRooms = getHilRooms();
-
-        try (var em = emf.createEntityManager()) {
+    /**
+     * Populates the "route" table with mock data
+     *
+     * @param emf Entitymanagerfactory needed for the Entitymanager
+     * @author pelle112112
+     */
+    /*@NotNull
+    private static void populateRoutes(EntityManagerFactory emf) {
+        try (EntityManager em = emf.createEntityManager()) {
+            // Insert test rows
             em.getTransaction().begin();
-            Hotel california = new Hotel("Hotel California", "California", Hotel.HotelType.LUXURY);
-            Hotel hilton = new Hotel("Hilton", "Copenhagen", Hotel.HotelType.STANDARD);
-            california.setRooms(calRooms);
-            hilton.setRooms(hilRooms);
-            em.persist(california);
-            em.persist(hilton);
+
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('1','Nørregade 10','1172','Rovsingsgade 31','2200');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('2','Nørregade 10','1172','Duevej 92','2000');").executeUpdate();
+            em.createNativeQuery("INSERT INTO public.route (id,endlocation,endpostalcode, startlocation, startpostalcode) VALUES ('3','Nørregade 10','1172','Frederiksvej 10','2000');").executeUpdate();
+
             em.getTransaction().commit();
         }
-        */
+    }*/
+
+    /**
+     * Truncates the "route" table
+     *
+     * @param emf Entitymanagerfactory needed for the Entitymanager
+     * @author pelle112112
+     */
+    private static void truncateRoutes(EntityManagerFactory emf) {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            em.createNativeQuery("TRUNCATE TABLE public.route RESTART IDENTITY").executeUpdate();
+            em.getTransaction().commit();
+
+        }
     }
 
-    @NotNull
-    private static Set<Room> getCalRooms() {
-        Room r100 = new Room(100, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r101 = new Room(101, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r102 = new Room(102, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r103 = new Room(103, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r104 = new Room(104, new BigDecimal(3200), Room.RoomType.DOUBLE);
-        Room r105 = new Room(105, new BigDecimal(4500), Room.RoomType.SUITE);
 
-        Room[] roomArray = {r100, r101, r102, r103, r104, r105};
-        return Set.of(roomArray);
+    public static void createDrivers(EntityManagerFactory emf) {
+        try {
+            EntityManager em = emf.createEntityManager();
+
+            em.getTransaction().begin();
+
+            // Create or fetch Driver objects
+            Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
+            em.persist(driver1);
+
+            Driver driver2 = new Driver("email2@email.dk", "Jane Doe", "password", "address", "ABC143", new HashSet<>());
+            em.persist(driver2);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @NotNull
-    private static Set<Room> getHilRooms() {
-        Room r111 = new Room(111, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r112 = new Room(112, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r113 = new Room(113, new BigDecimal(2520), Room.RoomType.SINGLE);
-        Room r114 = new Room(114, new BigDecimal(2520), Room.RoomType.DOUBLE);
-        Room r115 = new Room(115, new BigDecimal(3200), Room.RoomType.DOUBLE);
-        Room r116 = new Room(116, new BigDecimal(4500), Room.RoomType.SUITE);
+    public static void createRoutes(EntityManagerFactory emf) {
+        try {
+            EntityManager em = emf.createEntityManager();
 
-        Room[] roomArray = {r111, r112, r113, r114, r115, r116};
-        return Set.of(roomArray);
+            em.getTransaction().begin();
+
+            // Create or fetch Driver objects
+            Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
+            em.persist(driver1);
+
+            Driver driver2 = new Driver("email2@email.dk", "Jane Doe", "password", "address", "ABC143", new HashSet<>());
+            em.persist(driver2);
+
+            // sample routes with associated drivers
+            LocalDateTime departureDateTime1 = LocalDateTime.of(2024, 5, 10, 8, 0);
+            Route route1 = new Route(driver1, 10001, 90001, "New York", "Los Angeles",
+                    300.5, 360, true, 4, 2, departureDateTime1);
+            em.persist(route1);
+
+            LocalDateTime departureDateTime2 = LocalDateTime.of(2024, 5, 10, 8, 0);
+            Route route2 = new Route(driver2, 10001, 90001, "New Jersey", "Los Hermanos",
+                    300.5, 360, true, 4, 2, departureDateTime2);
+            em.persist(route2);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
