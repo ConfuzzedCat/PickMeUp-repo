@@ -41,79 +41,84 @@ const Requests = () => {
 
   return (
     <>
-      <div>
-        {incomingRequests.length > 0 ? (
-          <div>
-            <h2>Requests for your rides:</h2>
-            <table>
-              <thead>
-                <tr>
-                  <td>Sender of Request:</td>
-                  <td>Receiver of Request:</td>
-                  <td>Ride:</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {incomingRequests.map((request) => (
-                  <React.Fragment key={request.id}>
-                    <tr>
+      <div className="container mx-auto prose-xl">
+        <div>
+          {incomingRequests.length > 0 ? (
+            <div>
+              <h2>Requests for your rides:</h2>
+              <table className="table">
+                {" "}
+                <thead>
+                  <tr>
+                    <td>Sender of Request:</td>
+                    <td>Receiver of Request:</td>
+                    <td>Ride:</td>
+                    <td>Passenger Info</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {incomingRequests.map((request) => (
+                    <React.Fragment key={request.id}>
+                      <tr>
+                        <td>{request.rideRequestSenderID}</td>
+                        <td>{request.rideRequestReceiverID}</td>
+                        <td>{request.rideID}</td>
+                        <td>
+                          <button onClick={() => handlePassengerInfo(request.rideRequestSenderID, request.id)}>See passenger info</button>
+                        </td>
+                        <td>
+                          <button className="btn" onClick={() => acceptPassenger(request.rideRequestSenderID, request.rideID)}>
+                            Accept request
+                          </button>{" "}
+                        </td>
+                        <td>
+                          <button className="btn" onClick={() => rejectPassenger(request.rideRequestSenderID, request.rideID)}>
+                            Reject request
+                          </button>{" "}
+                        </td>
+                      </tr>
+                      {chosenRideRequest === request.id && <tr>{UserInfoComponent(passengerInfo)}</tr>}
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>
+              <h2>There is no requests for your rides.</h2>
+            </div>
+          )}
+        </div>
+        <div>
+          {outgoingRequests.length > 0 ? (
+            <div>
+              <table className="table">
+                {" "}
+                <thead>
+                  <tr>
+                    <td>Sender of Request:</td>
+                    <td>Receiver of Request:</td>
+                    <td>Ride:</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {outgoingRequests.map((request) => (
+                    <tr key={request.id}>
                       <td>{request.rideRequestSenderID}</td>
                       <td>{request.rideRequestReceiverID}</td>
                       <td>{request.rideID}</td>
-                      <td>
-                        <button onClick={() => handlePassengerInfo(request.rideRequestSenderID, request.id)}>See passenger info</button>
-                      </td>
-                      <td>
-                        <button className="btn" onClick={() => acceptPassenger(request.rideRequestSenderID, request.rideID)}>
-                          Accept request
-                        </button>{" "}
-                      </td>
-                      <td>
-                        <button className="btn" onClick={() => rejectPassenger(request.rideRequestSenderID, request.rideID)}>
-                          Reject request
-                        </button>{" "}
-                      </td>
                     </tr>
-                    {chosenRideRequest === request.id && <tr>{UserInfoComponent(passengerInfo)}</tr>}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div>
-            <h2>There is no requests for your rides.</h2>
-          </div>
-        )}
-      </div>
-      <div>
-        {outgoingRequests.length > 0 ? (
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <td>Sender of Request:</td>
-                  <td>Receiver of Request:</td>
-                  <td>Ride:</td>
-                </tr>
-              </thead>
-              <tbody>
-                {outgoingRequests.map((request) => (
-                  <tr key={request.id}>
-                    <td>{request.rideRequestSenderID}</td>
-                    <td>{request.rideRequestReceiverID}</td>
-                    <td>{request.rideID}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div>
-            <h2>You have not requested any rides.</h2>
-          </div>
-        )}
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>
+              <h2>You have not requested any rides.</h2>
+            </div>
+          )}
+        </div>
       </div>
     </>
   )

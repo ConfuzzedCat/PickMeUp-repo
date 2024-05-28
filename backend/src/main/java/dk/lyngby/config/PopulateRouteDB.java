@@ -1,9 +1,6 @@
 package dk.lyngby.config;
 
-import dk.lyngby.model.RideRequest;
-import dk.lyngby.model.Route;
-import dk.lyngby.model.Driver;
-import dk.lyngby.model.UserMock;
+import dk.lyngby.model.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +23,7 @@ public class PopulateRouteDB {
     public static void main(String[] args) {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         UserMock passenger = new UserMock("test@testesen.dk", "test123", "Test", "Testesen");
+        UserMock passenger2 = new UserMock("test2@testesen.dk", "test123", "Jens", "Jensen");
         UserMock driver = new UserMock("driver@driversen", "driver123", "Driver", "Driversen");
         Driver driver1 = new Driver("email@email.dk", "John Doe", "password", "address", "ABC123", new HashSet<>());
 
@@ -33,6 +31,7 @@ public class PopulateRouteDB {
             em.getTransaction().begin();
 
             em.persist(passenger);
+            em.persist(passenger2);
             em.persist(driver);
             em.persist(driver1);
 
@@ -40,6 +39,9 @@ public class PopulateRouteDB {
         }
 
         routes = getRoutes(driver1);
+
+        Review review1 = new Review(routes.get(0), passenger, "Excellent Ride", "The driver was very polite and the ride was smooth.", 5.0);
+        Review review2 = new Review(routes.get(1), passenger2, "Good, but could be better", "The ride was quick but the car was not very clean.", 3.5);
 
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
