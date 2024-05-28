@@ -5,6 +5,7 @@ import facade from "../util/apiFacade"
 function CreateRoute() {
   const [trips, setTrips] = useState([])
   const [formData, setFormData] = useState({
+    driverId: 1, // hardcoded driverId for now
     startPostalCode: "",
     endPostalCode: "",
     startLocation: "",
@@ -14,7 +15,7 @@ function CreateRoute() {
     handicapAvailability: false,
     passengerAmount: "",
     carSize: "",
-    departureDateTime: "", // Updated to accept date and time in "yyyy-MM-dd HH:mm" format
+    departureTime: "", // Updated to accept date and time in "yyyy-MM-dd HH:mm" format
   })
 
   useEffect(() => {
@@ -40,8 +41,8 @@ function CreateRoute() {
     e.preventDefault()
     try {
       // Ensure the departureDateTime is formatted correctly before sending
-      const formattedDateTime = formatDateTime(formData.departureDateTime)
-      await facade.createRoute({ ...formData, departureDateTime: formattedDateTime })
+      const formattedDateTime = formatDateTime(formData.departureTime)
+      await facade.createRoute({ ...formData, departureTime: formattedDateTime })
       fetchTrips()
     } catch (error) {
       console.error("Error creating trip:", error)
@@ -56,14 +57,7 @@ function CreateRoute() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="container mx-auto prose-xl">
       <div className="flex flex-col items-center">
         <h1 style={{ fontWeight: "bold" }} className="mb-8 text-4xl text-center">
           Driver
@@ -75,43 +69,43 @@ function CreateRoute() {
           <form id="tripForm" className="flex flex-col items-center gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label htmlFor="startPostalCode">Start Postal Code:</label>
-              <input type="text" id="startPostalCode" name="startPostalCode" value={formData.startPostalCode} onChange={handleChange} required className="input" />
+              <input type="text" id="startPostalCode" name="startPostalCode" value={formData.startPostalCode} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="endPostalCode">End Postal Code:</label>
-              <input type="text" id="endPostalCode" name="endPostalCode" value={formData.endPostalCode} onChange={handleChange} required className="input" />
+              <input type="text" id="endPostalCode" name="endPostalCode" value={formData.endPostalCode} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="startLocation">Start Location:</label>
-              <input type="text" id="startLocation" name="startLocation" value={formData.startLocation} onChange={handleChange} required className="input" />
+              <input type="text" id="startLocation" name="startLocation" value={formData.startLocation} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="endLocation">End Location:</label>
-              <input type="text" id="endLocation" name="endLocation" value={formData.endLocation} onChange={handleChange} required className="input" />
+              <input type="text" id="endLocation" name="endLocation" value={formData.endLocation} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="routeLength">Route Length:</label>
-              <input type="number" id="routeLength" name="routeLength" value={formData.routeLength} onChange={handleChange} required className="input" />
+              <input type="number" id="routeLength" name="routeLength" value={formData.routeLength} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="timeInMinutes">Time In Minutes:</label>
-              <input type="number" id="timeInMinutes" name="timeInMinutes" value={formData.timeInMinutes} onChange={handleChange} required className="input" />
+              <input type="number" id="timeInMinutes" name="timeInMinutes" value={formData.timeInMinutes} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="handicapAvailability">Handicap Availability:</label>
-              <input type="checkbox" id="handicapAvailability" name="handicapAvailability" checked={formData.handicapAvailability} onChange={handleChange} className="input" />
+              <input type="checkbox" id="handicapAvailability" name="handicapAvailability" checked={formData.handicapAvailability} onChange={handleChange} className="radio" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="passengerAmount">Passenger Amount:</label>
-              <input type="number" id="passengerAmount" name="passengerAmount" value={formData.passengerAmount} onChange={handleChange} required className="input" />
+              <input type="number" id="passengerAmount" name="passengerAmount" value={formData.passengerAmount} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
               <label htmlFor="carSize">Car Size:</label>
-              <input type="number" id="carSize" name="carSize" value={formData.carSize} onChange={handleChange} required className="input" />
+              <input type="number" id="carSize" name="carSize" value={formData.carSize} onChange={handleChange} required className="input input-bordered" />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="departureDateTime">Departure Date/Time:</label>
-              <input type="datetime-local" id="departureDateTime" name="departureDateTime" value={formData.departureDateTime} onChange={handleChange} required className="input" />
+              <label htmlFor="departureTime">Departure Date/Time:</label>
+              <input type="datetime-local" id="departureTime" name="departureTime" value={formData.departureTime} onChange={handleChange} required className="input input-bordered" />
             </div>
             <button type="submit" className="btn btn-primary w-full text-center">
               Create Trip
