@@ -66,6 +66,18 @@ public class Route {
         this.rideRequests = new ArrayList<>();
     }
 
+    public Route(int startPostalCode, int endPostalCode, String startLocation, String endLocation, double routeLength, int timeInMinutes, boolean handicapAvailability, int passengerAmount, int carSize, LocalDateTime departureTime) {
+        this.startPostalCode = startPostalCode;
+        this.endPostalCode = endPostalCode;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        this.routeLength = routeLength;
+        this.timeInMinutes = timeInMinutes;
+        this.handicapAvailability = handicapAvailability;
+        this.passengerAmount = passengerAmount;
+        this.carSize = carSize;
+        this.departureTime = departureTime;
+    }
 
     @Override
     public int hashCode() {

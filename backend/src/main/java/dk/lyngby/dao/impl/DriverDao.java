@@ -11,13 +11,20 @@ import jakarta.persistence.EntityManagerFactory;
 
 public class DriverDao {
 
-    Driver driver = new Driver();
+    private static DriverDao instance;
 
-    EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static EntityManagerFactory emf;
+
+    public static DriverDao getInstance(EntityManagerFactory _emf) {
+        if (instance == null) {
+            emf = _emf;
+            instance = new DriverDao();
+        }
+        return instance;
+    }
 
 
 
-    
     public Driver getById(int id) {
         try(EntityManager em = emf.createEntityManager()){
             return em.find(Driver.class, id);
@@ -69,17 +76,17 @@ public class DriverDao {
 
     public Driver delete(int id) {
         try(EntityManager em = emf.createEntityManager()){
+            Driver driver = null;
             em.getTransaction().begin();
             driver = em.find(Driver.class, id);
             if (driver != null) {
                 em.remove(driver);
                 em.getTransaction().commit();
             }
-
+            return driver;
             
         }
 
-        return driver;
 
     }
 

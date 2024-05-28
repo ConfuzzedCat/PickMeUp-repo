@@ -2,12 +2,16 @@ package dk.lyngby.controller.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dk.lyngby.config.HibernateConfig;
 import dk.lyngby.controller.IController;
+import dk.lyngby.dao.impl.DriverDao;
 import dk.lyngby.dao.impl.RouteDAO;
 import dk.lyngby.dto.RouteDTO;
 import dk.lyngby.exception.ApiException;
+import dk.lyngby.model.Driver;
+import dk.lyngby.utility.GsonProvider;
 import dk.lyngby.utility.RouteCalcUtil;
 import dk.lyngby.model.Route;
 import io.javalin.http.Context;
@@ -27,10 +31,13 @@ public class RouteController implements IController<Route, Integer> {
 
 
     private RouteDAO dao;
+    private DriverDao driverDao;
 
     public RouteController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         this.dao = RouteDAO.getInstance(emf);
+        this.driverDao = DriverDao.getInstance(emf);
+
     }
 
         private RouteCalcUtil routeUtil = new RouteCalcUtil();
@@ -162,12 +169,39 @@ public class RouteController implements IController<Route, Integer> {
 
     @Override
     public void create(Context ctx) {
-        Route jsonRequest = ctx.bodyAsClass(Route.class);
-        Route route = dao.create(jsonRequest);
-        RouteDTO routeDto = new RouteDTO(route);
+        Gson gson = GsonProvider.createGson();
+
+        // Parse the request body as JsonObject to extract driverId
+        JsonObject jsonObject = gson.fromJson(ctx.body(), JsonObject.class);
+        int driverId = jsonObject.get("driverId").getAsInt();
+
+        // Retrieve the Driver entity based on driverId
+        Driver driver = driverDao.getById(driverId);
+
+        if (driver == null) {
+            ctx.res().setStatus(404);
+            ctx.result("Driver not found");
+            return;
+        }
+
+        // Remove driverId from the JSON object
+        jsonObject.remove("driverId");
+
+        // Parse the modified JSON object to Route
+        Route route = gson.fromJson(jsonObject, Route.class);
+
+        // Set the driver in the Route object
+        route.setDriver(driver);
+
+        // Persist the Route object
+        Route createdRoute = dao.create(route);
+
+        // Convert to DTO and send the response
+        RouteDTO routeDto = new RouteDTO(createdRoute);
         ctx.res().setStatus(201);
-        ctx.json(routeDto, RouteDTO.class);
+        ctx.json(routeDto);
     }
+
 
     @Override
     public void update(Context ctx) {
