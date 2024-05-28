@@ -8,13 +8,14 @@ public class DriverRoute {
     
     private final DriverController dc = new DriverController();
 
-    public EndpointGroup getRoutes(){
+    public EndpointGroup getRoutes() {
         return () -> {
             path("/drivers", () -> {
                 get("/", dc::getallDrivers);
                 get("/{id}", dc::getById);
-                post("/", dc::create);
+                post("/signup", dc::create);
                 put("/{id}", dc::update);
+                delete("/{id}", dc::delete);
             });
         };
     }

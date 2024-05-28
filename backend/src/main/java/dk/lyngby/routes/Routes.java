@@ -16,6 +16,7 @@ public class Routes {
     private final RoutesRoute routesRoute = new RoutesRoute();
     private final RequestsRoute requestsRoute = new RequestsRoute();
     private final UserRoute userRoute = new UserRoute();
+    private final DriverRoute driverRoute = new DriverRoute();
 
     private final ReviewRoute reviewRoute = new ReviewRoute();
     private int count = 0;
@@ -36,6 +37,7 @@ public class Routes {
                 path("/", requestsRoute.getRoutes());
                 path("/", userRoute.getInfo());
                 path("/", reviewRoute.getRoutes());
+                path("/", driverRoute.getRoutes());
             });
 
             app.after(ctx -> LOGGER.info(" Request {} - {} was handled with status code {}", count++, ctx.attribute("requestInfo"), ctx.status()));
